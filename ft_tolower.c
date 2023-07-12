@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 11:50:30 by atang             #+#    #+#             */
-/*   Updated: 2023/07/12 17:11:03 by atang            ###   ########.fr       */
+/*   Created: 2023/07/12 13:58:30 by atang             #+#    #+#             */
+/*   Updated: 2023/07/12 17:32:49 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(const char *s)
+int	ft_tolower(int c)
 {
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	if (c >= 65 && c <= 90)
+		return (c + 32);
+	return (c);
 }
 
-/*
 int	main(void)
 {
-	const char	*str;
+	char	str1[100];
+	char	str2[100];
+	char	str3[100];
+	char	str4[100];
 
-	str = "Hello there!";
-	printf("%s\n", str);
-	printf("Number of characters: %d\n", ft_strlen(str));
+	strcpy(str1, "A");
+	strcpy(str2, "1A");
+	strcpy(str3, "AbcD");
+	strcpy(str4, "\0");
+	ft_tolower(str1);
+	ft_tolower(str2);
+	ft_tolower(str3);
+	ft_tolower(str4);
+	printf("%s\n", str1);
+	printf("%s\n", str2);
+	printf("%s\n", str3);
+	printf("%s\n", str4);
 	return (0);
 }
-*/

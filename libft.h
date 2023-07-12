@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 11:50:30 by atang             #+#    #+#             */
-/*   Updated: 2023/07/12 17:11:03 by atang            ###   ########.fr       */
+/*   Created: 2023/07/12 14:37:47 by atang             #+#    #+#             */
+/*   Updated: 2023/07/12 17:55:43 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-int	ft_strlen(const char *s)
-{
-	int	i;
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
+int	ft_isalpha(int c);
+int	ft_isdigit(int c);
+int	ft_isalnum(int c);
+int	ft_isascii(int c);
+int	ft_isprint(int c);
+int	ft_strlen(const char *s);
+int	ft_toupper(int c);
+int	ft_tolower(int c);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int	ft_atoi(const char *str);
 
-/*
-int	main(void)
-{
-	const char	*str;
-
-	str = "Hello there!";
-	printf("%s\n", str);
-	printf("Number of characters: %d\n", ft_strlen(str));
-	return (0);
-}
-*/
+#endif

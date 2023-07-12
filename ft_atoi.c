@@ -1,35 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 11:50:30 by atang             #+#    #+#             */
-/*   Updated: 2023/07/12 17:11:03 by atang            ###   ########.fr       */
+/*   Created: 2023/07/12 14:12:16 by atang             #+#    #+#             */
+/*   Updated: 2023/07/12 17:26:51 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(const char *s)
+int	ft_atoi(const char *str)
 {
+	int	result;
+	int	sign;
 	int	i;
 
+	sign = 1;
+	result = 0;
 	i = 0;
-	while (s[i] != '\0')
+	while (str[i] == " ")
 		i++;
-	return (i);
+	if (str[i] == "-")
+	{
+		sign = -1;
+		i++;
+	}
+	while (str[i] != '\0')
+	{
+		result = (result * 10) + (str[i] - '0');
+		i++;
+	}
+	return (result * sign);
 }
 
-/*
-int	main(void)
+int main()
 {
-	const char	*str;
+	const char str[] = " -12345";
+	int num = ft_atoi(str);
 
-	str = "Hello there!";
-	printf("%s\n", str);
-	printf("Number of characters: %d\n", ft_strlen(str));
+	printf ("%d\n", num);
 	return (0);
 }
-*/
