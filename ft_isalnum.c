@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 11:22:46 by atang             #+#    #+#             */
-/*   Updated: 2023/07/12 11:29:04 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/16 19:53:17 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,3 +19,14 @@ int	ft_isalnum(int c)
 		return (1);
 	return (0);
 }
+
+/* int	main(void)
+{
+	char ch = '%';
+
+	if (ft_isalnum(ch) == 1)
+		printf("The character '%c' is alphanumeric.\n", ch);
+    else
+		printf("The character '%c' is not alphanumeric.\n", ch);
+    return (0);
+} */

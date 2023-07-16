@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 11:37:08 by atang             #+#    #+#             */
-/*   Updated: 2023/07/12 11:41:42 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/16 19:58:34 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,3 +18,14 @@ int	ft_isprint(int c)
 		return (1);
 	return (0);
 }
+
+/* int main() {
+    int ch = '&';
+    
+    printf("The character is: %c\n", ch);
+    if (ft_isprint(ch))
+        printf("The character '%c' is printable.\n", ch);
+    else
+        printf("The character '%c' is not printable.\n", ch);
+    return (0);
+} */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:58:30 by atang             #+#    #+#             */
-/*   Updated: 2023/07/12 17:32:49 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/16 20:04:01 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,11 @@ int	ft_tolower(int c)
 	return (c);
 }
 
-int	main(void)
+/* int main()
 {
-	char	str1[100];
-	char	str2[100];
-	char	str3[100];
-	char	str4[100];
-
-	strcpy(str1, "A");
-	strcpy(str2, "1A");
-	strcpy(str3, "AbcD");
-	strcpy(str4, "\0");
-	ft_tolower(str1);
-	ft_tolower(str2);
-	ft_tolower(str3);
-	ft_tolower(str4);
-	printf("%s\n", str1);
-	printf("%s\n", str2);
-	printf("%s\n", str3);
-	printf("%s\n", str4);
-	return (0);
-}
+    int c = 'Q';
+	int result = ft_tolower(c);
+    printf("Character is: %c\n", c);    
+    printf("Lowercase equivalent: %c\n", result);
+    return (0);
+} */

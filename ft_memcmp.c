@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 17:35:31 by atang             #+#    #+#             */
-/*   Updated: 2023/07/16 20:06:19 by atang            ###   ########.fr       */
+/*   Created: 2023/07/16 17:10:17 by atang             #+#    #+#             */
+/*   Updated: 2023/07/16 20:21:21 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	while (n > 0)
+	const unsigned char *p1;
+	const unsigned char *p2;
+	
+	size_t i;
+	p1 = (const unsigned char *)s1;
+	p2 = (const unsigned char *)s2;
+
+	i = 0;
+	while (i < n)
 	{
-		if (*s1 != *s2)
-		{
-			return (*s1 - *s2);
-		}
-		if (*s1 == '\0' && *s2 == '\0')
-		{
-			break ;
-		}
-		s1++;
-		s2++;
-		n--;
+		if (p1[i] != p2[i])
+			return (p1[i] - p2[i]);
+		else
+			i++;
 	}
 	return (0);
 }
@@ -35,8 +36,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	const char	*str1 = "Outcome";
 	const char	*str2 = "Outdoor";
-	size_t	nbr = 4;
-	int	result = ft_strncmp(str1, str2, nbr);
+	size_t	nbr = 6;
+	int	result = ft_memcmp(str1, str2, nbr);
 
 	printf("String 1: %s\n", str1);
 	printf("String 2: %s\n", str2);

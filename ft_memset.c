@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 11:30:54 by atang             #+#    #+#             */
-/*   Updated: 2023/07/16 19:40:57 by atang            ###   ########.fr       */
+/*   Created: 2023/07/16 12:22:32 by atang             #+#    #+#             */
+/*   Updated: 2023/07/16 20:27:44 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isascii(int c)
+void	ft_memset(void *b, int c, size_t len)
 {
-	if (c >= 0 && c <= 127)
-		return (1);
-	return (0);
+	char	*ptr;
+	size_t	i;
+
+	ptr = (char *)b;
+	i = 0;
+	while (i < len)
+	{
+		*ptr = (char) c;
+		ptr++;
+		i++;
+	}
 }
 
-/* 
-int main()
+/* int	main(void)
 {
-    int ch = '&';
-    
-    printf("The character is: %c\n", ch);
-    if (ft_isascii(ch))
-        printf("%d is an ASCII character.\n", ch);
-    else
-        printf("%d is not an ASCII character.\n", ch);
-    return (0);
-}
- */
+	char buffer [10];
+	size_t i = 0;
+
+	ft_memset(buffer, 'Y', sizeof(buffer));
+	while (i < sizeof(buffer))
+	{
+		printf("%c ", buffer[i]);
+		i++;
+	}
+	return (0);
+} */
