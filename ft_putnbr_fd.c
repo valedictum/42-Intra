@@ -1,44 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 14:12:16 by atang             #+#    #+#             */
-/*   Updated: 2023/07/18 11:02:34 by atang            ###   ########.fr       */
+/*   Created: 2023/07/18 15:32:09 by atang             #+#    #+#             */
+/*   Updated: 2023/07/18 15:42:18 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* Outputs the integer ’n’ to the given file descriptor.
+n: The integer to output.
+fd: The file descriptor on which to write. */
+
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+void	ft_putnbr_fd(int n, int fd)
 {
-	int	result;
-	int	sign;
+	char	digit;
 
-	sign = 1;
-	result = 0;
-	while (*str == ' ')
-		str++;
-	if (*str == '-')
+	if (n < 0)
 	{
-		sign = -1;
-		str++;
+		write(1, "-", 1);
+		if (n == -2147483648)
+		{
+			n = -(n + 1);
+			ft_putnbr_fd(n / 10, fd);
+			write(1, "8", 1);
+			return ;
+		}
+		n = -n;
 	}
-	while (*str >= '0' && *str <= '9')
+	if (n >= 10)
 	{
-		result = (result * 10) + (*str - '0');
-		str++;
+		ft_putnbr_fd(n / 10, fd);
 	}
-	return (result * sign);
+	digit = n % 10 + '0';
+	write (fd, &digit, 1);
 }
 
 /* int	main(void)
 {
-	const char	str[] = " -12345";
-	int			num = ft_atoi(str);
-
-	printf ("%d\n", num);
+	ft_putnbr_fd(-2147485, 1);
 	return (0);
 } */

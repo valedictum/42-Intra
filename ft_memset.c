@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 12:22:32 by atang             #+#    #+#             */
-/*   Updated: 2023/07/16 20:27:44 by atang            ###   ########.fr       */
+/*   Created: 2023/07/18 11:09:10 by atang             #+#    #+#             */
+/*   Updated: 2023/07/18 11:44:52 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,12 @@ void	ft_memset(void *b, int c, size_t len)
 	}
 }
 
-/* int	main(void)
+/* int main(void)
 {
-	char buffer [10];
-	size_t i = 0;
+    char str[21];
 
-	ft_memset(buffer, 'Y', sizeof(buffer));
-	while (i < sizeof(buffer))
-	{
-		printf("%c ", buffer[i]);
-		i++;
-	}
-	return (0);
+    ft_memset(str, 'A', sizeof(str) - 1);
+    str[sizeof(str) - 1] = '\0';
+	printf("Filled string: %s\n", str);
+    return 0;
 } */

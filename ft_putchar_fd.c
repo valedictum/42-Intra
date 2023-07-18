@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 11:30:54 by atang             #+#    #+#             */
-/*   Updated: 2023/07/16 19:40:57 by atang            ###   ########.fr       */
+/*   Created: 2023/07/18 11:45:45 by atang             #+#    #+#             */
+/*   Updated: 2023/07/18 12:19:56 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isascii(int c)
+void	ft_putchar_fd(char c, int fd)
 {
-	if (c >= 0 && c <= 127)
-		return (1);
-	return (0);
+	write(fd, &c, 1);
 }
 
-/* int main()
+/* int main(void)
 {
-    int ch = '&';
-    
-    printf("The character is: %c\n", ch);
-    if (ft_isascii(ch))
-        printf("%d is an ASCII character.\n", ch);
-    else
-        printf("%d is not an ASCII character.\n", ch);
+	char	c = 'A';
+    int		fd = 1;
+
+    ft_putchar_fd(c, fd);
+	ft_putchar_fd('\n', fd);
     return (0);
 } */

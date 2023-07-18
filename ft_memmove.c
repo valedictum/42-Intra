@@ -5,58 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 16:42:43 by atang             #+#    #+#             */
-/*   Updated: 2023/07/16 20:59:29 by atang            ###   ########.fr       */
+/*   Created: 2023/07/18 11:11:25 by atang             #+#    #+#             */
+/*   Updated: 2023/07/18 15:09:36 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove (void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char	*dst_ptr;
+	char		*dst_ptr;
 	const char	*src_ptr;
 
 	dst_ptr = (char *)dst;
 	src_ptr = (const char *)src;
-
 	if (dst_ptr == src_ptr)
 		return (dst);
-	if (dst_ptr < src_ptr)
-	{
-		size_t i = 0;
-		while (i < len)
-		{
-			dst_ptr[i] = src_ptr[i];
-			i++;
-		}
-	}
+	if (src_ptr < dst_ptr)
+		while (len --)
+			dst_ptr[len] = src_ptr[len];
 	else
-	{
-		size_t i = len;
-		while (i > 0)
-		{
-			dst_ptr[i - 1] = src_ptr[i -1];
-			i--;
-		}
-	}
+		while (len--)
+			*dst_ptr++ = *src_ptr++;
 	return (dst);
 }
 
-int main(void)
-{
-    char dst[10] = "123456789";
-    char src[10] = "AbcdeF";
+/* int main() {
+    int arr[5] = {1, 2, 3, 4, 5};
 
-    printf("Before ft_memmove:\n");
-    printf("Dst: %s\n", dst);
-    printf("Src: %s\n", src);
+    // Move the last three elements two positions to the right
+    ft_memmove(arr + 2, arr + 1, 3 * sizeof(int));
 
-    ft_memmove(dst + 2, dst, 4);
-
-    printf("\nAfter ft_memmove:\n");
-    printf("Dst: %s\n", dst);
-    printf("Src: %s\n", src);
+    // Output: 1 2 2 3 4
+    for (int i = 0; i < 5; ++i) {
+        printf("%d ", arr[i]);
+    }
 
     return 0;
-}
+} */
+
+/* int main() {
+    // Test case 1: Move elements within an array
+    int arr1[5] = {1, 2, 3, 4, 5};
+    ft_memmove(arr1 + 2, arr1 + 1, 3 * sizeof(int));
+    // Expected output: 1 2 2 3 4
+    printf("Test case 1: ");
+    for (int i = 0; i < 5; ++i) {
+        printf("%d ", arr1[i]);
+    }
+    printf("\n");
+
+    // Test case 2: Move elements between non-overlapping arrays
+    int src2[4] = {10, 11, 12, 13};
+    int dest2[4] = {0};
+    ft_memmove(dest2, src2, 4 * sizeof(int));
+    // Expected output: 10 11 12 13
+    printf("Test case 2: ");
+    for (int i = 0; i < 4; ++i) {
+        printf("%d ", dest2[i]);
+    }
+    printf("\n");
+
+    // Test case 3: Move elements between overlapping arrays
+    int arr3[6] = {1, 2, 3, 4, 5, 6};
+    ft_memmove(arr3 + 1, arr3 + 3, 3 * sizeof(int));
+    // Expected output: 1 4 5 6 5 6
+    printf("Test case 3: ");
+    for (int i = 0; i < 6; ++i) {
+        printf("%d ", arr3[i]);
+    }
+    printf("\n");
+
+    // Test case 4: Move characters within a string
+    char str4[10] = "HelloWorld";
+    ft_memmove(str4 + 3, str4 + 7, 5 * sizeof(char));
+    // Expected output: Helrld
+	printf("Test case 4: %s\n", str4);
+    
+	return (0);
+} */

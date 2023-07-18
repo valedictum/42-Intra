@@ -1,33 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: atang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 11:50:30 by atang             #+#    #+#             */
-/*   Updated: 2023/07/18 11:05:46 by atang            ###   ########.fr       */
+/*   Created: 2023/07/18 16:22:19 by atang             #+#    #+#             */
+/*   Updated: 2023/07/18 16:23:43 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-/* int	main(void)
-{
-	const char	*str;
-
-	str = "Hello there!";
-	printf("%s\n", str);
-	printf("Number of characters: %d\n", ft_strlen(str));
-	return (0);
-} */
