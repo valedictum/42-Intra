@@ -6,9 +6,27 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 11:30:54 by atang             #+#    #+#             */
-/*   Updated: 2023/07/16 19:40:57 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/20 16:47:11 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* 
+NAME
+     isascii -- test for ASCII character
+
+LIBRARY
+     Standard C Library (libc, -lc)
+
+SYNOPSIS
+     #include <ctype.h>
+
+     int
+     isascii(int c);
+
+DESCRIPTION
+     The isascii() function tests for an ASCII character, which is any 
+	 character between 0 and octal 0177 inclusive.
+ */
 
 #include "libft.h"
 

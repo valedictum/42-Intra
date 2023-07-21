@@ -6,25 +6,51 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 11:09:10 by atang             #+#    #+#             */
-/*   Updated: 2023/07/18 11:44:52 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/21 11:39:04 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* 
+NAME
+     memset -- fill a byte string with a byte value
+
+LIBRARY
+     Standard C Library (libc, -lc)
+
+SYNOPSIS
+     #include <string.h>
+
+     void *
+     memset(void *b, int c, size_t len);
+
+DESCRIPTION
+     The memset() function writes len bytes of value c (converted to an 
+	 unsigned char) to the string b.
+
+RETURN VALUES
+     The memset() function returns its first argument.
+ */
+
 #include "libft.h"
 
-void	ft_memset(void *b, int c, size_t len)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	char	*ptr;
-	size_t	i;
+	unsigned char	*ptr;
+	size_t			i;
 
-	ptr = (char *)b;
+	if (b == NULL)
+	{
+		return (NULL);
+	}
+	ptr = (unsigned char *)b;
 	i = 0;
 	while (i < len)
 	{
-		*ptr = (char) c;
+		*ptr = (unsigned char) c;
 		ptr++;
 		i++;
 	}
+	return (b);
 }
 
 /* int main(void)

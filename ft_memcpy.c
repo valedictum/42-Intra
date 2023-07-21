@@ -6,21 +6,45 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 11:11:59 by atang             #+#    #+#             */
-/*   Updated: 2023/07/18 11:24:03 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/21 18:09:02 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* 
+NAME
+     memcpy -- copy memory area
+
+LIBRARY
+     Standard C Library (libc, -lc)
+
+SYNOPSIS
+     #include <string.h>
+
+     void *
+     memcpy(void *restrict dst, const void *restrict src, size_t n);
+
+DESCRIPTION
+     The memcpy() function copies n bytes from memory area src to memory area 
+	 dst.  If dst and src overlap, behavior is undefined.  Applications in 
+	 which dst and src might overlap should use memmove(3) instead.
+
+RETURN VALUES
+     The memcpy() function returns the original value of dst.
+ */
 
 #include "libft.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t	i;
-	char	*dst_ptr;
-	char	*src_ptr;
+	unsigned char			*dst_ptr;
+	const unsigned char		*src_ptr;
 
+	if (dst == NULL && src == NULL)
+		return (NULL);
 	i = 0;
-	dst_ptr = (char *)dst;
-	src_ptr = (char *)src;
+	dst_ptr = (unsigned char *)dst;
+	src_ptr = (const unsigned char *)src;
 	while (i < n)
 	{
 		dst_ptr[i] = src_ptr[i];
@@ -34,7 +58,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
     char src[] = "Hello World!";
     char dst[20];
 
-    size_t n = ft_strlen(src) + 1;
+	size_t n = ft_strlen(src) + 1;
 
     ft_memcpy(dst, src, n);
 	printf("Copied string: %s\n", dst);

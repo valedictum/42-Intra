@@ -3,57 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:24:34 by atang             #+#    #+#             */
-/*   Updated: 2023/07/18 16:25:00 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/20 16:47:27 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-ft_memchr.c
-#include <string.h>
-void *memchr(const void *s, int c, size_t n);
+NAME
+     memchr -- locate byte in byte string
+
+LIBRARY
+     Standard C Library (libc, -lc)
+
+SYNOPSIS
+     #include <string.h>
+
+     void *
+     memchr(const void *s, int c, size_t n);
 
 DESCRIPTION
-The memchr() function locates the first occurrence of c (converted to an
-unsigned char) in string s.
+     The memchr() function locates the first occurrence of c (converted to 
+	 an unsigned char) in string s.
 
 RETURN VALUES
-The memchr() function returns a pointer to the byte located, or NULL if
-no such byte exists within n bytes.
+     The memchr() function returns a pointer to the byte located, or NULL if 
+	 no such byte exists within n bytes.
 */
 
 #include "libft.h"
 
-void *ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-    const unsigned char *p = s;
-    unsigned char target = (unsigned char)c;
+	const unsigned char	*p;
+	unsigned char		target;
+	size_t				i;
 
-    for (size_t i = 0; i < n; i++)
-    {
-        if (p[i] == target)
-        {
-            return (void *)(p + i);
-        }
-    }
-    return (NULL);
+	p = s;
+	i = 0;
+	target = (unsigned char)c;
+	while (i < n)
+	{
+		if (p[i] == target)
+		{
+			return ((void *)(p + i));
+		}
+		i++;
+	}
+	return (NULL);
 }
 
-int main()
+/* int	main(void)
 {
-    char buffer[] = "Hello World!";
-    char ch = 'W'
-    char *result = ft_memchr(buffer, ch, strlen(buffer));
+	char	buffer[] = "Congratulations!";
+	char	ch = 't';
+	char	*result = ft_memchr(buffer, ch, ft_strlen(buffer));
 
-    if (result != NULL)
-    {
-        printf("Found '%c' at position %ld\n", ch, result - buffer);
-    }
-    else
-    {
-        printf("Character not found.\n");
-    }
-    return (0);
-}
+	printf("String: %s\n", buffer);
+	if (result != NULL)
+		printf("Found '%c' at position %ld\n", ch, result - buffer);
+	else
+		printf("Character not found.\n");
+	return (0);
+} */

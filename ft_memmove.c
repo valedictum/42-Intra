@@ -6,9 +6,31 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 11:11:25 by atang             #+#    #+#             */
-/*   Updated: 2023/07/18 15:09:36 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/20 16:49:11 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* 
+NAME
+     memmove -- copy byte string
+
+LIBRARY
+     Standard C Library (libc, -lc)
+
+SYNOPSIS
+     #include <string.h>
+
+     void *
+     memmove(void *dst, const void *src, size_t len);
+
+DESCRIPTION
+     The memmove() function copies len bytes from string src to string dst.  
+	 The two strings may overlap; the copy is always done in a non-destructive 
+	 manner.
+
+RETURN VALUES
+     The memmove() function returns the original value of dst.
+ */
 
 #include "libft.h"
 

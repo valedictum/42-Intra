@@ -6,30 +6,48 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:32:09 by atang             #+#    #+#             */
-/*   Updated: 2023/07/18 15:42:18 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/21 11:28:32 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Outputs the integer ’n’ to the given file descriptor.
-n: The integer to output.
-fd: The file descriptor on which to write. */
+/* 
+Function name
+	ft_putnbr_fd
+
+Prototype
+	void ft_putnbr_fd(int n, int fd);
+
+Parameters
+	n: The integer to output.
+	fd: The file descriptor on which to write.
+
+Return value
+	None
+
+External functs.
+	write
+
+Description
+	Outputs the integer ’n’ to the given file descriptor.
+ */
 
 #include "libft.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {
 	char	digit;
+	int		sign;
 
+	sign = 1;
 	if (n < 0)
 	{
-		write(1, "-", 1);
+		write(fd, "-", 1);
 		if (n == -2147483648)
 		{
-			n = -(n + 1);
-			ft_putnbr_fd(n / 10, fd);
-			write(1, "8", 1);
+			write(fd, "2147483648", 10);
 			return ;
 		}
+		sign = -1;
 		n = -n;
 	}
 	if (n >= 10)
@@ -40,8 +58,11 @@ void	ft_putnbr_fd(int n, int fd)
 	write (fd, &digit, 1);
 }
 
-/* int	main(void)
+/* 
+int	main(void)
 {
-	ft_putnbr_fd(-2147485, 1);
+	ft_putnbr_fd(-2147483648, 1);
 	return (0);
-} */
+}
+
+ */

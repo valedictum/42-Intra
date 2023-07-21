@@ -6,13 +6,30 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 11:55:43 by atang             #+#    #+#             */
-/*   Updated: 2023/07/18 15:47:18 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/21 12:03:16 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Outputs the string ’s’ to the given file descriptor.
-s: The string to output.
-fd: The file descriptor on which to write. */
+/* 
+Function name
+	ft_putstr_fd
+
+Prototype
+	void ft_putstr_fd(char *s, int fd);
+
+Parameters
+	s: The string to output.
+	fd: The file descriptor on which to write.
+
+Return value
+	None
+
+External functs.
+	write
+
+Description
+	Outputs the string ’s’ to the given file descriptor.
+ */
 
 #include "libft.h"
 
