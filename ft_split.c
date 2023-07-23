@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 15:51:58 by atang             #+#    #+#             */
-/*   Updated: 2023/07/21 14:15:18 by atang            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /* 
 Function name
 	ft_split
@@ -79,12 +67,12 @@ static char	**ft_malloc_str(size_t size)
 	return (str);
 }
 
-static char	*ft_newstrdup(const char *s1, int len)
+static char	*ft_newstrdup(const char *s1, size_t len)
 {
 	char	*str;
 	int		i;
 
-	str = (char *)malloc((len + 1) * sizeof(char));
+	str = (char *)ft_calloc(len + 1, sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	i = 0;
@@ -126,9 +114,9 @@ char	**ft_split(const char *s, char c)
 	return (words);
 }
 
-/* int	main(void)
+int	main(void)
 {
-	const char	*str;
+	char		str[] = "Testing,with,this,test,string";
 	char		delimiter;
 	int			word_count;
 	int			i;
@@ -136,7 +124,6 @@ char	**ft_split(const char *s, char c)
 
 	i = 0;
 	word_count = 0;
-	str = "Testing,with,this,test,string";
 	delimiter = ',';
 	words = ft_split(str, delimiter);
 	if (words != NULL)
@@ -154,4 +141,4 @@ char	**ft_split(const char *s, char c)
 	else
 		printf("Memory allocation failed.\n");
 	return (0);
-} */
+}
