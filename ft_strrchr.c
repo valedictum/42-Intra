@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:25:42 by atang             #+#    #+#             */
-/*   Updated: 2023/07/20 16:54:57 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 17:24:33 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ DESCRIPTION
 RETURN VALUES
      The functions strchr() and strrchr() return a pointer to the located 
 	 character, or NULL if the character does not appear in the string.
+*/
+/*
+	- set last pointer to the end, update the last pointer to current 
+	position if a match found
+	- check if the null terminator matches the target character and return 
+	the address of the last occurrence (or NULL if not found)
 */
 
 #include "libft.h"

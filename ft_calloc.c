@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:19:56 by atang             #+#    #+#             */
-/*   Updated: 2023/07/21 12:38:52 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 16:32:29 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ RETURN VALUES
 
 	The free() function does not return a value.
 */
+/* 
+	- calloc_zero allocates single '0' byte memory for nmemb OR size = 0, 
+	returns pointer to allocated memomry block or NULl if allocation fails
+	- check if nmemb * size is equal to total_size / size to ensure no integer 
+	overflow during the calculation of total_size
+ */
 
 #include "libft.h"
 

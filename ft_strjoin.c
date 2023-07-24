@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:14:23 by atang             #+#    #+#             */
-/*   Updated: 2023/07/20 16:24:49 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 17:34:57 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ External functs.
 Description
 	Allocates (with malloc(3)) and returns a new string, which is the result of the 
 	concatenation of ’s1’ and ’s2’.
+*/
+/*
+	- if memory allocation is successful, content of s1 is copied into the result, 
+	then the content of s2 is copied into the result starting from the position 
+	immediately after the end of s1.
 */
 
 #include "libft.h"

@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 11:11:25 by atang             #+#    #+#             */
-/*   Updated: 2023/07/20 16:49:11 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 16:52:25 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ DESCRIPTION
 
 RETURN VALUES
      The memmove() function returns the original value of dst.
+ */
+/* 
+	- if dst_ptr == src_ptr, the pointers are pointing to the same memory 
+	location, meaning that the source and destination memory regions overlap, 
+	and there is no need to perform any copy operation so the function 
+	directly returns the dst pointer.
+	- if src_ptr < dst_ptr, copy from back (backwards)
+	- if src_ptr > dst_ptr, copy from front (forward)
  */
 
 #include "libft.h"

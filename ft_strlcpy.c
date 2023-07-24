@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:46:30 by atang             #+#    #+#             */
-/*   Updated: 2023/07/20 16:53:09 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 17:38:38 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ RETURN VALUES
      If the return value is >= dstsize, the output string has been truncated. 
 	 It is the caller's responsibility to handle this.
  */
+/*
+	- copy the characters from src to dst, respecting dstsize.
+	- loop stops when it reaches the end of src or reaches (dstsize - 1) 
+	(- 1 is to leave space for null terminator)
+*/
 
 #include "libft.h"
 

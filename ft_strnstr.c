@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 21:07:27 by atang             #+#    #+#             */
-/*   Updated: 2023/07/20 16:55:54 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 17:30:23 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,58 @@ RETURN VALUES
 	 nowhere in haystack, NULL is returned; otherwise a pointer to the first 
 	 character of the first occurrence of needle is returned.
  */
+/*
+	- (haystack_idx + needle_idx) ensures that it compares characters 
+	at corresponding positions in the two strings while searching 
+	for the substring as needle moves forward
+*/
 
 #include "libft.h"
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	needle_len;
+	size_t	haystack_idx;
+	size_t	needle_idx;
 
+	haystack_idx = 0;
 	if (*needle == '\0')
-		return ((char *)haystack);
-	needle_len = ft_strlen(needle);
-	if (needle_len > len)
-		return (NULL);
-	while (*haystack && len >= needle_len)
 	{
-		if (ft_strncmp(haystack, needle, needle_len) == 0)
-			return ((char *)haystack);
-		haystack++;
-		len--;
+		return ((char *)haystack);
+	}
+	while (haystack[haystack_idx] != '\0' && haystack_idx < len)
+	{
+		needle_idx = 0;
+		while (haystack[haystack_idx + needle_idx] == needle[needle_idx] && 
+			haystack_idx + needle_idx < len)
+		{
+			needle_idx++;
+			if (needle[needle_idx] == '\0')
+			{
+				return ((char *)&haystack[haystack_idx]);
+			}
+		}
+		haystack_idx++;
 	}
 	return (NULL);
 }
 
-/* int main(void)
+/* int	main(void)
 {
-    char haystack[] = "Hello, World!";
-    char needle[] = "orl";
-    size_t len = sizeof(haystack) - 1;
+	char 	haystack[] = "fake";
+	char 	needle[] = "";
+	size_t	len = 3;
+	char *result = ft_strnstr(haystack, needle, len);
 
-    char *result = ft_strnstr(haystack, needle, len);
-
-    printf("Haystack: %s\n", haystack);
-    printf("Needle: %s\n", needle);
-    if (result != NULL)
-    {
-        printf("Substring found at index: %ld\n", result - haystack);
-    }
-    else
-    {
-        printf("Substring not found.\n");
-    }
-    return (0);
-} */
+	printf("Haystack: %s\n", haystack);
+	printf("Needle: %s\n", needle);
+	if (result != NULL)
+	{
+		printf("Substring found at index: %ld\n", result - haystack);
+	}
+	else
+	{
+		printf("Substring not found.\n");
+	}
+	return (0);
+}
+ */

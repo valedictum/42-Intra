@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 21:52:59 by atang             #+#    #+#             */
-/*   Updated: 2023/07/21 11:30:24 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 16:19:59 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ Description
 	received as an argument. Negative numbers must be handled.
 */
 
+/* 
+	negsign = 1 if negative, 0 if positive, (num /=10) is (num = num / 10)
+ */
+
 #include "libft.h"
 
 static int	count_digits(int num)
@@ -51,25 +55,25 @@ static int	count_digits(int num)
 
 char	*ft_itoa(int num)
 {
-	int		sign_len; 
+	int		negsign; 
 	int		len;
 	char	*str;
 
-	sign_len = (num < 0);
+	negsign = (num < 0);
 	len = count_digits(num);
-	str = (char *)malloc((len + sign_len + 1) * sizeof(char));
+	str = (char *)malloc((len + negsign + 1) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
-	str[len + sign_len] = '\0';
+	str[len + negsign] = '\0';
 	while (len-- > 0)
 	{
-		if (sign_len)
-			str[len + sign_len] = -(num % 10) + '0';
+		if (negsign)
+			str[len + negsign] = -(num % 10) + '0';
 		else
-			str[len + sign_len] = (num % 10) + '0';
+			str[len + negsign] = (num % 10) + '0';
 		num /= 10;
 	}
-	if (sign_len)
+	if (negsign)
 		str[0] = '-';
 	return (str);
 }

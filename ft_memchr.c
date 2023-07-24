@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:24:34 by atang             #+#    #+#             */
-/*   Updated: 2023/07/20 16:47:27 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 17:07:01 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ RETURN VALUES
      The memchr() function returns a pointer to the byte located, or NULL if 
 	 no such byte exists within n bytes.
 */
+/* 
+	- constant unsigned char pointer is used to access the memory location 
+	it points to, so you can read the value stored there (since it's a 
+	read-only pointer), but you cannot modify the value using this pointer
+	- (p = s) points the pointer 'p' to the start of the memory block 
+	pointed by 's'.
+	- if a match is found (p[i] == target), return a pointer to the 
+	location of the match in memory (the (void *) typecast is used to 
+	convert the pointer to void* type because the function return type 
+	is void*.)
+ */
 
 #include "libft.h"
 

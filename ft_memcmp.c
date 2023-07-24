@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:10:17 by atang             #+#    #+#             */
-/*   Updated: 2023/07/20 16:48:55 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 16:55:07 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ RETURN VALUES
 	 for example).  Zero-length strings are always identical.  This behavior is
 	 not required by C and portable code should only depend on the sign of 
 	 the returned value.
+ */
+/* 
+	- if the returned value is negative, it means s1 is less than s2
+	- if the returned value is positive, it means s1 is greater than s2	
  */
 
 #include "libft.h"

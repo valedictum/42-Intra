@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:35:31 by atang             #+#    #+#             */
-/*   Updated: 2023/07/21 11:01:53 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 17:11:50 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ RETURN VALUES
 	 equal to, or less than the string s2.  The comparison is done using 
 	 unsigned characters, so that `\200' is greater than `\0'.
  */
+/*
+	- the function returns a negative value if s1 is "less than" s2, 
+	a positive value if s1 is "greater than" s2
+	- unsigned char to ensure correct behavior during comparison, 
+	specifically with negative values
+*/
 
 #include "libft.h"
 

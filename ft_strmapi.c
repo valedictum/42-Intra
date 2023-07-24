@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:50:45 by atang             #+#    #+#             */
-/*   Updated: 2023/07/20 14:55:37 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 17:55:47 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ Description
 	its index as first argument to create a new string (with malloc(3)) 
 	resulting from successive applications of ’f’.
  */
+/*
+ 	- second while loop iterates through s string and applies the function 
+	f to each character. The result of f(i, s[i]) is stored in the 
+	corresponding index of the result string. The function f is called 
+	with the current index i and the character at that index s[i].
+*/
 
 #include "libft.h"
 

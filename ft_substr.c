@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:15:24 by atang             #+#    #+#             */
-/*   Updated: 2023/07/21 11:11:44 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 18:00:03 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ External functs.
 Description
 	Allocates (with malloc(3)) and returns a substring from the string ’s’.
 	The substring begins at index ’start’ and is of maximum size ’len’.
+*/
+/*
+	- first if is if the starting index 'start' is greater than or equal 
+	to the length of 's' or the length 'len' is 0, return an empty string.
+	- remaining length after the starting index (start)
+	- if len > remaining length, len set to the remaining length
+	to avoid going beyond the end of the original string
 */
 
 #include "libft.h"

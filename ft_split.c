@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 14:15:44 by atang             #+#    #+#             */
-/*   Updated: 2023/07/21 17:56:06 by atang            ###   ########.fr       */
+/*   Created: 2023/07/24 15:15:28 by atang             #+#    #+#             */
+/*   Updated: 2023/07/24 18:24:13 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@ Description
 	Allocates (with malloc(3)) and returns an array of strings obtained by 
 	splitting ’s’ using the character ’c’ as a delimiter. The array must end 
 	with a NULL pointer.
+*/
+
+/*
+	- count_words used to count the number of words in the input string. 
+	The inside_word variable keeps track of whether the current character is 
+	inside a word (i.e., not a delimiter). Whenever a delimiter is encountered, 
+	inside_word is set to 0, and when it finds the start of a new word 
+	(a non-delimiter followed by a delimiter), word_count is incremented.
+	- newstrdup for new string of length len + 1 and copies the characters 
+	from s1 to the new string
+	- count_words, then malloc (+ 1), then iterates through s, and whenever 
+	it encounters the delimiter character c, a new substring is created using 
+	ft_newstrdup function (if non-delimiter characters before delimiter) and stored
+	as substring in the words array at the appropriate index.
+	- if there are non-delimiter characters remaining at the end of the string, 
+	last substring created and added to the words array.
 */
 
 #include "libft.h"
@@ -67,12 +83,12 @@ static char	**ft_malloc_str(size_t size)
 	return (str);
 }
 
-static char	*ft_newstrdup(const char *s1, size_t len)
+static char	*ft_newstrdup(const char *s1, int len)
 {
 	char	*str;
 	int		i;
 
-	str = (char *)ft_calloc(len + 1, sizeof(char));
+	str = (char *)malloc((len + 1) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	i = 0;
@@ -113,32 +129,28 @@ char	**ft_split(const char *s, char c)
 	words[letter_index] = (NULL);
 	return (words);
 }
-
-int	main(void)
+/*
+int main(void)
 {
-	char		str[] = "Testing,with,this,test,string";
-	char		delimiter;
-	int			word_count;
-	int			i;
-	char		**words;
+    char const *s = "Hello,world,this,is,a,test";
+    char c = ',';
 
-	i = 0;
-	word_count = 0;
-	delimiter = ',';
-	words = ft_split(str, delimiter);
-	if (words != NULL)
-	{
-		word_count = count_words(str, delimiter);
-		printf("Number of words: %d\n", word_count);
-		while (i < word_count)
-		{
-			printf("Word %d: %s\n", i + 1, words[i]);
-			free(words[i]);
-			i++;
-		}
-		free(words);
-	}
-	else
-		printf("Memory allocation failed.\n");
-	return (0);
+    char **result = ft_split(s, c);
+    if (result == NULL)
+    {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    int i = 0;
+    while (result[i] != NULL)
+    {
+        printf("%s\n", result[i]);
+        free(result[i]);
+        i++;
+    }
+    free(result);
+
+    return 0;
 }
+*/

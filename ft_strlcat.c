@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 13:18:13 by atang             #+#    #+#             */
-/*   Updated: 2023/07/20 16:51:37 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 17:47:17 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,14 @@ RETURN VALUES
      If the return value is >= dstsize, the output string has been truncated. 
 	 It is the caller's responsibility to handle this.
  */
-
+/*
+	- dstsize is max size allowed for dst
+	- if the dst buffer is already full (dst_len == dstsize), return the 
+	total length if we were to append src to dst (dstsize + src_len) to ensure 
+	that the dst buffer remains null-terminated
+	- return the total length of the concatenated string (dst_len + src_len) 
+	excluding the null-terminator
+*/
 #include "libft.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)

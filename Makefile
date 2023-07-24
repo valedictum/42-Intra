@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/07/11 11:54:36 by jong              #+#    #+#              #
-#    Updated: 2023/07/21 12:35:23 by atang            ###   ########.fr        #
+#    Created: 2023/07/24 09:30:06 by atang             #+#    #+#              #
+#    Updated: 2023/07/24 18:24:09 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS 	= ft_isalpha ft_isdigit ft_isalnum ft_isascii ft_isprint ft_strlen \
 		  ft_toupper ft_tolower ft_strchr ft_strrchr ft_strncmp ft_memchr \
 		  ft_memcmp ft_strnstr ft_atoi ft_calloc ft_strdup ft_substr ft_strjoin \
 		  ft_itoa ft_putchar_fd ft_putstr_fd ft_putendl_fd ft_putnbr_fd \
-		  ft_strmapi ft_striteri ft_strtrim
+		  ft_strmapi ft_striteri ft_strtrim ft_split
 
 CFILES 	= $(SRCS:%=%.c)
 OFILES 	= $(SRCS:%=%.o)
@@ -42,4 +42,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-

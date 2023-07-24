@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 11:09:10 by atang             #+#    #+#             */
-/*   Updated: 2023/07/21 11:39:04 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 10:49:26 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,11 @@ void	*ft_memset(void *b, int c, size_t len)
 	unsigned char	*ptr;
 	size_t			i;
 
-	if (b == NULL)
-	{
-		return (NULL);
-	}
-	ptr = (unsigned char *)b;
+	ptr = b;
 	i = 0;
 	while (i < len)
 	{
-		*ptr = (unsigned char) c;
-		ptr++;
+		ptr[i] = (unsigned char) c;
 		i++;
 	}
 	return (b);

@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 11:11:59 by atang             #+#    #+#             */
-/*   Updated: 2023/07/21 18:09:02 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/24 09:47:19 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ RETURN VALUES
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t	i;
-	unsigned char			*dst_ptr;
-	const unsigned char		*src_ptr;
+	size_t				i;
+	unsigned char		*dst_ptr;
+	const unsigned char	*src_ptr;
 
 	if (dst == NULL && src == NULL)
 		return (NULL);
