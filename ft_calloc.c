@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:19:56 by atang             #+#    #+#             */
-/*   Updated: 2023/07/24 16:32:29 by atang            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:10:15 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,48 +53,20 @@ RETURN VALUES
 
 	The free() function does not return a value.
 */
-/* 
-	- calloc_zero allocates single '0' byte memory for nmemb OR size = 0, 
-	returns pointer to allocated memomry block or NULl if allocation fails
-	- check if nmemb * size is equal to total_size / size to ensure no integer 
-	overflow during the calculation of total_size
- */
 
 #include "libft.h"
 
-static void	*calloc_zero(void)
+void	*ft_calloc(size_t count, size_t size)
 {
-	void	*memory;
+	void	*temp;
 
-	memory = malloc(1);
-	if (memory != NULL)
-		ft_memset(memory, 0, 1);
-	return (memory);
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	size_t	total_size;
-	void	*memory;
-
-	if (nmemb == 0 || size == 0)
-		return (calloc_zero());
-	if (SIZE_MAX / nmemb < size)
+	temp = malloc (count * size);
+	if (temp == NULL)
 	{
-		printf("Integer overflow during memory allocation.\n");
-		return (NULL);
+		return (temp);
 	}
-	total_size = nmemb * size;
-	if (nmemb != total_size / size)
-		return (NULL);
-	memory = malloc(total_size);
-	if (memory == NULL)
-	{
-		printf("Memory allocation failed.\n");
-		return (NULL);
-	}
-	ft_memset(memory, 0, total_size);
-	return (memory);
+	ft_bzero(temp, (count * size));
+	return (temp);
 }
 
 /* 

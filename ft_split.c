@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 15:15:28 by atang             #+#    #+#             */
-/*   Updated: 2023/07/24 18:24:13 by atang            ###   ########.fr       */
+/*   Created: 2023/07/26 13:57:02 by atang             #+#    #+#             */
+/*   Updated: 2023/07/26 16:10:13 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,124 +33,148 @@ Description
 	splitting ’s’ using the character ’c’ as a delimiter. The array must end 
 	with a NULL pointer.
 */
+/* 
+	- count the number of words in the input string separated by the delimiter, 
+	iterating through the string and keeping track of whether it's inside a 
+	word or not (in_word_flag). For a delimiter, it sets the flag to 0, 
+	and when it encounters a character while in_word_flag is 0, it increments 
+	the count and sets the in_word_flag to 1 to indicate that inside a word.
+	
+	- extract a single word - passed a pointer to a pointer s, so it can 
+	update the original pointer to move past the extracted word. It first skips 
+	leading delimiters by incrementing *s (the pointer to the input string) 
+	until it reaches a non-delimiter character. Then, it calculates the length
+	of the word by counting characters until it encounters the next delimiter
+	or the end of the string. After determining the word's length, it 
+	dynamically allocates memory for the word using malloc, copies the 
+	characters from *s into the new memory, and terminates the word with a 
+	null-terminator. Finally, it increments the pointer *s to move past the 
+	extracted word.
 
-/*
-	- count_words used to count the number of words in the input string. 
-	The inside_word variable keeps track of whether the current character is 
-	inside a word (i.e., not a delimiter). Whenever a delimiter is encountered, 
-	inside_word is set to 0, and when it finds the start of a new word 
-	(a non-delimiter followed by a delimiter), word_count is incremented.
-	- newstrdup for new string of length len + 1 and copies the characters 
-	from s1 to the new string
-	- count_words, then malloc (+ 1), then iterates through s, and whenever 
-	it encounters the delimiter character c, a new substring is created using 
-	ft_newstrdup function (if non-delimiter characters before delimiter) and stored
-	as substring in the words array at the appropriate index.
-	- if there are non-delimiter characters remaining at the end of the string, 
-	last substring created and added to the words array.
-*/
+	- free the memory allocated for each word in the array, words, iterating 
+	through the array and freeing each word's memory.
+
+	- main function returns an array of words as output, calling count_words 
+	first. Then, memory is dynamically allocated for the result array to 
+	store pointers to the words. Then, the function iterates through the words
+	and calls extract_word to extract each word and store its pointer in the 
+	result array. If extract_word returns NULL, (extract word failure), memory 
+	allocated for the words processed so far in freed and then the result array
+	itself is freed before returning NULL to indicate failure. Otherwise,
+	continuation of word extraction before NULL termination of the array, 
+	and return of the array of words.
+ */
 
 #include "libft.h"
 
-static int	count_words(const char *str, char c)
+static int	count_words(char const *s, char c)
 {
-	int	word_count;
-	int	inside_word;
+	int	count;
+	int	in_word_flag;
 
-	word_count = 0;
-	inside_word = 0;
-	while (*str)
-	{
-		if (*str == c)
-			inside_word = 0;
-		else if (!inside_word)
-		{
-			inside_word = 1;
-			word_count++;
-		}
-		str++;
-	}
-	return (word_count);
-}
-
-static char	**ft_malloc_str(size_t size)
-{
-	char	**str;
-
-	str = (char **)malloc(size * sizeof(char *));
-	if (!str)
-		return (NULL);
-	return (str);
-}
-
-static char	*ft_newstrdup(const char *s1, int len)
-{
-	char	*str;
-	int		i;
-
-	str = (char *)malloc((len + 1) * sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
-char	**ft_split(const char *s, char c)
-{
-	int			word_count; 
-	int			letter_index;
-	char		**words;
-	const char	*start;
-
-	word_count = count_words(s, c);
-	words = ft_malloc_str(word_count + 1);
-	if (!words)
-		return (NULL);
-	letter_index = 0;
-	start = s;
+	count = 0;
+	in_word_flag = 0;
 	while (*s)
 	{
 		if (*s == c)
+			in_word_flag = 0;
+		else if (in_word_flag == 0)
 		{
-			if (s > start)
-				words[letter_index++] = ft_newstrdup(start, s - start);
-			start = s + 1;
+			in_word_flag = 1;
+			count++;
 		}
 		s++;
 	}
-	if (s > start)
-		words[letter_index++] = ft_newstrdup(start, s - start);
-	words[letter_index] = (NULL);
-	return (words);
+	return (count);
 }
-/*
-int main(void)
+
+static char	*extract_word(char const **s, char c)
 {
-    char const *s = "Hello,world,this,is,a,test";
-    char c = ',';
+	char	*word;
+	int		word_len;
+	int		i;
 
-    char **result = ft_split(s, c);
-    if (result == NULL)
-    {
-        printf("Memory allocation failed.\n");
-        return 1;
-    }
-
-    int i = 0;
-    while (result[i] != NULL)
-    {
-        printf("%s\n", result[i]);
-        free(result[i]);
-        i++;
-    }
-    free(result);
-
-    return 0;
+	word_len = 0;
+	while (**s && **s == c)
+		(*s)++;
+	while ((*s)[word_len] && (*s)[word_len] != c)
+		word_len++;
+	word = (char *)malloc((word_len + 1) * sizeof(char));
+	if (word == NULL)
+		return (NULL);
+	i = 0;
+	while (i < word_len)
+	{
+		word[i] = (*s)[i];
+		i++;
+	}
+	word[word_len] = '\0';
+	*s += word_len;
+	return (word);
 }
-*/
+
+static void	free_words(char **words)
+{
+	int	i;
+
+	i = 0;
+	while (words[i])
+	{
+		free(words[i]);
+		i++;
+	}
+}
+
+char	**ft_split(char const *s, char c)
+{
+	int		word_count;
+	char	**result;
+	int		i;
+
+	i = 0;
+	if (s == NULL)
+		return (NULL);
+	word_count = count_words(s, c);
+	result = (char **)malloc((word_count + 1) * sizeof(char *));
+	if (result == NULL)
+		return (NULL);
+	i = 0;
+	while (i < word_count)
+	{
+		result[i] = extract_word(&s, c);
+		if (!result[i])
+		{
+			free_words(result);
+			free(result);
+			return (NULL);
+		}
+		i++;
+	}
+	result[i] = NULL;
+	return (result);
+}
+/* 
+int	main(void)
+{
+	char	input_string[] = "Hello,World,this,is,me!,";
+	char	delimiter = ',';
+	int		i;
+	char	**words;
+
+	words = ft_split(input_string, delimiter);
+	if (words == NULL)
+	{
+		printf("Memory allocation failed OR input string NULL.\n");
+		return (1);
+	}
+	i = 0;
+	while (words[i])
+	{
+		printf("%s\n", words[i]);
+		i++;
+	}
+	free_words(words);
+	free(words);
+	return (0);
+}
+ */
