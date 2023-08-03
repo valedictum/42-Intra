@@ -1,5 +1,0 @@
-Norminette Errors: ft_memcpy.c, ft_split.c
-
-Failed tests: memset, memcpy, bzero, strnstr, split, libftTester, fsoares
-
-Passed tests: isalpha, isdigit, isalnum, isascii, isprint, strlen, memmove, strlcpy, strlcat, toupper, tolower, strchr, strrchr, strncmp, memchr, memcmp, atoi, calloc, strdup, substr, strjoin, strtrim, itoa, strmapi, striteri, putchar_fd, putstr_fd, putendl_fd, putnbr_fd
