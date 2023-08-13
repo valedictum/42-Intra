@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_string.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/03 13:44:47 by atang             #+#    #+#             */
-/*   Updated: 2023/08/07 14:01:33 by atang            ###   ########.fr       */
+/*   Created: 2023/08/07 12:06:14 by atang             #+#    #+#             */
+/*   Updated: 2023/08/13 13:56:07 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#include "../includes/ft_printf.h"
 
-# include <unistd.h>
-# include <stdarg.h>
+/* static size_t	ft_strlen(const char *s)
+{
+	int	i;
 
-/* function prototype */
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+} */
 
-#endif
+void	ft_string(char *s, int *char_count)
+{
+	while (*s)
+	{
+		ft_character(*s, char_count);
+		s++;
+	}
+}

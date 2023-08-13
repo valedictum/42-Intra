@@ -1,13 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pointer.c                                       :+:      :+:    :+:   */
+/*   ft_unsigned_decimal.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/07 12:04:44 by atang             #+#    #+#             */
-/*   Updated: 2023/08/07 12:05:18 by atang            ###   ########.fr       */
+/*   Created: 2023/08/07 12:37:21 by atang             #+#    #+#             */
+/*   Updated: 2023/08/13 13:56:15 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "../includes/ft_printf.h"
+
+void	ft_unsigned_decimal(unsigned int num, int *char_count)
+{
+	if (num >= 10)
+		ft_unsigned_decimal(num / 10, char_count);
+	ft_character('0' + num % 10, char_count);
+}

@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_character.c                                     :+:      :+:    :+:   */
+/*   test_case_basic.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/07 12:05:40 by atang             #+#    #+#             */
-/*   Updated: 2023/08/07 14:19:11 by atang            ###   ########.fr       */
+/*   Created: 2023/08/13 17:12:07 by atang             #+#    #+#             */
+/*   Updated: 2023/08/13 18:12:58 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+/* Basic Test Cases (test_case_basic.c) */
 
-void	ft_character(char c, int fd)
+#include "../includes/ft_printf.h"
+#include <stdio.h>
+
+void	test_case_basic(void)
 {
-	write (fd, &c, 1);
+	int	printed_chars;
+
+	printf("Testing %%c:\n");
+	ft_printf("Expected: Hello, World!\n");
+	printed_chars = ft_printf("Hello, World!");
+	printf("ft_printf returned: %d\n", printed_chars);
 }
