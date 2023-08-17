@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_string.c                                        :+:      :+:    :+:   */
+/*   ft_character.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/07 12:06:14 by atang             #+#    #+#             */
-/*   Updated: 2023/08/13 13:56:07 by atang            ###   ########.fr       */
+/*   Created: 2023/08/07 12:05:40 by atang             #+#    #+#             */
+/*   Updated: 2023/08/17 15:33:44 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
-/* static size_t	ft_strlen(const char *s)
+void	ft_character(char c, int *char_count)
 {
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-} */
-
-void	ft_string(char *s, int *char_count)
-{
-	while (*s)
-	{
-		ft_character(*s, char_count);
-		s++;
-	}
+	write(1, &c, 1);
+	(*char_count)++;
 }

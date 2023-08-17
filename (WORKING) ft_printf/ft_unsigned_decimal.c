@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_case_basic.c                                  :+:      :+:    :+:   */
+/*   ft_unsigned_decimal.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/13 17:12:07 by atang             #+#    #+#             */
-/*   Updated: 2023/08/13 18:12:58 by atang            ###   ########.fr       */
+/*   Created: 2023/08/07 12:37:21 by atang             #+#    #+#             */
+/*   Updated: 2023/08/13 13:56:15 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Basic Test Cases (test_case_basic.c) */
+#include "ft_printf.h"
 
-#include "../includes/ft_printf.h"
-#include <stdio.h>
-
-void	test_case_basic(void)
+void	ft_unsigned_decimal(unsigned int num, int *char_count)
 {
-	int	printed_chars;
-
-	printf("Testing %%c:\n");
-	ft_printf("Expected: Hello, World!\n");
-	printed_chars = ft_printf("Hello, World!");
-	printf("ft_printf returned: %d\n", printed_chars);
+	if (num >= 10)
+		ft_unsigned_decimal((num / 10), char_count);
+	ft_character('0' + (num % 10), char_count);
 }

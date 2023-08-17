@@ -6,61 +6,63 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/03 13:43:51 by atang             #+#    #+#              #
-#    Updated: 2023/08/13 18:04:12 by atang            ###   ########.fr        #
+#    Updated: 2023/08/15 11:15:16 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME     = libftprintf.a
-INCDIR   = includes
-SRCDIR   = sources
-TESTDIR  = tests
-OBJDIR   = objs
+NAME   	= libftprintf.a
 
-CC       = gcc
-CFLAGS   = -Wall -Wextra -Werror
-sources  = ft_character.c \
-           ft_hexadecimal.c \
-           ft_integer.c \
-           ft_pointer.c \
-           ft_printf.c \
-           ft_string.c \
-           ft_unsigned_decimal.c
+CC     	= gcc
+CFLAGS 	= -Wall -Wextra -Werror
+SRCS	= ft_character.c \
+        	ft_hexadecimal.c \
+           	ft_integer.c \
+           	ft_pointer.c \
+           	ft_printf.c \
+           	ft_string.c \
+           	ft_unsigned_decimal.c
 
-test_sources = test_main.c \
-               test_case_basic.c \
-               test_case_numeric.c \
-               test_case_string.c
+TEST_SRCS	= test_main.c \
+            	test_case_basic.c \
+               	test_case_numeric.c \
+               	test_case_string.c
 
-CFILES   = $(addprefix $(SRCDIR)/, $(sources))
-OFILES   = $(addprefix $(OBJDIR)/, $(sources:.c=.o))
-TESTCFILES = $(addprefix $(TESTDIR)/, $(test_sources:.c=.o))
+OBJS	=	$(SRCS:.c=.o)
 
 RM       = rm -f
 
-$(NAME): $(OFILES)
-	$(CC) $(CFLAGS) -c $(CFILES) -I./$(INCDIR)
-	ar -rcs $(NAME) $(OFILES)
+$(NAME): $(OBJS)
+	ar -rcs $(NAME) $(OBJS)
 
-tests: $(TESTCFILES) $(OFILES)
-	$(CC) $(CFLAGS) -o tester $(TESTCFILES) $(OFILES) -I./$(INCDIR)
-
-all: $(NAME) tests
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(TESTDIR)/%.o: $(TESTDIR)/%.c
-	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+all: $(NAME)
 
 clean:
-	$(RM) $(OFILES) $(TESTCFILES)
+	$(RM) $(OBJS)
 
-fclean: clean
+fclean:	clean
 	$(RM) $(NAME)
-	$(RM) tester
 
 re: fclean all
 
-.PHONY: all clean fclean re tests
+test_basic: $(NAME)
+	$(CC) $(CFLAGS) -o test_basic_program test_basic.c -I./includes -L./ -lftprintf
+	./test_basic_program
+	$(RM) test_basic_program
+
+test_numeric: $(NAME)
+	$(CC) $(CFLAGS) -o test_numeric_program test_numeric.c -I./includes -L./ -lftprintf
+	./test_numeric_program
+	$(RM) test_numeric_program
+
+test_string_program: $(NAME)
+	$(CC) $(CFLAGS) -o test_string_program test_string_program.c -I./includes -L./ -lftprintf
+	./test_string_program
+	$(RM) test_string_program
+
+test: $(NAME)
+	$(CC) $(CFLAGS) -o test_program test_main.c -I./includes -L./ -lftprintf
+	./test_program
+	$(RM) test_program
+
+
+.PHONY: all clean fclean re

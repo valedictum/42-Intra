@@ -6,15 +6,33 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 12:04:44 by atang             #+#    #+#             */
-/*   Updated: 2023/08/13 13:55:57 by atang            ###   ########.fr       */
+/*   Updated: 2023/08/17 15:32:45 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
-void	ft_pointer(void *ptr, int *char_count)
+void	ft_pointer(size_t pointer, int *char_count)
 {
+	char	string[25];
+	int		i;
+	char	*hexadecimal_base;
+
+	hexadecimal_base = "0123456789abcdef";
+	i = 0;
 	ft_character('0', char_count);
 	ft_character('x', char_count);
-	ft_hexadecimal((unsigned long long)ptr, 0, char_count);
+	if (pointer == 0)
+	{
+		ft_character('0', char_count);
+		return ;
+	}
+	while (pointer != 0)
+	{
+		string[i] = hexadecimal_base [pointer % 16];
+		pointer = pointer / 16;
+		i++;
+	}
+	while (i--)
+		ft_character(string[i], char_count);
 }
