@@ -6,11 +6,25 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 12:06:14 by atang             #+#    #+#             */
-/*   Updated: 2023/08/13 13:56:07 by atang            ###   ########.fr       */
+/*   Updated: 2023/08/18 16:26:20 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/* 
+ft_string iterates through each character of the input string, prints them 
+using ft_character, and updates the char_count accordingly. It also handles 
+the case when the input string is null, printing "(null)" and updating 
+char_count by 6.
+
+- char *s = pointer to string (character array) you want printed.
+- int *char_count = pointer to an integer to keep track of the number of 
+characters printed. 
+- size_t for variable i as size_t is unsigned and specificailly designed to 
+represent sizes and indices of objects so it is weel-suited for string 
+traversal.
+ */
 
 void	ft_string(char *s, int *char_count)
 {
