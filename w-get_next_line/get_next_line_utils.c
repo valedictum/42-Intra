@@ -6,13 +6,13 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:49:11 by atang             #+#    #+#             */
-/*   Updated: 2023/08/26 17:45:33 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/01 18:02:48 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h" 
 
-size_t	ft_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	int	i;
 
@@ -22,19 +22,21 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strdup(const char *s1)
+char	*gnl_strdup(const char *s1)
 {
-	int		i;
-	int		len;
+	size_t	i;
+	size_t	len;
 	char	*str;
 
-	i = 0;
-	len = ft_strlen(s1);
-	str = (char *)malloc(sizeof(*str) * (len + 1));
+	if (s1 == NULL)
+		return (NULL);
+	len = gnl_strlen(s1);
+	str = (char *)malloc(len + 1);
 	if (str == NULL)
 	{
 		return (NULL);
 	}
+	i = 0;
 	while (i < len)
 	{
 		str[i] = s1[i];
@@ -44,7 +46,7 @@ char	*ft_strdup(const char *s1)
 	return (str);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	*gnl_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t				i;
 	unsigned char		*dst_ptr;
@@ -63,7 +65,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*gnl_strjoin(char const *s1, char const *s2)
 {
 	size_t	len_s1;
 	size_t	len_s2;
@@ -72,14 +74,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
+	len_s1 = gnl_strlen(s1);
+	len_s2 = gnl_strlen(s2);
 	total_len = len_s1 + len_s2;
 	result = (char *)malloc((total_len + 1) * sizeof(char));
 	if (result == NULL)
 		return (NULL);
-	ft_memcpy(result, s1, len_s1);
-	ft_memcpy(result + len_s1, s2, len_s2);
+	gnl_memcpy(result, s1, len_s1);
+	gnl_memcpy(result + len_s1, s2, len_s2);
 	result[total_len] = '\0';
 	return (result);
 }

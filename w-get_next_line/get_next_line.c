@@ -6,110 +6,135 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:48:14 by atang             #+#    #+#             */
-/*   Updated: 2023/08/26 17:45:35 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/01 17:40:26 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h" 
 
-char	*extract_line(char **stash)
+char	*extract_completed_line(char **stash)
 {
-	char	*line;
-	char	*line_end;
-	char	*new_stash;
+	char	*extracted_line;
+	char	*line_terminator;
+	char	*remaining_stash;
 
-	line = NULL;
-	line_end = *stash;
-	while (*line_end != '\0' && *line_end != '\n')
-		line_end++;
-	if (*line_end == '\n')
+	extracted_line = NULL;
+	line_terminator = *stash;
+	while (*line_terminator != '\0' && *line_terminator != '\n')
+		line_terminator++;
+	if (*line_terminator == '\n')
 	{
-		*line_end = '\0';
-		line = ft_strdup(*stash);
-		new_stash = ft_strdup(line_end + 1);
+		*line_terminator = '\0';
+		extracted_line = gnl_strdup(*stash);
+		remaining_stash = gnl_strdup(line_terminator + 1);
 		free(*stash);
-		*stash = new_stash;
+		*stash = remaining_stash;
 	}
-	else if (*line_end == '\0')
+	else if (*line_terminator == '\0')
 	{
 		free(*stash);
 		*stash = NULL;
 	}
-	return (line);
+	return (extracted_line);
 }
 
 char	*read_from_fd(int fd)
 {
-	char		*buffer;
-	ssize_t		bytes_read;
+	char	*read_buffer;
+	int		bytes_read;
 
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
+	read_buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (read_buffer == NULL)
 		return (NULL);
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 	if (bytes_read == -1)
 	{
-		free(buffer);
+		free(read_buffer);
 		return (NULL);
 	}
-	buffer[bytes_read] = '\0';
-	return (buffer);
+	read_buffer[bytes_read] = '\0';
+	return (read_buffer);
+}
+
+void	free_and_reset_stash(char **stash)
+{
+	free(*stash);
+	*stash = NULL;
+}
+
+char	*read_and_process_lines(int fd, char **stash)
+{
+	char	*line_read;
+	char	*completed_line_from_stash;
+	char	*temp_combined_stash;
+
+	line_read = read_from_fd(fd);
+	if (!line_read)
+	{
+		if (**stash)
+		{
+			completed_line_from_stash = gnl_strdup(*stash);
+			free_and_reset_stash(stash);
+			return (completed_line_from_stash);
+		}
+		free_and_reset_stash(stash);
+		return (NULL);
+	}
+	if (*stash == NULL)
+		temp_combined_stash = gnl_strdup(line_read);
+	else
+		temp_combined_stash = gnl_strjoin(*stash, line_read);
+	free(line_read); 
+	if (!temp_combined_stash)
+	{
+		free_and_reset_stash(stash);
+		return (NULL);
+	}
+	free_and_reset_stash(stash);
+	*stash = temp_combined_stash;
+	completed_line_from_stash = extract_completed_line(stash);
+	return (completed_line_from_stash);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*stash;
-	char		*temp_stash;
-	char		*line_being_read;
-	char		*line;
+	char		*completed_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 	{
-		free(stash);
-		stash = NULL;
 		return (NULL);
 	}
 	if (!stash)
-		stash = ft_strdup("");
-	line = extract_line(&stash);
-	if (line)
-		return (line);
-	line_being_read = read_from_fd(fd);
-	if (!line_being_read)
+		stash = gnl_strdup("");
+	completed_line = extract_completed_line(&stash);
+	if (completed_line)
+		return (completed_line); 
+	completed_line = read_and_process_lines(fd, &stash);
+	if (completed_line == NULL && stash)
 	{
-		line = ft_strdup(stash);
 		free(stash);
 		stash = NULL;
-		return (NULL);
 	}
-	temp_stash = ft_strjoin(stash, line_being_read);
-	free(stash);
-	stash = temp_stash;
-	free(line_being_read); 
-	return (get_next_line(fd));
+	return (completed_line);
 }
 
-/* 
-//Call `get_next_line()` with a file descriptor
-	//Declare a static variable `stash` to hold the leftovers after a line 
-	is extracted
-	//Declare a variable to store the current data that was read
-	//Declare a variable to store the extracted line in which our function 
-	returns
+/* int	main(void)
+{
+	int		fd = open("example.txt", O_RDONLY);
+	char	*line;
 
-//Check for file descriptor, BUFFER_SIZE, and read() errors
+	if (fd == -1)
+	{
+		printf("Error opening file");
+		return (1);
+	}
 
-//Account for the first call of the function, where `stash` will be empty
-	//Initialise it to an empty string, preparing for an accumulation of 
-	characters next read
-
-//If there is a complete line processed, extract it
-	//Return the line
-
-//If there is more data to read
-	//Append the new data to the stash
-	//Call `get_next_line()` again. Possibly use recursion
-
-//If there is no more data to read
-	//Return the leftovers from the stash
- */	
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s\n", line);
+		free(line);
+	}
+	close(fd);
+	return (0);
+} */
