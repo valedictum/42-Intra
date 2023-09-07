@@ -6,82 +6,112 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:49:11 by atang             #+#    #+#             */
-/*   Updated: 2023/09/01 18:02:48 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/07 16:20:16 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h" 
 
-size_t	gnl_strlen(const char *s)
+size_t	gnl_strlen(const char *str)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+/* 
+
+- gnl_strlen calculates the length of a string
+
+ */
+
+char	*gnl_strchr(char *str, int target_char)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-char	*gnl_strdup(const char *s1)
-{
-	size_t	i;
-	size_t	len;
-	char	*str;
-
-	if (s1 == NULL)
-		return (NULL);
-	len = gnl_strlen(s1);
-	str = (char *)malloc(len + 1);
-	if (str == NULL)
+	if (!str)
+		return (0);
+	if (target_char == '\0')
+		return ((char *)&str[gnl_strlen(str)]);
+	while (str[i] != '\0')
 	{
-		return (NULL);
-	}
-	i = 0;
-	while (i < len)
-	{
-		str[i] = s1[i];
+		if (str[i] == (char) target_char)
+			return ((char *)&str[i]);
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	return (0);
 }
+/* 
 
-void	*gnl_memcpy(void *dst, const void *src, size_t n)
+- gnl_strchr searches for a target character in an input string
+- fn checks if 'str' is NULL or if 'target_char' is the null-terminator, then 
+it iterates through 'str' and returns a pointer to the first occurrence of the
+'target_char' if found or NULL if not found
+- FOR GNL: used to locate the newline character ('\n') in the 'stash' buffer 
+to determine if a complete line is available for extraction   
+
+ */
+
+char	*gnl_strjoin(char *first_str, char *second_str)
 {
-	size_t				i;
-	unsigned char		*dst_ptr;
-	const unsigned char	*src_ptr;
+	size_t	first_index;
+	size_t	second_index;
+	char	*joined_str;
 
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	i = 0;
-	dst_ptr = (unsigned char *)dst;
-	src_ptr = (const unsigned char *)src;
-	while (i < n)
+	if (!first_str)
 	{
-		dst_ptr[i] = src_ptr[i];
-		i++;
+		first_str = (char *)malloc(1 * sizeof(char));
+		first_str[0] = '\0';
 	}
-	return (dst);
+	if (first_str == NULL || second_str == NULL)
+		return (NULL);
+	joined_str = malloc(sizeof(char) * ((gnl_strlen(first_str)
+					+ gnl_strlen(second_str)) + 1));
+	if (joined_str == NULL)
+		return (NULL);
+	first_index = -1;
+	second_index = 0;
+	if (first_str)
+		while (first_str[++first_index] != '\0')
+			joined_str[first_index] = first_str[first_index];
+	while (second_str[second_index] != '\0')
+		joined_str[first_index++] = second_str[second_index++];
+	joined_str[gnl_strlen(first_str) + gnl_strlen(second_str)] = '\0';
+	free(first_str);
+	return (joined_str);
 }
+/* 
 
-char	*gnl_strjoin(char const *s1, char const *s2)
+- gnl_strjoin concatenates two strings together, 'first str' and 'second str'
+- fn checks if 'first_str' is NULL, and if so, initialises it as an empty string.
+Memory is then dynamically allocated for 'joined_str' to store the concatenated 
+result and then the characters are copied from 'first_str' and 'second_str' into
+'joined str'. 'Joined_str' is then null-terminated, and the memory allocated for 
+'first_str' is freed.
+- FOR GNL: concatenates partial lines from the file with the 'stash' buffer
+to build complete lines 
+
+ */
+
+char	*gnl_initialise_str(void)
 {
-	size_t	len_s1;
-	size_t	len_s2;
-	size_t	total_len;
-	char	*result;
+	char	*string;
 
-	if (s1 == NULL || s2 == NULL)
+	string = (char *)malloc (sizeof(char) * 1);
+	if (!string)
 		return (NULL);
-	len_s1 = gnl_strlen(s1);
-	len_s2 = gnl_strlen(s2);
-	total_len = len_s1 + len_s2;
-	result = (char *)malloc((total_len + 1) * sizeof(char));
-	if (result == NULL)
-		return (NULL);
-	gnl_memcpy(result, s1, len_s1);
-	gnl_memcpy(result + len_s1, s2, len_s2);
-	result[total_len] = '\0';
-	return (result);
+	*string = '\0';
+	return (string);
 }
+/* 
+
+- gnl_initialise_str initialises an empty string
+- fn dynamically allocates memory for a single null-terminated character ('\0') 
+and returns a pointer to it
+- FOR GNL: initiliases an empty 'stash' buffer when the function is first called 
+or when a line has been completely extracted
+
+ */
