@@ -6,14 +6,13 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 17:01:46 by atang             #+#    #+#             */
-/*   Updated: 2023/08/21 10:28:37 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/08 11:17:22 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "ft_printf.h"
 
-/* 
 int	main(void)
 {
 	int				integer = 123456;
@@ -42,4 +41,3 @@ int	main(void)
 	printf("Percent sign: %%\n");
 	return (0);
 }
- */
