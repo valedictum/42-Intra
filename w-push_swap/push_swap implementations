@@ -1,0 +1,98 @@
+
+Tim Kipling (Push Swap but actually Push Rotate)
+
+- N=500 is largest tested output (<5500 operations for full score)
+
+- Algorithm is divided into 4 stages:
+
+	1. NORMALISATION - transform numbers so they are all within range 1 to N
+	inclusive (optional but helpful with debugging and finding some calculations
+	e.g. smallest value)
+
+	2. A-TO-B - perform pb operations (push B - take the first element at the top
+	of A and put it at the top of B, do nothing if A is empty) until most of the 
+	numbers are in stack B
+
+	3. B-TO-A - perform pa operations (push A - take the first element at the top
+	of B and put it at the top of A, do nothing if B is empty) until all the numbers
+	are back in stack A (Note: we should only perform the pa operation if stack A 
+	will remain in order afterwards). This requires us to perform rotate operations 
+	on both stacks until we can pa safely.
+
+	4. ALIGNING A - find and move the smallest number to the top of the stack using
+	rotate operations
+
+***
+
+Leo Fu (Push_Swap Tutorial)
+
+- Uses radix sort (easy to implement and stable, but won't get full marks). Radix
+Sort is an algorithm to sort numbers only, sorted from least significant digit to 
+most significant digit and whereby counting sort is used as a subroutine to sort.
+N.B original order comes first. 
+
+- If our instruction list is correct, we’ll be rated by the amount of instructions
+we use.
+
+	- With 3 numbers, we need to sort it with not more than 3 instructions.
+
+	- With 5 numbers, we need to sort it with not more than 12 instructions.
+
+	- With 100 numbers, we can get
+
+		5 points if the size of the list of instructions is less than 700
+
+		4 points if the size of the list of instructions is less than 900
+
+		3 points if the size of the list of instructions is less than 1100
+
+		2 points if the size of the list of instructions is less than 1300
+
+		1 points if the size of the list of instructions is less than 1500
+
+	- With 500 numbers, we can get
+
+		5 points if the size of the list of instructions is less than 5500
+
+		4 points if the size of the list of instructions is less than 7000
+
+		3 points if the size of the list of instructions is less than 8500
+
+		2 points if the size of the list of instructions is less than 10000
+
+		1 points if the size of the list of instructions is less than 11500
+
+- Algorithm is divided into 4 stages:
+
+	1. PARSING - put numbers in the stack A if no errors are detected
+
+	2. CHECK NUMBERS IN A SORTED - Check if the numbers in A are all sorted. If so, 
+	end the program without printing anything. It’d be preferable to write a function 
+	A_is_sorted()
+
+	3. CHECK IF SMALL OR BIG STACK - If the size of A ≤ 5, call function 
+	sort_small_stack(). Else, call function sort_big_stack()
+
+- Radix sort is an efficient algorithm to sort non-negative integers with 
+time complexity O(n * d) where d = floor(log_b(k) + 1) for base = b
+
+TBC...
+
+***
+
+Oduwole Dare (42 Push Swap Explained(Pseudocodes))
+
+***
+
+Jamie Dawson (Push_Swap: The least amount of moves with two stacks)
+
+***
+
+
+
+
+
+
+
+
+
