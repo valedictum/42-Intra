@@ -1,115 +1,90 @@
-#include <stdio.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/12 11:09:26 by atang             #+#    #+#             */
+/*   Updated: 2023/09/12 16:18:25 by atang            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void    sa(t_stack_node **stackA)
+#include "push_swap.h"
+
+t_stack_node	*read_values_and_push_onto_stack_a(int argc, char *argv[])
 {
-    if (*stackA != NULL && (*stackA)->next != NULL)
-    {
-        int temp;
+	t_stack_node	*stack_a;
+	t_stack_node	*new_node;
+	int				i;
+	int				value;
 
-        temp = (*stackA)->value;
-        (*stackA)->value = (*stackA)->next->value;
-        (*stackA)->next->value = temp;
-    }
-}
-
-void    sb(t_stack_node **stackB)
-{
-    if (*stackB != NULL && (*stackB)->next != NULL)
-    {
-        int temp;
-
-        temp = (*stackB)->value;
-        (*stackB)->value = (*stackB)->next->value;
-        (*stackB)->next->value = temp;
-    }
-}
-
-void    ss(t_stack_node **stackA, t_stack_node **stackB)
-{
-    sa(stackA);
-    sb(stackB);
-}
-
-int	ps_atoi(const char *str)
-{
-	int	result;
-	int	sign;
-
-	sign = 1;
-	result = 0;
-	while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r'
-		|| *str == '\v' || *str == '\f')
-		str++;
-	if (*str == '-')
+	stack_a = NULL;
+	i = argc - 1;
+	while (i >= 1)
 	{
-		sign = -1;
-		str++;
+		value = ps_atoi(argv[i]);
+		new_node = (t_stack_node *)malloc(sizeof(t_stack_node));
+		if (new_node == NULL)
+		{
+			perror("Memory allocation failed");
+			exit(EXIT_FAILURE);
+		}
+		new_node->value = value;
+		new_node->next = stack_a;
+		stack_a = new_node;
+		i--;
 	}
-	else if (*str == '+')
+	return (stack_a);
+}
+
+int	is_sorted(t_stack_node *stack)
+{
+	while (stack != NULL && stack->next != NULL)
 	{
-		str++;
+		if (stack->value > stack->next->value)
+			return (0);
+		stack = stack->next;
 	}
-	while (*str >= '0' && *str <= '9')
+	return (1);
+}
+
+/* 
+To implement is_sorted, you would need to iterate through the elements of 
+the stack and compare each element with the next one to determine if they 
+are in ascending order. This function will return 1 if the stack is sorted 
+in ascending order and 0 otherwise.
+ */
+
+/* 
+int	main(int argc, char *argv[])
+{
+	t_stack_node	*stack_a;
+	t_stack_node	*stack_b;
+	t_stack_node	*current_a;
+	t_stack_node	*temp;
+
+	if (argc < 2)
 	{
-		result = (result * 10) + (*str - '0');
-		str++;
+		printf ("Usage: %s <value1> <value2> ... <valueN>\n", argv[0]);
+		exit(EXIT_FAILURE);
 	}
-	return (result * sign);
+	stack_a = read_values_and_push_onto_stack_a(argc, argv);
+	stack_b = NULL;
+	printf("Stack A elements: ");
+	current_a = stack_a;
+	while (current_a != NULL)
+	{
+		printf("%d ", current_a->value);
+		current_a = current_a->next;
+	}
+	printf("\n");
+	while (stack_a != NULL)
+	{
+		temp = stack_a;
+		stack_a = stack_a->next;
+		free(temp);
+	}
+	return (0);
 }
-
-typedef struct stack_node
-{
-    int value;
-    struct stack_node *next;
-} t_stack_node;
-
-t_stack_node    *read_values_and_push_onto_stack_A(int argc, char *argv[])
-{
-    t_stack_node    *stackA = NULL;
-    int i;
-
-    i = argc - 1;
-    while (i >= 1)
-    {
-        int value = ps_atoi(argv[i]);
-
-        t_stack_node    *new_node = (t_stack_node *)malloc(sizeof(t_stack_node));
-        if (new_node == NULL)
-        {
-            perror("Memory allocation failed");
-            exit(EXIT_FAILURE);
-        }
-        new_node->value = value;
-        new_node->next = stackA;
-        stackA = new_node;
-        i--;
-    }
-    return(stackA);
-}
-
-int main(int argc, char *argv[])
-{
-    if (argc < 2)
-    {
-        printf ("Usage: %s <value1> <value2> ... <valueN>\n", argv[0]);
-        exit(EXIT_FAILURE);
-    }
-    t_stack_node    *stackA = read_values_and_push_onto_stack_A(argc, argv);
-    t_stack_node    *stackB = NULL;
-    printf("Stack A elements: ");
-    t_stack_node *currentA = stackA;
-    while (currentA != NULL)
-    {
-        printf("%d ", currentA->value);
-        currentA = currentA->next;
-    }
-    printf("\n");
-    while (stackA != NULL)
-    {
-        t_stack_node *temp = stackA;
-        stackA = stackA->next;
-        free(temp);
-    }
-    return(0);
-}
+ */
