@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 12:11:58 by atang             #+#    #+#             */
-/*   Updated: 2023/09/12 16:52:49 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/17 14:25:04 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ int	main(int argc, char *argv[])
 	print_stack(stack_a);
 	num_elements = argc -1;
 	if (num_elements == 2)
-	{
 		sort_two_elements(&stack_a);
-	}
 	else if (num_elements == 3)
 		sort_three_elements(&stack_a);
+	else if (num_elements == 5)
+		sort_five_elements(&stack_a, &stack_b);
 	printf("Stack A elements (after sorting): ");
 	print_stack(stack_a);
-	printf("\n");
 	free_stack(stack_a);
 	free_stack(stack_b);
 	return (0);

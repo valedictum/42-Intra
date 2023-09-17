@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:22:25 by atang             #+#    #+#             */
-/*   Updated: 2023/09/12 15:11:23 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/17 18:18:29 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	pa(t_stack_node	**stack_a, t_stack_node **stack_b)
 		*stack_b = (*stack_b)->next;
 		free(temp);
 	}
+	printf("pa\n");
 }
 
 /* 
@@ -59,6 +60,7 @@ void	pb(t_stack_node	**stack_b, t_stack_node **stack_a)
 		*stack_a = (*stack_a)->next;
 		free(temp);
 	}
+	printf("pb\n");
 }
 
 /* 

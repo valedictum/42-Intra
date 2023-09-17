@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2023/09/12 16:52:24 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/17 14:25:35 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void			print_stack(t_stack_node *stack);
 void			free_stack(t_stack_node *stack);
 void			sort_two_elements(t_stack_node **stack_a);
 void			sort_three_elements(t_stack_node **stack_a);
+void			sort_five_elements(t_stack_node **stack_a, t_stack_node **stack_b);
 //swap_operations.c
 void			sa(t_stack_node **stack_a);
 void			sb(t_stack_node **stack_b);

@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:18:02 by atang             #+#    #+#             */
-/*   Updated: 2023/09/12 15:02:37 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/16 15:28:50 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ra(t_stack_node **stack_a)
 		temp->next = NULL;
 		last_element->next = temp;
 	}
+	printf("ra\n");
 }
 
 /* 

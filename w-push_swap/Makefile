@@ -31,7 +31,7 @@ RM       = rm -f
 $(NAME): $(OBJS)
 	ar -rcs $(NAME) $(OBJS)
 
-all: $(NAME)
+all: tet
 
 clean:
 	$(RM) $(OBJS)
