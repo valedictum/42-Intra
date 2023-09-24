@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:12:57 by atang             #+#    #+#             */
-/*   Updated: 2023/09/12 16:49:14 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/24 18:56:58 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,19 @@ int	ps_atoi(const char *str)
 	return (result * sign);
 }
 
-void	free_stack(t_stack_node *stack)
+void	free_stack(t_stack_node **stack)
 {
 	t_stack_node	*current;
-	t_stack_node	*temp;
+	t_stack_node	*next;
 
-	current = stack;
-	while (current != NULL)
+	current = *stack;
+	while (current)
 	{
-		temp = current;
-		current = current->next;
-		free(temp);
+		next = current->next;
+		free(current);
+		current = next;
 	}
+	*stack = NULL;
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:09:26 by atang             #+#    #+#             */
-/*   Updated: 2023/09/12 16:18:25 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/24 18:56:57 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,6 @@ t_stack_node	*read_values_and_push_onto_stack_a(int argc, char *argv[])
 	}
 	return (stack_a);
 }
-
-int	is_sorted(t_stack_node *stack)
-{
-	while (stack != NULL && stack->next != NULL)
-	{
-		if (stack->value > stack->next->value)
-			return (0);
-		stack = stack->next;
-	}
-	return (1);
-}
-
-/* 
-To implement is_sorted, you would need to iterate through the elements of 
-the stack and compare each element with the next one to determine if they 
-are in ascending order. This function will return 1 if the stack is sorted 
-in ascending order and 0 otherwise.
- */
 
 /* 
 int	main(int argc, char *argv[])

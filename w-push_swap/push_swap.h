@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2023/09/17 14:25:35 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/24 18:56:57 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,21 @@ typedef struct stack_node
 }	t_stack_node;
 
 void			print_stack(t_stack_node *stack);
-void			free_stack(t_stack_node *stack);
+void			free_stack(t_stack_node **stack);
 void			sort_two_elements(t_stack_node **stack_a);
 void			sort_three_elements(t_stack_node **stack_a);
-void			sort_five_elements(t_stack_node **stack_a, t_stack_node **stack_b);
+void			sort_five_elements(t_stack_node **stack_a,
+					t_stack_node **stack_b);
+void			free_linked_list(t_stack_node **head);
+int				stack_size(t_stack_node *stack);
+void			merge_sort(t_stack_node **stack_a);
+t_stack_node	*sorted_merge(t_stack_node *stack_a, t_stack_node *stack_b);
+void			find_middle(t_stack_node *stack_a, t_stack_node **front_ref,
+					t_stack_node **back_ref);
+void			push(t_stack_node **head_ref, int new_data);
+/* void			merge(t_stack_node **stack_a, t_stack_node **stack_b,
+					int left_size, int right_size);
+void			merge_sort(t_stack_node **stack_a, t_stack_node **stack_b); */
 //swap_operations.c
 void			sa(t_stack_node **stack_a);
 void			sb(t_stack_node **stack_b);
