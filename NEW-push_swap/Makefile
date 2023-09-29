@@ -6,20 +6,25 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 14:44:36 by atang             #+#    #+#              #
-#    Updated: 2023/09/29 15:18:59 by atang            ###   ########.fr        #
+#    Updated: 2023/09/29 22:19:39 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= push_swap
 CC				= gcc
 RM 				= rm -f
-CFLAGS 			= -Wall -Wextra -Werror -I./libft -I./ft_printf
-LIBFTDIR 		= libft/
-FT_PRINTFDIR	= ft_printf/
-OBJ_DIR 		= obj/
-BONUS 			= checker
-SRC_DIR 		= srcs/
+CFLAGS 			= -Wall -Wextra -Werror
+LIBRARY 		= -lft -lftprintf
 
+ROOT_DIR 		= $(shell pwd)
+LIBFT_DIR 		= $(ROOT_DIR)/lib/libft
+PRINTF_DIR 		= $(ROOT_DIR)//lib/printf
+
+SRCS 			= ./srcs/*.c
+INCS 			= ./incs
+LIBS 			= ./libs
+
+/*
 SRCS	= srcs/push_swap/push_swap.c \
 			operations_push.c \
 			operations_reverse_rotate.c \
@@ -34,32 +39,23 @@ SRCS	= srcs/push_swap/push_swap.c \
 			ps_print_utils.c \
 			ps_sort_few.c \
 			ps_sort_many.c \
-			
-OBJS	=	$(SRCS:.c=.o)
+*/
 
-RM      = rm -f
+$(NAME): all
 
-INCLUDE	= -L$(LIBFTDIR) -L$(FT_PRINTFDIR) -lft -lft_printf
-
-.c.o:
-	${CC} -c $< -o ${<:.c=.o}
-
-$(NAME): $(OBJS)
+all:
 	make -C $(LIBFTDIR)
 	make -C $(FT_PRINTFDIR)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(INCLUDE)
-
-all: ${NAME}
+	$(CC) $(CFLAGS) -I $(INCS) $(SRCS) -o $(NAME) -L$(LIBFT_DIR0) -L$(PRINTF_DIR)
 
 clean:
-	$(RM) $(OBJS)
-	@cd $(LIBFTDIR) && $(MAKE) fclean
-	@cd $(FT_PRINTFDIR) && $(MAKE) fclean
+	${RM} ${LIBFT_DIR}/*.o
+	${RM} ${PRINTF_DIR}/*.o
 
 fclean:	clean
-	$(RM) $(NAME)
-	@cd $(LIBFTDIR) && $(MAKE) fclean
-	@cd $(FT_PRINTFDIR) && $(MAKE) fclean
+	${RM} ${LIBFT_DIR}/*.a
+	${RM} ${PRINTF_DIR}/*.a
+	${RM} ${NAME}
 
 re: fclean all
 

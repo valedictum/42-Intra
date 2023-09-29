@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:29:47 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 18:37:22 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/29 22:19:45 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,21 @@ int	ps_sort_onto_stack_b(t_stack node **stack_a)
 		ps_sort_three_elements(stack_a);
 	return (stack_b);
 }
+
+t_stack_node	**ps_sort_back_onto_stack_a(t_stack_node **stack_a, t_stack_node)
+{
+	int				i;
+	t_stack_node	*temp;
+
+	while(*stack_b)
+	{
+		temp = *stack_b;
+		i = 
+	}
+}
+
+
+
 
 void	ps_sort(t_stack_node **stack_a)
 {
