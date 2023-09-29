@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:37:36 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 14:56:16 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/29 18:46:59 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ void	ps_free_stack(t_stack_node **stack)
 		current = next;
 	}
 	*stack = NULL;
+}
+
+void	ps_free_str(char **input_array_of_str)
+{
+	char	*str_ptr;
+
+	if (!input_array_of_str)
+		return ;
+	while (*input_array_of_str)
+	{
+		str_ptr = *input_array_of_str;
+		input_array_of_str++;
+		free(str_ptr);
+	}
+	*input_array_of_str = NULL;
 }
 
 void	*ps_safe_malloc(size_t size)

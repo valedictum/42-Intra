@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:02:00 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 15:44:41 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/29 18:46:56 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,19 @@ int	ps_find_index(t_stack_node *stack, int number)
 	return (-1);
 }
 
-int	ps_sort_onto_stack_b(t_stack node **stack_a)
-{
-	t_stack_node	*stack_b;
 
-	stack_b = NULL;
-	if (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
-		pb(stack_a);
-	if (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
-		pb(stack_a);
-	if (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
-		ps_sort_b_until_3_elements(stack_a, &stack_b);
-	if (!ps_check_if_sorted(*stack_a))
-		ps_sort_three_elements(stack_a);
-	return (stack_b);
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*

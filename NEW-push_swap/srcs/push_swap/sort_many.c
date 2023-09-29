@@ -6,13 +6,27 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:29:47 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 14:40:39 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/29 18:37:22 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
 
+int	ps_sort_onto_stack_b(t_stack node **stack_a)
+{
+	t_stack_node	*stack_b;
 
+	stack_b = NULL;
+	if (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
+		pb(stack_a);
+	if (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
+		pb(stack_a);
+	if (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
+		ps_sort_b_until_3_elements(stack_a, &stack_b);
+	if (!ps_check_if_sorted(*stack_a))
+		ps_sort_three_elements(stack_a);
+	return (stack_b);
+}
 
 void	ps_sort(t_stack_node **stack_a)
 {
