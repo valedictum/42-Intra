@@ -6,11 +6,11 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:41:31 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 12:38:45 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/29 14:33:45 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../includes/push_swap.h"
 
 int	ps_checkdup(t_stack_node *stack_a)
 {

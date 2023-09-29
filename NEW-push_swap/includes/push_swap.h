@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 12:38:41 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/29 15:52:17 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include "../libft/libft.h"
+# include "../ft_printf/ft_printf.h"
+
 
 typedef struct stack_node
 {
@@ -66,13 +69,18 @@ t_stack_node	*ps_create_and_insert_node(t_stack_node *stack, int value);
 
 //ps_memory_utils.c
 void			ps_free_stack(t_stack_node **stack);
+void			ps_free_str(char **input_array_of_str);
 void			*ps_safe_malloc(size_t size);
 
 //ps_print_utils.c
 void			ps_print_stack(t_stack_node *stack);
+void			ps_error_message(void);
 
-//sort_elements.c 
+//sort_few.c 
 void			ps_sort_two_elements(t_stack_node **stack_a);
 void			ps_sort_three_elements(t_stack_node **stack_a);
+
+//sort_many.c
+void			ps_sort(t_stack_node **stack_a);
 
 #endif

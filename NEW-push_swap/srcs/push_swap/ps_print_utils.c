@@ -6,11 +6,11 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:44:35 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 12:38:42 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/29 14:47:49 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../includes/push_swap.h"
 
 void	ps_print_stack(t_stack_node *stack)
 {
@@ -20,4 +20,10 @@ void	ps_print_stack(t_stack_node *stack)
 		stack = stack->next;
 	}
 	printf("\n");
+}
+
+void	ps_error_message(void)
+{
+	write (2, "Error\n", 6);
+	exit (1);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_elements.c                                    :+:      :+:    :+:   */
+/*   sort_few.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 16:29:47 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 12:38:40 by atang            ###   ########.fr       */
+/*   Created: 2023/09/29 14:22:20 by atang             #+#    #+#             */
+/*   Updated: 2023/09/29 14:40:50 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../includes/push_swap.h"
 
 void	ps_sort_two_elements(t_stack_node **stack_a)
 {
@@ -43,3 +43,4 @@ void	ps_sort_three_elements(t_stack_node **stack_a)
 	if (a->value > b->value && b->value < c->value && a->value > c->value)
 		ra(stack_a);
 }
+

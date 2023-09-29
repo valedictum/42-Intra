@@ -6,11 +6,11 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:37:36 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 12:38:43 by atang            ###   ########.fr       */
+/*   Updated: 2023/09/29 14:56:16 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../includes/push_swap.h"
 
 void	ps_free_stack(t_stack_node **stack)
 {
@@ -39,4 +39,3 @@ void	*ps_safe_malloc(size_t size)
 	}
 	return (ptr);
 }
-
