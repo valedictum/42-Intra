@@ -6,20 +6,21 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 14:44:36 by atang             #+#    #+#              #
-#    Updated: 2023/10/01 15:35:33 by atang            ###   ########.fr        #
+#    Updated: 2023/10/01 17:40:20 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= push_swap
 CC				= gcc
 RM 				= rm -f
-CFLAGS 			= -Wall -Wextra -Werror
-LIBRARY 		= -L$(LIBFT_DIR) -L$(PRINTF_DIR) -lft -lftprintf
+CFLAGS 			= -Wall -Wextra -Werror -I$(PRINTF_DIR) -I$(INCS)
+LIBRARY 		= -L$(PRINTF_DIR) -lftprintf
 
 ROOT_DIR 		= $(shell pwd)
-LIBFT_DIR 		= $(ROOT_DIR)/libs/libft
-PRINTF_DIR 		= $(ROOT_DIR)//libs/printf
-SRCS	= srcs/push_swap/push_swap.c \
+PRINTF_DIR 		= $(ROOT_DIR)/libs/printf
+SRC_DIR 		= $(ROOT_DIR)/srcs/push_swap
+
+SRCS	= 	push_swap.c \
 			calculate_ab.c \
 			calculate_ba.c \
 			operations_push.c \
@@ -37,15 +38,17 @@ SRCS	= srcs/push_swap/push_swap.c \
 			rotate_type.c \
 			sort_few.c \
 			sort_many.c \
+			split.c \
 
-INCS 			= ./incs
+OBJS	=	$(SRCS:.c=.o)
+
+INCS = $(ROOT_DIR)/incs
 
 $(NAME): all
 
 all:
-	make -C $(LIBFT_DIR)
 	make -C $(PRINTF_DIR)
-	$(CC) $(CFLAGS) -I $(INCS) $(SRCS) -o $(NAME) $(LIBRARY)
+	$(CC) $(CFLAGS) -I $(INCS) -I $(PRINTF_DIR) $(addprefix $(SRC_DIR)/, $(SRCS)) -o $(NAME) $(LIBRARY)
 
 clean:
 	${RM} ${SRCS:.c=.o}

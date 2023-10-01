@@ -6,19 +6,19 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:29:47 by atang             #+#    #+#             */
-/*   Updated: 2023/10/01 15:24:13 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/01 18:03:25 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/push_swap.h"
+#include "push_swap.h"
 
 
 void	ps_sort_b_until_3(t_stack_node **stack_a, t_stack_node **stack_b)
 {
-	int		i;
-	t_stack	*temp;
+	int				i;
+	t_stack_node	*temp;
 
-	while (ps_find_stack_size(*stack_a) > 3 && !ps_checksorted(*stack_a))
+	while (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
 	{
 		temp = *stack_a;
 		i = ps_rotate_type_ab(*stack_a, *stack_b);
@@ -38,7 +38,7 @@ void	ps_sort_b_until_3(t_stack_node **stack_a, t_stack_node **stack_b)
 	}
 }
 
-int	ps_sort_onto_stack_b(t_stack node **stack_a)
+int	ps_sort_onto_stack_b(t_stack_node **stack_a)
 {
 	t_stack_node	*stack_b;
 
@@ -62,8 +62,8 @@ t_stack_node	**ps_sort_back_onto_stack_a(t_stack_node **stack_a,
 
 	while (*stack_b)
 	{
-		temp = *stack_b;
-		i = ps_rotate_type_ba(*stack_a, *stack_b);
+		temp = stack_b;
+		i = ps_rotate_type_ba(stack_a, stack_b);
 
 		while (i >= 0)
 		{

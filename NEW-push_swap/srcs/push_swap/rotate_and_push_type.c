@@ -6,13 +6,13 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 12:59:08 by atang             #+#    #+#             */
-/*   Updated: 2023/10/01 14:15:58 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/01 18:03:26 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/push_swap.h"
+#include "push_swap.h"
 
-int	ps_use_rarb(t_stack_node **stack_a, t_stack **stack_b, int required_value,
+int	ps_use_rarb(t_stack_node **stack_a, t_stack_node **stack_b, int required_value,
 	int stack_choice)
 {
 	if (stack_choice == 'stack_a')
@@ -40,7 +40,7 @@ int	ps_use_rarb(t_stack_node **stack_a, t_stack **stack_b, int required_value,
 	return (-1);
 }
 
-int	ps_use_rrarrb(t_stack_node **stack_a, t_stack **stack_b, int required_value,
+int	ps_use_rrarrb(t_stack_node **stack_a, t_stack_node **stack_b, int required_value,
 	int stack_choice)
 {
 	if (stack_choice == 'stack_a')
@@ -68,7 +68,7 @@ int	ps_use_rrarrb(t_stack_node **stack_a, t_stack **stack_b, int required_value,
 	return (-1);
 }
 
-int	ps_use_rrarb(t_stack_node **stack_a, t_stack **stack_b, int required_value,
+int	ps_use_rrarb(t_stack_node **stack_a, t_stack_node **stack_b, int required_value,
 	int stack_choice)
 {
 	if (stack_choice == 'stack_a')
@@ -90,7 +90,7 @@ int	ps_use_rrarb(t_stack_node **stack_a, t_stack **stack_b, int required_value,
 	return (-1);
 }
 
-int	ps_use_rarrb(t_stack_node **stack_a, t_stack **stack_b, int required_value,
+int	ps_use_rarrb(t_stack_node **stack_a, t_stack_node **stack_b, int required_value,
 	int stack_choice)
 {
 	if (stack_choice == 'stack_a')
@@ -104,7 +104,7 @@ int	ps_use_rarrb(t_stack_node **stack_a, t_stack **stack_b, int required_value,
 	else
 	{
 		while (ps_find_correct_place_in_stack_a(*stack_a, required_value) > 0)
-			ra(stack_a, stack_b);
+			ra(stack_a);
 		while ((*stack_b)->value != required_value)
 			rrb(stack_b);
 		pa(stack_a, stack_b);

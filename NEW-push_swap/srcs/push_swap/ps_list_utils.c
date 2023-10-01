@@ -6,11 +6,11 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:24:05 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 18:46:56 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/01 17:23:42 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/push_swap.h"
+#include "push_swap.h"
 
 t_stack_node	*ps_create_and_insert_node(t_stack_node *stack, int value)
 {
