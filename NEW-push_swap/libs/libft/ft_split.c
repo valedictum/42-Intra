@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 13:57:02 by atang             #+#    #+#             */
-/*   Updated: 2023/07/26 16:10:13 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/01 15:39:43 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ Description
 	and return of the array of words.
  */
 
-#include "libft.h"
+#include "../../includes/libft.h"
 
 static int	count_words(char const *s, char c)
 {

@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:12:16 by atang             #+#    #+#             */
-/*   Updated: 2023/07/21 11:15:25 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/01 15:38:27 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ DESCRIPTION
            (int)strtol(str, (char **)NULL, 10);
  */
 
-#include "libft.h"
+#include "../../includes/libft.h"
 
 int	ft_atoi(const char *str)
 {

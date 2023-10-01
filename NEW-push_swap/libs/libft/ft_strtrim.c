@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:52:31 by atang             #+#    #+#             */
-/*   Updated: 2023/07/24 18:05:41 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/01 15:39:40 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ Description
 	from the s1 starting from the front index)
 */
 
-#include "libft.h"
+#include "../../includes/libft.h"
 
 char	*ft_strtrim(char const *s1, char const *set)
 {

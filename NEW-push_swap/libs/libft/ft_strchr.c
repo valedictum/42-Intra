@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:25:16 by atang             #+#    #+#             */
-/*   Updated: 2023/07/24 17:19:10 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/01 15:39:42 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ RETURN VALUES
 	character (c)
 */
 
-#include "libft.h"
+#include "../../includes/libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {

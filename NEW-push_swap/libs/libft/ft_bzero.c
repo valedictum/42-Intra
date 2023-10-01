@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:06:55 by atang             #+#    #+#             */
-/*   Updated: 2023/07/24 10:46:05 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/01 15:38:40 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ DESCRIPTION
 
  */
 
-#include "libft.h"
+#include "../../includes/libft.h"
 
 void	ft_bzero(void *s, size_t n)
 {

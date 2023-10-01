@@ -6,7 +6,7 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 14:44:36 by atang             #+#    #+#              #
-#    Updated: 2023/09/29 22:19:39 by atang            ###   ########.fr        #
+#    Updated: 2023/10/01 15:35:33 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,18 +14,14 @@ NAME			= push_swap
 CC				= gcc
 RM 				= rm -f
 CFLAGS 			= -Wall -Wextra -Werror
-LIBRARY 		= -lft -lftprintf
+LIBRARY 		= -L$(LIBFT_DIR) -L$(PRINTF_DIR) -lft -lftprintf
 
 ROOT_DIR 		= $(shell pwd)
-LIBFT_DIR 		= $(ROOT_DIR)/lib/libft
-PRINTF_DIR 		= $(ROOT_DIR)//lib/printf
-
-SRCS 			= ./srcs/*.c
-INCS 			= ./incs
-LIBS 			= ./libs
-
-/*
+LIBFT_DIR 		= $(ROOT_DIR)/libs/libft
+PRINTF_DIR 		= $(ROOT_DIR)//libs/printf
 SRCS	= srcs/push_swap/push_swap.c \
+			calculate_ab.c \
+			calculate_ba.c \
 			operations_push.c \
 			operations_reverse_rotate.c \
 			operations_rotate.c \
@@ -37,24 +33,24 @@ SRCS	= srcs/push_swap/push_swap.c \
 			ps_list_utils.c \
 			ps_memory_utils.c \
 			ps_print_utils.c \
-			ps_sort_few.c \
-			ps_sort_many.c \
-*/
+			rotate_and_push_type.c \
+			rotate_type.c \
+			sort_few.c \
+			sort_many.c \
+
+INCS 			= ./incs
 
 $(NAME): all
 
 all:
-	make -C $(LIBFTDIR)
-	make -C $(FT_PRINTFDIR)
-	$(CC) $(CFLAGS) -I $(INCS) $(SRCS) -o $(NAME) -L$(LIBFT_DIR0) -L$(PRINTF_DIR)
+	make -C $(LIBFT_DIR)
+	make -C $(PRINTF_DIR)
+	$(CC) $(CFLAGS) -I $(INCS) $(SRCS) -o $(NAME) $(LIBRARY)
 
 clean:
-	${RM} ${LIBFT_DIR}/*.o
-	${RM} ${PRINTF_DIR}/*.o
+	${RM} ${SRCS:.c=.o}
 
 fclean:	clean
-	${RM} ${LIBFT_DIR}/*.a
-	${RM} ${PRINTF_DIR}/*.a
 	${RM} ${NAME}
 
 re: fclean all

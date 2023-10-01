@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:02:00 by atang             #+#    #+#             */
-/*   Updated: 2023/09/29 18:46:56 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/01 13:40:13 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,71 +30,52 @@ int	ps_find_index(t_stack_node *stack, int number)
 	return (-1);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-// This function finds the correct place of the number in stack_b.
-// In other words, it check what index number nbr_push will get 
-// after it is being pushed to the stack_b.
-int	ft_find_place_b(t_stack *stack_b, int nbr_push)
+int	ps_find_correct_place_in_stack_b(t_stack_node *stack_b, int nbr_to_insert)
 {
-	int		i;
-	t_stack	*tmp;
+	int				i;
+	t_stack_node	*temp;
 
 	i = 1;
-	if (nbr_push > stack_b->nbr && nbr_push < ft_lstlast(stack_b)->nbr)
+	if (nbr_to_insert > stack_b->value && nbr_to_insert
+		> ps_find_last_element(stack_b)->value)
 		i = 0;
-	else if (nbr_push > ft_max(stack_b) || nbr_push < ft_min(stack_b))
-		i = ft_find_index(stack_b, ft_max(stack_b));
+	else if (nbr_to_insert > ps_find_max_value(stack_b) || nbr_to_insert
+		< ps_find_min_value(stack_b))
+		i = ps_find_index(stack_b, ps_find_max_value(stack_b));
 	else
 	{
-		tmp = stack_b->next;
-		while (stack_b->nbr < nbr_push || tmp->nbr > nbr_push)
+		temp = stack_b->next;
+		while (stack_b->value < nbr_to_insert || temp->value > nbr_to_insert)
 		{
 			stack_b = stack_b->next;
-			tmp = stack_b->next;
+			temp = stack_b->next;
 			i++;
 		}
 	}
 	return (i);
 }
 
-// This function finds the correct place of the number in stack_a.
-// In other words, it check what index number nbr_push will get 
-// after it is being pushed to the stack_a.
-int	ft_find_place_a(t_stack *stack_a, int nbr_push)
+int	ps_find_correct_place_in_stack_a(t_stack_node *stack_a, int nbr_to_insert)
 {
-	int		i;
-	t_stack	*tmp;
+	int				i;
+	t_stack_node	*temp;
 
 	i = 1;
-	if (nbr_push < stack_a->nbr && nbr_push > ft_lstlast(stack_a)->nbr)
+	if (nbr_to_insert < stack_a->value && nbr_to_insert
+		> ps_find_last_element(stack_a)->value)
 		i = 0;
-	else if (nbr_push > ft_max(stack_a) || nbr_push < ft_min(stack_a))
-		i = ft_find_index(stack_a, ft_min(stack_a));
+	else if (nbr_to_insert > ps_find_max_value(stack_a) || nbr_to_insert
+		< ps_find_min_value(stack_a))
+		i = ps_find_index(stack_a, ps_find_min_value(stack_a));
 	else
 	{
-		tmp = stack_a->next;
-		while (stack_a->nbr > nbr_push || tmp->nbr < nbr_push)
+		temp = stack_a->next;
+		while (stack_a->value > nbr_to_insert || temp->value < nbr_to_insert)
 		{
 			stack_a = stack_a->next;
-			tmp = stack_a->next;
+			temp = stack_a->next;
 			i++;
 		}
 	}
 	return (i);
 }
-*/
