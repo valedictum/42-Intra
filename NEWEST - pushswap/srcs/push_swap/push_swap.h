@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2023/10/01 15:24:00 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/02 17:48:51 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-# include "../libft/libft.h"
-# include "../ft_printf/ft_printf.h"
+# include <limits.h>
+# include "../../libs/printf/ft_printf.h"
 
 
 typedef struct stack_node
@@ -27,17 +27,11 @@ typedef struct stack_node
 	struct stack_node	*prev;
 }	t_stack_node;
 
-//calculate_ab.c
-int				ps_case_rarb(t_stack *a, t_stack *b, int required_value);
-int				ps_case_rrarrb(t_stack *a, t_stack *b, int required_value);
-int				ps_case_rrarb(t_stack *a, t_stack *b, int required_value);
-int				ps_case_rarrb(t_stack *a, t_stack *b, int required_value);
-
-//calculate_ba.c
-int				ps_case_rarb_a(t_stack *a, t_stack *b, int required_value);
-int				ps_case_rrarrb_a(t_stack *a, t_stack *b, int required_value);
-int				ps_case_rarrb_a(t_stack *a, t_stack *b, int required_value);
-int				ps_case_rrarb_a(t_stack *a, t_stack *b, int required_value);
+//operations_combinations.c
+void			ps_pa_then_ra(t_stack_node **stack_a, t_stack_node **stack_b);
+void			ps_ra_then_pa_then_rra(t_stack_node **stack_a, t_stack_node **stack_b);
+void			rotate_stack_a_radix(t_stack_node **stack_a);
+void			reverse_rotate_stack_a_radix(t_stack_node **stack_a);
 
 //operations_push.c
 void			pa(t_stack_node	**stack_a, t_stack_node **stack_b);
@@ -82,6 +76,7 @@ int				ps_find_max_value(t_stack_node *stack);
 
 //ps_list_utils.c
 t_stack_node	*ps_create_and_insert_node(t_stack_node *stack, int value);
+void			copy_stack(t_stack_node **source, t_stack_node **destination);
 
 //ps_memory_utils.c
 void			ps_free_stack(t_stack_node **stack);
@@ -92,28 +87,28 @@ void			*ps_safe_malloc(size_t size);
 void			ps_print_stack(t_stack_node *stack);
 void			ps_error_message(void);
 
-//rotate_and_push_type.c
-int				ps_use_rarb(t_stack_node **stack_a, t_stack **stack_b,
-					int required_value, int stack_choice);
-int				ps_use_rrarrb(t_stack_node **stack_a, t_stack **stack_b,
-					int required_value, int stack_choice);
-int				ps_use_rrarb(t_stack_node **stack_a, t_stack **stack_b,
-					int required_value, int stack_choice);
-int				ps_use_rarrb(t_stack_node **stack_a, t_stack **stack_b,
-					int required_value, int stack_choice);					
+//ps_split.c
+char			**ft_split(char const *s, char c);
 
-//rotate_type.c
-int				ps_rotate_type_ba(t_stack *a, t_stack *b);
-int				ps_rotate_type_ab(t_stack *a, t_stack *b);
+//sort_2_and_3_numbers.c 
+void			ps_sort_2_numbers(t_stack_node **stack_a);
+void			ps_sort_3_numbers(t_stack_node **stack_a);
 
-//sort_few.c 
-void			ps_sort_two_elements(t_stack_node **stack_a);
-void			ps_sort_three_elements(t_stack_node **stack_a);
+//sort_5_numbers.c
+void			first_stack(t_stack_node **stack_a, t_stack_node **stack_b);
+void			second_stack(t_stack_node **stack_a, t_stack_node **stack_b);
+void			ps_sort_5_numbers(t_stack_node **stack_a,
+					t_stack_node **stack_b);
 
-//sort_many.c
-void			ps_sort_b_until_3(t_stack_node **stack_a, t_stack_node **stack_b);
-int				ps_sort_onto_stack_b(t_stack node **stack_a);
-t_stack_node	**ps_sort_back_onto_stack_a(t_stack_node **stack_a,;
-void			ps_sort(t_stack_node **stack_a);
+//sort_more_than_5_numbers.c
+void			sort_section_of_list(t_stack_node **head);
+void			swap_stack_a_first_time(t_stack_node **stack_a,
+					t_stack_node **copy_swap_stack_a);
+void			swap_stack_a_second_time(t_stack_node **stack_a,
+					t_stack_node **copy_swap_stack_a);
+void			swap_stack_a_third_time(t_stack_node **stack_a,
+					t_stack_node **stack_b);
+void			ps_sort_beyond_3_and_5_numbers(t_stack_node **stack_a,
+					t_stack_node **stack_b);			
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 12:59:17 by atang             #+#    #+#             */
-/*   Updated: 2023/10/01 18:03:25 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/02 12:43:14 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int	ps_rotate_type_ab(t_stack_node *a, t_stack_node *b)
 	int				i;
 	t_stack_node	*temp;
 
-	tmp = a;
+	temp = a;
 	i = ps_case_rrarrb(a, b, a->value);
-	while (tmp)
+	while (temp)
 	{
-		if (i > ps_case_rarb(a, b, temp->value)
+		if (i > ps_case_rarb(a, b, temp->value))
 			i = ps_case_rarb(a, b, temp->value);
 		if (i > ps_case_rrarrb(a, b, temp->value))
 			i = ps_case_rrarrb(a, b, temp->value);

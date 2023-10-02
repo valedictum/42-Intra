@@ -44,11 +44,11 @@ int	ps_sort_onto_stack_b(t_stack_node **stack_a)
 
 	stack_b = NULL;
 	if (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
-		pb(stack_a);
+		pb(stack_b, stack_a);
 	if (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
-		pb(stack_a);
+		pb(stack_b, stack_a);
 	if (ps_find_stack_size(*stack_a) > 3 && !ps_check_if_sorted(*stack_a))
-		ps_sort_b_until_3_elements(stack_a, &stack_b);
+		ps_sort_b_until_3(stack_a, &stack_b);
 	if (!ps_check_if_sorted(*stack_a))
 		ps_sort_three_elements(stack_a);
 	return (stack_b);

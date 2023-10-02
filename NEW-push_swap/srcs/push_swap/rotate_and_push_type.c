@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 12:59:08 by atang             #+#    #+#             */
-/*   Updated: 2023/10/01 18:03:26 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/02 12:47:16 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ps_use_rarb(t_stack_node **stack_a, t_stack_node **stack_b, int required_value,
 	int stack_choice)
 {
-	if (stack_choice == 'stack_a')
+	if (stack_choice == stack_a)
 	{
 		while ((*stack_a)->value != required_value
 			&& ps_find_correct_place_in_stack_b(*stack_b, required_value) > 0)
@@ -43,7 +43,7 @@ int	ps_use_rarb(t_stack_node **stack_a, t_stack_node **stack_b, int required_val
 int	ps_use_rrarrb(t_stack_node **stack_a, t_stack_node **stack_b, int required_value,
 	int stack_choice)
 {
-	if (stack_choice == 'stack_a')
+	if (stack_choice == stack_a)
 	{
 		while ((*stack_a)->value != required_value
 			&& ps_find_correct_place_in_stack_b(*stack_b, required_value) > 0)
@@ -71,7 +71,7 @@ int	ps_use_rrarrb(t_stack_node **stack_a, t_stack_node **stack_b, int required_v
 int	ps_use_rrarb(t_stack_node **stack_a, t_stack_node **stack_b, int required_value,
 	int stack_choice)
 {
-	if (stack_choice == 'stack_a')
+	if (stack_choice == stack_a)
 	{
 		while ((*stack_a)->value != required_value)
 			rra(stack_a);
@@ -82,7 +82,7 @@ int	ps_use_rrarb(t_stack_node **stack_a, t_stack_node **stack_b, int required_va
 	else
 	{
 		while (ps_find_correct_place_in_stack_a(*stack_a, required_value) > 0)
-			rra(stack_a, stack_b);
+			rra(stack_a);
 		while ((*stack_b)->value != required_value)
 			rb(stack_b);
 		pa(stack_a, stack_b);
@@ -93,7 +93,7 @@ int	ps_use_rrarb(t_stack_node **stack_a, t_stack_node **stack_b, int required_va
 int	ps_use_rarrb(t_stack_node **stack_a, t_stack_node **stack_b, int required_value,
 	int stack_choice)
 {
-	if (stack_choice == 'stack_a')
+	if (*stack_choice == *stack_a)
 	{
 		while ((*stack_a)->value != required_value)
 			ra(stack_a);

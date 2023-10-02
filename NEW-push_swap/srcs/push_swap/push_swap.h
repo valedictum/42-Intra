@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2023/10/01 18:06:38 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/02 12:50:52 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <limits.h>
 # include "../../libs/printf/ft_printf.h"
 
 
@@ -110,7 +111,8 @@ void			ps_sort_two_elements(t_stack_node **stack_a);
 void			ps_sort_three_elements(t_stack_node **stack_a);
 
 //sort_many.c
-void			ps_sort_b_until_3(t_stack_node **stack_a, t_stack_node **stack_b);
+void			ps_sort_b_until_3(t_stack_node **stack_a,
+					t_stack_node **stack_b);
 int				ps_sort_onto_stack_b(t_stack_node **stack_a);
 t_stack_node	**ps_sort_back_onto_stack_a(t_stack_node **stack_a);
 void			ps_sort(t_stack_node **stack_a);
