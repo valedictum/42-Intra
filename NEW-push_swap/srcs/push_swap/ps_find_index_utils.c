@@ -6,12 +6,13 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:02:00 by atang             #+#    #+#             */
-/*   Updated: 2023/10/01 17:23:42 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/15 15:47:51 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+/* 
 int	ps_find_index(t_stack_node *stack, int number)
 {
 	int	i;
@@ -29,7 +30,9 @@ int	ps_find_index(t_stack_node *stack, int number)
 	}
 	return (-1);
 }
+*/
 
+/* 
 int	ps_find_correct_place_in_stack_b(t_stack_node *stack_b, int nbr_to_insert)
 {
 	int				i;
@@ -79,3 +82,4 @@ int	ps_find_correct_place_in_stack_a(t_stack_node *stack_a, int nbr_to_insert)
 	}
 	return (i);
 }
+ */

@@ -21,7 +21,7 @@ t_stack_node	*ps_find_last_element(t_stack_node	*stack)
 	return (stack);
 }
 
-int	ps_find_stack_size(t_stack_node	*stack)
+int	ps_stack_size(t_stack_node	*stack)
 {
 	size_t	stack_size;
 
@@ -34,6 +34,24 @@ int	ps_find_stack_size(t_stack_node	*stack)
 	return (stack_size);
 }
 
+t_stack_node	*ps_min_node(t_stack_node *stack)
+{
+	t_stack_node	*min_node;
+
+	if (!stack)
+		return (NULL);
+	min_node = stack;
+	stack = stack->next;
+	while (stack)
+	{
+		if (stack->value < min_node->value)
+			min_node = stack;
+		stack = stack->next;
+	}
+	return (min_node);
+}
+
+/* 
 int	ps_find_min_value(t_stack_node *stack)
 {
 	int	min_value;
@@ -50,7 +68,26 @@ int	ps_find_min_value(t_stack_node *stack)
 	}
 	return (min_value);
 }
+*/
 
+t_stack_node	*ps_max_node(t_stack_node *stack)
+{
+	t_stack_node	*max_node;
+
+	if (!stack)
+		return (NULL);
+	max_node = stack;
+	stack = stack->next;
+	while (stack)
+	{
+		if (stack->value > max_node->value)
+			max_node = stack;
+		stack = stack->next;
+	}
+	return (max_node);
+}
+
+/* 
 int	ps_find_max_value(t_stack_node *stack)
 {
 	int	max_value;
@@ -67,3 +104,4 @@ int	ps_find_max_value(t_stack_node *stack)
 	}
 	return (max_value);
 }
+ */

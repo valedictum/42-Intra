@@ -6,34 +6,34 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:22:25 by atang             #+#    #+#             */
-/*   Updated: 2023/10/01 17:23:42 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/06 15:41:48 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	pa(t_stack_node	**stack_a, t_stack_node **stack_b)
+void	pb(t_stack_node	**stack_a, t_stack_node **stack_b)
 {
 	int				value;
 	t_stack_node	*temp;
 
-	if (*stack_b != NULL)
+	if (*stack_a != NULL)
 	{
-		value = (*stack_b)->value;
-		*stack_a = ps_create_and_insert_node(*stack_a, value);
-		temp = *stack_b;
-		*stack_b = (*stack_b)->next;
-		free(temp);
+		value = (*stack_a)->value;
+		temp = *stack_a;
+		*stack_a = (*stack_a)->next;
+		temp->next = *stack_b;
+		*stack_b = temp;
 	}
-	ft_printf("pa\n");
+	ft_printf("pb\n");
 }
 
 /* 
-pa (push a): Take the first element at the top of b and put it at the top of a.
-Do nothing if b is empty.
+pb (push b): Take the first element at the top of a and put it at the top of b.
+Do nothing if a is empty.
  */
 
-void	pb(t_stack_node	**stack_b, t_stack_node **stack_a)
+void	pa(t_stack_node	**stack_b, t_stack_node **stack_a)
 {
 	int				value;
 	t_stack_node	*temp;
@@ -46,11 +46,10 @@ void	pb(t_stack_node	**stack_b, t_stack_node **stack_a)
 		*stack_a = (*stack_a)->next;
 		free(temp);
 	}
-	ft_printf("pb\n");
+	ft_printf("pa\n");
 }
 
 /* 
-pb (push b): Take the first element at the top of a and put it at the top of b.
-Do nothing if a is empty.
+pa (push a): Take the first element at the top of b and put it at the top of a.
+Do nothing if b is empty.
  */
-

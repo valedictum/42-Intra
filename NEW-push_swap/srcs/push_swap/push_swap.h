@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2023/10/02 12:50:52 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/15 19:33:53 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,32 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <stdbool.h> 
 # include "../../libs/printf/ft_printf.h"
 
 
 typedef struct stack_node
 {
 	long				value;
-	long				index;
+	int					rank;
+	int					position;
+	bool				upper_half;
 	struct stack_node	*next;
 	struct stack_node	*prev;
 }	t_stack_node;
 
-//calculate_ab.c
-int				ps_case_rarb(t_stack_node *a, t_stack_node *b, int required_value);
-int				ps_case_rrarrb(t_stack_node *a, t_stack_node *b, int required_value);
-int				ps_case_rrarb(t_stack_node *a, t_stack_node *b, int required_value);
-int				ps_case_rarrb(t_stack_node *a, t_stack_node *b, int required_value);
+/* 
+bool				movement_cost;
+bool				cheapest;
+struct stack_node	*target_node;
+ */
 
-//calculate_ba.c
-int				ps_case_rarb_a(t_stack_node *a, t_stack_node *b, int required_value);
-int				ps_case_rrarrb_a(t_stack_node *a, t_stack_node *b, int required_value);
-int				ps_case_rarrb_a(t_stack_node *a, t_stack_node *b, int required_value);
-int				ps_case_rrarb_a(t_stack_node *a, t_stack_node *b, int required_value);
+//operations_combinations.c
+void			ps_pa_then_ra(t_stack_node **stack_a, t_stack_node **stack_b);
+void			ps_ra_then_pa_then_rra(t_stack_node **stack_a,
+					t_stack_node **stack_b);
+void			rotate_stack_a_radix(t_stack_node **stack_a);
+void			reverse_rotate_stack_a_radix(t_stack_node **stack_a);
 
 //operations_push.c
 void			pa(t_stack_node	**stack_a, t_stack_node **stack_b);
@@ -60,11 +64,14 @@ void			ss(t_stack_node **stack_a, t_stack_node **stack_b);
 
 //parse_arguments.c
 int				ps_atoi(const char *str);
-t_stack_node	*ps_parse_args_in_quotes(char **argv[]);
-t_stack_node	*ps_read_values_and_push_onto_stack_a(int argc, char *argv[]);
+t_stack_node	*ps_parse_args_in_quotes(char *argv[]);
+void			ps_parse_and_insert_arguments(t_stack_node **stack_a,
+					char *argv[], int *num_elements);
+// t_stack_node	*ps_read_values_and_push_onto_stack_a(int argc, char *argv[]);
 
 //ps_check_utils.c
 int				ps_checkdup(t_stack_node *stack_a);
+void			ps_check_stack_and_display_error(t_stack_node *stack_a);
 int				ps_check_if_sorted(t_stack_node *stack_a);
 
 //ps_find_index_utils.c
@@ -76,12 +83,15 @@ int				ps_find_correct_place_in_stack_a(t_stack_node *stack_a,
 
 //ps_find_utils.c
 t_stack_node	*ps_find_last_element(t_stack_node	*stack);
-int				ps_find_stack_size(t_stack_node	*stack);
+int				ps_stack_size(t_stack_node	*stack);
 int				ps_find_min_value(t_stack_node *stack);
-int				ps_find_max_value(t_stack_node *stack);
+t_stack_node	*ps_min_node(t_stack_node *stack);
+t_stack_node	*ps_max_node(t_stack_node *stack);
 
 //ps_list_utils.c
+void			ps_calculate_rank(t_stack_node *stack);
 t_stack_node	*ps_create_and_insert_node(t_stack_node *stack, int value);
+void			copy_stack(t_stack_node **source, t_stack_node **destination);
 
 //ps_memory_utils.c
 void			ps_free_stack(t_stack_node **stack);
@@ -90,34 +100,32 @@ void			*ps_safe_malloc(size_t size);
 
 //ps_print_utils.c
 void			ps_print_stack(t_stack_node *stack);
+void			ps_print_stack_start_finish(t_stack_node *stack);
 void			ps_error_message(void);
 
-//rotate_and_push_type.c
-int				ps_use_rarb(t_stack_node **stack_a, t_stack_node **stack_b,
-					int required_value, int stack_choice);
-int				ps_use_rrarrb(t_stack_node **stack_a, t_stack_node **stack_b,
-					int required_value, int stack_choice);
-int				ps_use_rrarb(t_stack_node **stack_a, t_stack_node **stack_b,
-					int required_value, int stack_choice);
-int				ps_use_rarrb(t_stack_node **stack_a, t_stack_node **stack_b,
-					int required_value, int stack_choice);					
-
-//rotate_type.c
-int				ps_rotate_type_ba(t_stack_node *a, t_stack_node *b);
-int				ps_rotate_type_ab(t_stack_node *a, t_stack_node *b);
-
-//sort_few.c 
-void			ps_sort_two_elements(t_stack_node **stack_a);
-void			ps_sort_three_elements(t_stack_node **stack_a);
-
-//sort_many.c
-void			ps_sort_b_until_3(t_stack_node **stack_a,
-					t_stack_node **stack_b);
-int				ps_sort_onto_stack_b(t_stack_node **stack_a);
-t_stack_node	**ps_sort_back_onto_stack_a(t_stack_node **stack_a);
-void			ps_sort(t_stack_node **stack_a);
-
-//split.c
+//ps_split.c
 char			**ft_split(char const *s, char c);
+
+//sort_2_and_3_numbers.c 
+void			ps_sort_2_numbers(t_stack_node **stack_a);
+void			ps_sort_3_numbers(t_stack_node **stack_a);
+
+//sort_5_numbers.c
+void			first_stack(t_stack_node **stack_a, t_stack_node **stack_b);
+void			second_stack(t_stack_node **stack_a, t_stack_node **stack_b);
+void			ps_sort_5_numbers(t_stack_node **stack_a,
+					t_stack_node **stack_b);
+
+//sort_more_than_5_numbers.c
+void			sort_section_of_list(t_stack_node **head);
+void			swap_stack_a_first_time(t_stack_node **stack_a,
+					t_stack_node **copy_swap_stack_a);
+void			swap_stack_a_second_time(t_stack_node **stack_a,
+					t_stack_node **copy_swap_stack_a);
+void			swap_stack_a_third_time(t_stack_node **stack_a,
+					t_stack_node **stack_b);
+void			ps_sort_beyond_5_numbers(t_stack_node **stack_a,
+					t_stack_node **stack_b);
+void			insertion_sort(t_stack_node **stack_a, t_stack_node **stack_b);	
 
 #endif

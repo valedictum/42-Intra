@@ -6,7 +6,7 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 14:44:36 by atang             #+#    #+#              #
-#    Updated: 2023/10/01 17:40:20 by atang            ###   ########.fr        #
+#    Updated: 2023/10/02 16:36:36 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,7 @@ PRINTF_DIR 		= $(ROOT_DIR)/libs/printf
 SRC_DIR 		= $(ROOT_DIR)/srcs/push_swap
 
 SRCS	= 	push_swap.c \
-			calculate_ab.c \
-			calculate_ba.c \
+			operations_combinations.c \
 			operations_push.c \
 			operations_reverse_rotate.c \
 			operations_rotate.c \
@@ -34,11 +33,10 @@ SRCS	= 	push_swap.c \
 			ps_list_utils.c \
 			ps_memory_utils.c \
 			ps_print_utils.c \
-			rotate_and_push_type.c \
-			rotate_type.c \
-			sort_few.c \
-			sort_many.c \
-			split.c \
+			ps_split.c \
+			sort_2_and_3_numbers.c \
+			sort_5_numbers.c \
+			sort_more_than_5_numbers.c \
 
 OBJS	=	$(SRCS:.c=.o)
 
