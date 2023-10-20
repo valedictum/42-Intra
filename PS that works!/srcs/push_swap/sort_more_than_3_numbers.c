@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:28:54 by atang             #+#    #+#             */
-/*   Updated: 2023/10/20 18:43:26 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/20 18:52:12 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,10 +196,65 @@ void ps_update_positions(t_stack_node* stack)
     }
 }
 
-// THIS SORT WORKS!! //
 
+void insertion_sort(t_stack_node** stack_a, t_stack_node** stack_b)
+{
+    t_stack_node* current = *stack_a;
+    t_stack_node* target_element;
+    int target_rank = ps_stack_size(*stack_a);
 
+    while ((current != NULL) && (current->next != NULL))
+    {
+        while (current != target_element)
+        {
+            target_element = find_element_with_rank(stack_a, target_rank);
+            if (target_element == *stack_a)
+            {
+                pb(stack_a, stack_b);
+                ft_printf("Target at top of A - Pushed %d to B (Rank %d)\n", target_element->value, target_element->rank);
+                ps_update_positions(*stack_a);
+                ps_update_positions(*stack_b);
+                ft_printf("Stack A (top to bottom):\n");
+                if (*stack_a == NULL)
+                {
+                    ft_printf("--Empty--\n");
+                }
+                ps_print_stack(*stack_a);
+                ft_printf("Stack B (top to bottom):\n");
+                if (*stack_b == NULL)
+                {
+                    ft_printf("--Empty--\n");
+                }
+                ps_print_stack(*stack_b);
+                ft_printf("\n");
+                target_rank--;
+                current = *stack_a;
+                break;
+            }
+            else if (current->position <= ps_stack_size(*stack_a) / 2)
+            {
+                ra(stack_a);
+            }
+            else
+            {
+                rra(stack_a);
+            }
+            if (current == target_element)
+            {
+                break;
+            }
+        }
+    }
+    while (*stack_b != NULL)
+    {
+        pa(stack_a, stack_b);
+        ft_printf("Pushing element from B back onto A\n");
+        ft_printf("\n");
+    }
+}
 
+/*
+// DESCENDING BUT WORKS!!! //
 void insertion_sort(t_stack_node** stack_a, t_stack_node** stack_b)
 {
     t_stack_node* current = *stack_a;
@@ -255,6 +310,7 @@ void insertion_sort(t_stack_node** stack_a, t_stack_node** stack_b)
         ft_printf("\n");
     }
 }
+*/
 
 // WORKING BUT JUST NOT SORTING //
 /*
