@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:09:26 by atang             #+#    #+#             */
-/*   Updated: 2023/10/06 15:53:28 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/21 16:23:27 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,33 @@ t_stack_node	*ps_parse_args_in_quotes(char *argv[])
 	char			**temp;
 
 	stack_a = NULL;
+	temp = ft_split(&argv[1][1], ' '); // Skip the opening double quote
+	if (!temp)
+	{
+		ft_printf("Error: Memory allocation failed for temp.\n");
+		return (stack_a);
+	}
+	i = 0;
+	while (temp[i])
+	{
+		value = ps_atoi(temp[i]);
+		stack_a = ps_create_and_insert_node(stack_a, value);
+		i++;
+	}
+	ps_free_str(temp);
+	return (stack_a);
+	ft_printf("Parsed in quotes\n");
+}
+
+/*
+t_stack_node	*ps_parse_args_in_quotes(char *argv[])
+{
+	t_stack_node	*stack_a;
+	int				value;
+	int				i;
+	char			**temp;
+
+	stack_a = NULL;
 	temp = ft_split(argv[1], ' ');
 	if (!temp)
 	{
@@ -95,8 +122,38 @@ t_stack_node	*ps_parse_args_in_quotes(char *argv[])
 	ps_free_str(temp);
 	return (stack_a);
 }
+*/
 
-void	ps_parse_and_insert_arguments(t_stack_node **stack_a, char *argv[],
+int ps_parse_and_insert_arguments(t_stack_node **stack_a, char *argv[], int *num_elements)
+{
+    int value;
+
+    while (*argv)
+    {
+        if (**argv == '\"') {
+            // Argument enclosed in double quotes
+            (*argv)++; // Skip the double quote character
+            *stack_a = ps_parse_args_in_quotes(argv);
+            (*num_elements)++; // Increment the number of elements as needed
+        } else {
+            // Single argument (not enclosed in quotes)
+            value = ps_atoi(*argv);
+            *stack_a = ps_create_and_insert_node(*stack_a, value);
+            (*num_elements)++;
+        }
+        argv++;
+    }
+
+    return 0;
+}
+
+
+
+
+
+/*
+WORKING
+int	ps_parse_and_insert_arguments(t_stack_node **stack_a, char *argv[],
 		int *num_elements)
 {
 	int	value;
@@ -108,7 +165,10 @@ void	ps_parse_and_insert_arguments(t_stack_node **stack_a, char *argv[],
 		(*num_elements)++;
 		argv++;
 	}
+
+	return (0);
 }
+*/
 
 /* 
 t_stack_node	*ps_read_values_and_push_onto_stack_a(int argc, char *argv[])

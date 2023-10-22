@@ -6,13 +6,13 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:22:25 by atang             #+#    #+#             */
-/*   Updated: 2023/10/06 15:41:48 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/21 10:09:32 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	pb(t_stack_node	**stack_a, t_stack_node **stack_b)
+void	pb(t_stack_node	**stack_a, t_stack_node **stack_b, int *operation_count)
 {
 	int				value;
 	t_stack_node	*temp;
@@ -26,6 +26,7 @@ void	pb(t_stack_node	**stack_a, t_stack_node **stack_b)
 		*stack_b = temp;
 	}
 	ft_printf("pb\n");
+	(*operation_count)++;
 }
 
 /* 
@@ -33,7 +34,7 @@ pb (push b): Take the first element at the top of a and put it at the top of b.
 Do nothing if a is empty.
  */
 
-void	pa(t_stack_node	**stack_b, t_stack_node **stack_a)
+void	pa(t_stack_node	**stack_b, t_stack_node **stack_a, int *operation_count)
 {
 	int				value;
 	t_stack_node	*temp;
@@ -47,6 +48,7 @@ void	pa(t_stack_node	**stack_b, t_stack_node **stack_a)
 		free(temp);
 	}
 	ft_printf("pa\n");
+	(*operation_count)++;
 }
 
 /* 

@@ -6,12 +6,12 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 13:30:15 by atang             #+#    #+#             */
-/*   Updated: 2023/10/02 17:19:01 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/21 11:54:07 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+/* 
 void	first_stack(t_stack_node **stack_a, t_stack_node **stack_b)
 {
 	if (*stack_b != NULL && (*stack_b)->value < (*stack_a)->value)
@@ -77,3 +77,4 @@ void	ps_sort_5_numbers(t_stack_node **stack_a, t_stack_node **stack_b)
 			second_stack(stack_a, stack_b);
 	}
 }
+ */

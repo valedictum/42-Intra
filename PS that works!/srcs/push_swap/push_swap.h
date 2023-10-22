@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2023/10/20 16:09:40 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/22 18:03:12 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 typedef struct stack_node
 {
-	long				value;
+	int					value;
 	int					rank;
 	int					position;
 	bool				upper_half;
@@ -44,34 +44,37 @@ void			rotate_stack_a_radix(t_stack_node **stack_a);
 void			reverse_rotate_stack_a_radix(t_stack_node **stack_a);
 
 //operations_push.c
-void			pa(t_stack_node	**stack_a, t_stack_node **stack_b);
-void			pb(t_stack_node	**stack_b, t_stack_node **stack_a);
+void			pa(t_stack_node	**stack_a, t_stack_node **stack_b, int *operation_count);
+void			pb(t_stack_node	**stack_b, t_stack_node **stack_a, int *operation_count);
 
 //operations_reverse_rotate.c
-void			rra(t_stack_node **stack_a);
-void			rrb(t_stack_node **stack_b);
-void			rrr(t_stack_node **stack_a, t_stack_node **stack_b);
+void			rra(t_stack_node **stack_a, int *operation_count);
+void			rrb(t_stack_node **stack_b, int *operation_count);
+void			rrr(t_stack_node **stack_a, t_stack_node **stack_b, int *operation_count);
 
 //operations_rotate.c
-void			ra(t_stack_node **stack_a);
-void			rb(t_stack_node **stack_b);
-void			rr(t_stack_node **stack_a, t_stack_node **stack_b);
+void			ra(t_stack_node **stack_a, int *operation_count);
+void			rb(t_stack_node **stack_b, int *operation_count);
+void			rr(t_stack_node **stack_a, t_stack_node **stack_b, int *operation_count);
 
 //operations_swap.c
-void			sa(t_stack_node **stack_a);
-void			sb(t_stack_node **stack_b);
-void			ss(t_stack_node **stack_a, t_stack_node **stack_b);
+void			sa(t_stack_node **stack_a, int *operation_count);
+void			sb(t_stack_node **stack_b, int *operation_count);
+void			ss(t_stack_node **stack_a, t_stack_node **stack_b, int *operation_count);
 
 //parse_arguments.c
 int				ps_atoi(const char *str);
 t_stack_node	*ps_parse_args_in_quotes(char *argv[]);
-void			ps_parse_and_insert_arguments(t_stack_node **stack_a,
+int			ps_parse_and_insert_arguments(t_stack_node **stack_a,
 					char *argv[], int *num_elements);
 // t_stack_node	*ps_read_values_and_push_onto_stack_a(int argc, char *argv[]);
 
 //ps_check_utils.c
-int				ps_checkdup(t_stack_node *stack_a);
-void			ps_check_stack_and_display_error(t_stack_node *stack_a);
+int				ps_check_dupe(t_stack_node *stack_a);
+int				ps_is_digit(int c);
+int 			ps_check_syntax(const char *str);
+int 			is_valid_integer(int value); 
+void 			ps_check_stack_and_display_error(t_stack_node *stack_a);
 int				ps_check_if_sorted(t_stack_node *stack_a);
 
 //ps_find_index_utils.c
@@ -107,8 +110,8 @@ void			ps_error_message(void);
 char			**ft_split(char const *s, char c);
 
 //sort_2_and_3_numbers.c 
-void			ps_sort_2_numbers(t_stack_node **stack_a);
-void			ps_sort_3_numbers(t_stack_node **stack_a);
+void			ps_sort_2_numbers(t_stack_node **stack_a, int *operation_count);
+void			ps_sort_3_numbers(t_stack_node **stack_a, int *operation_count);
 
 //sort_5_numbers.c
 void			first_stack(t_stack_node **stack_a, t_stack_node **stack_b);
@@ -117,6 +120,7 @@ void			ps_sort_5_numbers(t_stack_node **stack_a,
 					t_stack_node **stack_b);
 
 //sort_more_than_5_numbers.c
+size_t			ps_strlen(char *s);
 void			sort_section_of_list(t_stack_node **head);
 void			swap_stack_a_first_time(t_stack_node **stack_a,
 					t_stack_node **copy_swap_stack_a);
@@ -126,10 +130,12 @@ void			swap_stack_a_third_time(t_stack_node **stack_a,
 					t_stack_node **stack_b);
 void			ps_sort_beyond_5_numbers(t_stack_node **stack_a,
 					t_stack_node **stack_b);
-void			insertion_sort(t_stack_node **stack_a, t_stack_node **stack_b);	
-t_stack_node	*merge(t_stack_node *left, t_stack_node *right,
-					t_stack_node **stack_a, t_stack_node **stack_b);
-t_stack_node	*merge_sort(t_stack_node *stack_a, t_stack_node **stack_b, int size);
+void			quicksort(t_stack_node** stack_a, t_stack_node** stack_b, int *operation_count);
+int				ps_find_moves_to_top(t_stack_node* stack_a, int value);
+void 			merge(t_stack_node** stack_a, t_stack_node** stack_b, int* operation_count);
+void 			mergeSort(t_stack_node** stack_a, t_stack_node** stack_b, int* operation_count);
+void			insertion_sort(t_stack_node **stack_a, t_stack_node **stack_b, int *operation_count);
+int 			ps_stack_rank_on_b(t_stack_node *stack, int value);
 bool 			is_sorted_ascending(t_stack_node *stack_a);
 bool			is_sorted_descending(t_stack_node* stack);
 bool			is_in_top_half(int element_position, int stack_size);

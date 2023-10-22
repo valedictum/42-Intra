@@ -6,13 +6,13 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:18:02 by atang             #+#    #+#             */
-/*   Updated: 2023/10/01 17:23:42 by atang            ###   ########.fr       */
+/*   Updated: 2023/10/21 10:26:19 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ra(t_stack_node **stack_a)
+void	ra(t_stack_node **stack_a, int *operation_count)
 {
 	t_stack_node	*last_element;
 	t_stack_node	*temp;
@@ -28,6 +28,7 @@ void	ra(t_stack_node **stack_a)
 		last_element->next = temp;
 	}
 	ft_printf("ra\n");
+	(*operation_count)++;
 }
 
 /* 
@@ -35,7 +36,7 @@ ra (rotate a): Shift up all elements of stack a by 1.
 The first element becomes the last one.
  */
 
-void	rb(t_stack_node **stack_b)
+void	rb(t_stack_node **stack_b, int *operation_count)
 {
 	t_stack_node	*last_element;
 	t_stack_node	*temp;
@@ -51,6 +52,7 @@ void	rb(t_stack_node **stack_b)
 		last_element->next = temp;
 	}
 	ft_printf("rb\n");
+	(*operation_count)++;
 }
 
 /* 
@@ -58,11 +60,12 @@ rb (rotate b): Shift up all elements of stack b by 1.
 The first element becomes the last one.
  */
 
-void	rr(t_stack_node **stack_a, t_stack_node **stack_b)
+void	rr(t_stack_node **stack_a, t_stack_node **stack_b, int *operation_count)
 {
-	ra(stack_a);
-	rb(stack_b);
+	ra(stack_a, operation_count);
+	rb(stack_b, operation_count);
 	ft_printf("rr\n");
+	(*operation_count)++;
 }
 
 /* 
