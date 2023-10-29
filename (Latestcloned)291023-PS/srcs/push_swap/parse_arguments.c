@@ -1,0 +1,200 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_arguments.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/12 11:09:26 by atang             #+#    #+#             */
+/*   Updated: 2023/10/21 16:23:27 by atang            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+int	ps_atoi(const char *str)
+{
+	int	result;
+	int	sign;
+
+	sign = 1;
+	result = 0;
+	while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r'
+		|| *str == '\v' || *str == '\f')
+		str++;
+	if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	else if (*str == '+')
+	{
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		result = (result * 10) + (*str - '0');
+		str++;
+	}
+	return (result * sign);
+}
+
+/*
+t_stack_node	*ps_parse_args_in_quotes(char *argv[])
+{
+	t_stack_node	*stack_a;
+	char			**temp;
+	int				i;
+	int				value;
+
+	stack_a = NULL;
+	i = 0;
+	if (!argv[1])
+	{
+		ft_printf("Error: No argument provided in quotes.\n");
+		return (stack_a);
+	}
+	temp = ft_split(argv[1], ' ');
+	if (!temp)
+	{
+		ft_printf("Error: Memory allocation failed for temp.\n");
+		return (stack_a);
+	}
+	while (temp[i])
+	{
+		value = ps_atoi(temp[i]);
+		stack_a = ps_create_and_insert_node(stack_a, value);
+		i++;
+	}
+	ps_free_str(temp);
+	return (stack_a);
+}
+*/
+
+t_stack_node	*ps_parse_args_in_quotes(char *argv[])
+{
+	t_stack_node	*stack_a;
+	int				value;
+	int				i;
+	char			**temp;
+
+	stack_a = NULL;
+	temp = ft_split(&argv[1][1], ' '); // Skip the opening double quote
+	if (!temp)
+	{
+		ft_printf("Error: Memory allocation failed for temp.\n");
+		return (stack_a);
+	}
+	i = 0;
+	while (temp[i])
+	{
+		value = ps_atoi(temp[i]);
+		stack_a = ps_create_and_insert_node(stack_a, value);
+		i++;
+	}
+	ps_free_str(temp);
+	return (stack_a);
+	ft_printf("Parsed in quotes\n");
+}
+
+/*
+t_stack_node	*ps_parse_args_in_quotes(char *argv[])
+{
+	t_stack_node	*stack_a;
+	int				value;
+	int				i;
+	char			**temp;
+
+	stack_a = NULL;
+	temp = ft_split(argv[1], ' ');
+	if (!temp)
+	{
+		ft_printf("Error: Memory allocation failed for temp.\n");
+		return (stack_a);
+	}
+	i = 0;
+	while (temp[i])
+	{
+		value = ps_atoi(temp[i]);
+		stack_a = ps_create_and_insert_node(stack_a, value);
+		i++;
+	}
+	ps_free_str(temp);
+	return (stack_a);
+}
+*/
+
+int ps_parse_and_insert_arguments(t_stack_node **stack_a, char *argv[], int *num_elements)
+{
+    int value;
+
+    while (*argv)
+    {
+        if (**argv == '\"') {
+            // Argument enclosed in double quotes
+            (*argv)++; // Skip the double quote character
+            *stack_a = ps_parse_args_in_quotes(argv);
+            (*num_elements)++; // Increment the number of elements as needed
+        } else {
+            // Single argument (not enclosed in quotes)
+            value = ps_atoi(*argv);
+            *stack_a = ps_create_and_insert_node(*stack_a, value);
+            (*num_elements)++;
+        }
+        argv++;
+    }
+
+    return 0;
+}
+
+
+
+
+
+/*
+WORKING
+int	ps_parse_and_insert_arguments(t_stack_node **stack_a, char *argv[],
+		int *num_elements)
+{
+	int	value;
+
+	while (*argv)
+	{
+		value = ps_atoi(*argv);
+		*stack_a = ps_create_and_insert_node(*stack_a, value);
+		(*num_elements)++;
+		argv++;
+	}
+
+	return (0);
+}
+*/
+
+/* 
+t_stack_node	*ps_read_values_and_push_onto_stack_a(int argc, char *argv[])
+{
+	t_stack_node	*stack_a;
+	int				i;
+	int				value;
+
+	stack_a = NULL;
+	i = argc - 1;
+	if (argc < 2)
+	{
+		ft_printf("Error: Not enough arguments provided.\n");
+		return (stack_a);
+	}
+	else if (argc == 2)
+		stack_a = ps_parse_args_in_quotes(argv);
+	else
+	{
+		while (i >= 2)
+		{
+			value = ps_atoi(argv[i]);
+			stack_a = ps_create_and_insert_node(stack_a, value);
+			i--;
+		}
+	}
+	return (stack_a);
+}
+ */
