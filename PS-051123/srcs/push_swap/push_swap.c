@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 10:22:25 by atang             #+#    #+#             */
-/*   Updated: 2023/11/05 18:25:18 by atang            ###   ########.fr       */
+/*   Updated: 2023/11/08 05:23:53 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ int	main(int argc, char *argv[])
 	else if (num_elements == 4 || num_elements == 5)
 		ps_sort_4_or_5_numbers(&stack_a, &stack_b, &operation_count);
 	else
-		chunk_sort(&stack_a, &stack_b, &operation_count);
+	{
+		chunk_sort_500(&stack_a, &stack_b, &operation_count);
 		insertion_sort(&stack_a, &stack_b, &operation_count);
+	}
 	ps_stack_rank(stack_a);
 	ps_update_positions(stack_a);
 	ft_printf("Stack A elements (after sorting):\n");
