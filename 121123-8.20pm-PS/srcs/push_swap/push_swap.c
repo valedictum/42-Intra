@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 10:22:25 by atang             #+#    #+#             */
-/*   Updated: 2023/11/12 20:02:43 by atang            ###   ########.fr       */
+/*   Updated: 2023/11/16 09:27:50 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char *argv[])
 		chunk_sort_4(&stack_a, &stack_b, &operation_count);
 		insertion_sort(&stack_a, &stack_b, &operation_count);
 	}
-	else if (num_elements == 6 || (num_elements >= 100 && num_elements <= 499))
+	else if (num_elements == 6 || (num_elements >= 10 && num_elements <= 499))
 	{
 		chunk_sort_100(&stack_a, &stack_b, &operation_count);
 		insertion_sort(&stack_a, &stack_b, &operation_count);
