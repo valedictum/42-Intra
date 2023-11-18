@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 10:22:25 by atang             #+#    #+#             */
-/*   Updated: 2023/11/18 17:47:14 by sentry           ###   ########.fr       */
+/*   Updated: 2023/11/18 18:57:39 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,41 @@ int main(int argc, char *argv[])
         ft_printf("Error: Not enough arguments provided.\n");
         return (1);
     }
-
     printf("After argument check\n");
-
     if (argc == 2 && (argv[1][0] == '\"') && (argv[1][ps_strlen(argv[1]) - 1] == '\"'))
 	{
         printf("Inside quoted argument check\n");
+		if (stack_a == NULL)
+		{
+			ft_printf("Error: Stack not properly initialized.\n");
+			return (1);
+		}
+		// Ensure num_elements is a valid value (greater than or equal to zero)
+		if (num_elements < 0)
+		{
+			ft_printf("Error: Invalid value for num_elements.\n");
+			return (1);
+		}
         ps_parse_args_in_quotes(&argv[1], &stack_a, &num_elements);
     }
 	else
 	{
         printf("Inside normal argument check\n");
+		if (stack_a == NULL)
+		{
+			ft_printf("Error: Stack not properly initialized.\n");
+			return (1);
+		}
+		// Ensure num_elements is a valid value (greater than or equal to zero)
+		if (num_elements < 0)
+		{
+			ft_printf("Error: Invalid value for num_elements.\n");
+			return (1);
+		}
         ps_parse_and_insert_arguments(&stack_a, argv, &num_elements);
     }
     printf("After argument parsing\n");
-
     // Add similar printf statements throughout the rest of your code blocks...
-
     // Example:
     printf("Before stack rank\n");
     ps_stack_rank(stack_a);
@@ -83,9 +101,7 @@ int main(int argc, char *argv[])
     printf("Before freeing stacks\n");
     ps_free_stack(&stack_a);
     ps_free_stack(&stack_b);
-
     printf("After freeing stacks\n");
-
     return (0);
 }
 /*
