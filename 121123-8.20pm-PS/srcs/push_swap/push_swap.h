@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2023/11/12 19:54:03 by atang            ###   ########.fr       */
+/*   Updated: 2023/11/18 17:35:43 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void			ss(t_stack_node **stack_a, t_stack_node **stack_b,
 
 //parse_arguments.c
 int				ps_atoi(const char *str);
-t_stack_node	*ps_parse_args_in_quotes(char *argv[]);
+int ps_parse_args_in_quotes(char **quoted_arg, t_stack_node **stack_a, int *num_elements);
 int			ps_parse_and_insert_arguments(t_stack_node **stack_a,
 					char *argv[], int *num_elements);
 // t_stack_node	*ps_read_values_and_push_onto_stack_a(int argc, char *argv[]);

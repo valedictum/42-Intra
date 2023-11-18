@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ps_check_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:41:31 by atang             #+#    #+#             */
-/*   Updated: 2023/11/12 19:53:37 by atang            ###   ########.fr       */
+/*   Updated: 2023/11/18 09:44:50 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ps_check_stack_and_display_error(t_stack_node *stack_a)
 	{
 		ps_free_stack(&stack_a);
 		ps_error_message();
+		ft_printf("Check stack error\n");
 	}
 }
 
