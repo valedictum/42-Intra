@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ps_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 16:35:02 by atang             #+#    #+#             */
-/*   Updated: 2023/11/27 08:38:12 by sentry           ###   ########.fr       */
+/*   Updated: 2023/10/02 16:25:46 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	count_words(char const *s, char c)
+static int	count_words(char const *s, char c)
 {
 	int	count;
 	int	in_word_flag;
@@ -33,7 +33,7 @@ int	count_words(char const *s, char c)
 	return (count);
 }
 
-char	*extract_word(char const **s, char c)
+static char	*extract_word(char const **s, char c)
 {
 	char	*word;
 	int		word_len;
@@ -58,7 +58,7 @@ char	*extract_word(char const **s, char c)
 	return (word);
 }
 
-void	free_words(char **words)
+static void	free_words(char **words)
 {
 	int	i;
 
@@ -98,4 +98,3 @@ char	**ft_split(char const *s, char c)
 	result[i] = NULL;
 	return (result);
 }
-

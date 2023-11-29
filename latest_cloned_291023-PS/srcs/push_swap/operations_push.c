@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:22:25 by atang             #+#    #+#             */
-/*   Updated: 2023/11/12 22:50:44 by sentry           ###   ########.fr       */
+/*   Updated: 2023/11/07 08:39:26 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ Do nothing if a is empty.
 
 void	pa(t_stack_node	**stack_b, t_stack_node **stack_a, int *operation_count)
 {
-	int				value = (*stack_a)->value;
+	int				value;
 	t_stack_node	*temp;
 
 	if (*stack_a != NULL)

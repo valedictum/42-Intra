@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_arguments.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:09:26 by atang             #+#    #+#             */
-/*   Updated: 2023/11/05 21:22:08 by atang            ###   ########.fr       */
+/*   Updated: 2023/11/18 08:41:20 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,36 @@ int	ps_atoi(const char *str)
 }
 */
 
+bool is_valid_integer(const char *str)
+{
+    if (*str == '-' || *str == '+') // Skip optional sign
+        str++;
+
+    while (*str) {
+        if (!isdigit(*str)) // Check if each character is a digit
+            return false;
+        str++;
+    }
+
+    return true;
+}
+
+static char	*ft_strchr(const char *s, int c)
+{
+	while (*s != '\0')
+	{
+		if (*s == (char)c)
+		{
+			return ((char *)s);
+		}
+		s++;
+	}
+	if (*s == (char)c)
+	{
+		return ((char *)s);
+	}
+	return (NULL);
+}
 
 // Handles INT MAX but makes it worse
 int ps_atoi(const char *str)
@@ -237,7 +267,10 @@ int ps_parse_and_insert_arguments(t_stack_node **stack_a, char *argv[], int *num
                 ft_printf("Unclosed double quote in quoted argument\n");
                 return 1; // Raise an error
             }
-        } else {
+        } 
+		/*
+		EXISTING
+		else {
             // Single argument (not enclosed in quotes)
             int is_valid = 1; // Flag to track if the argument is valid
 
@@ -255,6 +288,20 @@ int ps_parse_and_insert_arguments(t_stack_node **stack_a, char *argv[], int *num
                 *stack_a = ps_create_and_insert_node(*stack_a, value);
                 (*num_elements)++;
             }
+        }
+        argv++;
+		*/
+		else
+		{
+            // Single argument (not enclosed in quotes)
+            if (!is_valid_integer(*argv))
+			{
+                ft_printf("Invalid argument: %s\n", *argv);
+                return 1; // Raise an error
+            }
+            value = ps_atoi(*argv);
+            *stack_a = ps_create_and_insert_node(*stack_a, value);
+            (*num_elements)++;
         }
         argv++;
     }

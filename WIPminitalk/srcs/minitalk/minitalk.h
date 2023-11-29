@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2023/11/12 22:53:52 by sentry           ###   ########.fr       */
+/*   Created: 2023/11/19 19:23:53 by atang             #+#    #+#             */
+/*   Updated: 2023/11/29 04:48:01 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef MINITALK_H
+# define MINITALK_H
 
-# include <stdio.h>
+# include <unistd.h>
 # include <stdlib.h>
-# include <limits.h>
-# include <stdbool.h> 
+# include <signal.h>
 # include "../../libs/printf/ft_printf.h"
 
+//client.c
+int		ft_atoi(const char *str);
+void	handle_signal(int signal, siginfo_t *info, void *context);
+void	setup_signal_handlers(void);
+void	send_signal(int pid, unsigned char character);
 
+//server.c
+void	handle_signal(int signal, siginfo_t *info, void *context);
 
 #endif
