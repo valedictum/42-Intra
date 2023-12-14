@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:18:52 by atang             #+#    #+#             */
-/*   Updated: 2023/12/10 17:00:51 by atang            ###   ########.fr       */
+/*   Updated: 2023/12/15 01:23:06 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int	ft_atoi(const char *str)
+/*
+'mt_atoi' is used to convert a string to an integer (process ID aka pid).
+*/
+
+int	mt_atoi(const char *str)
 {
 	int	result;
 	int	sign;
@@ -39,75 +43,6 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void	handle_signal(int signal, siginfo_t *info, void *context)
-{
-	static unsigned char	assembled_byte = 0;
-	static int				bit = 0;
-
-	(void)info;
-	(void)context;
-	if (bit == 0)
-	{
-		assembled_byte = 0;
-	}
-	if (signal == SIGUSR1)
-	{
-		assembled_byte |= (0x01 << bit);
-	}
-	bit++;
-	if (bit == 8)
-	{
-		write(1, &assembled_byte, 1);
-		bit = 0;
-	}
-	else
-	{
-		assembled_byte <<= 1;
-	}
-}
-
-/*
-FUNCTION - setup_signal_handlers
-
-USAGE - Sets up signal handlers for SIGUSR1 and SIGUSR2 using handle_signal
-function to process them.
-
-'sigaction' structure (sa) is set up to handle signalling behaviour.
-
-'sa.sa_sigaction = handle_signal' assigns the signal handler 
-function handle_signal to the sa_sigaction member of the struct sigaction 
-and tells the system to call 'handle_signal' when a signal is received. 
-
-'sa.sa_flags = SA_SIGINFO' sets the sa_flags member of the struct 
-'sigaction' to SA_SIGINFO. This flag informs the operating system that the 
-signal handler function is using extended information (siginfo_t and 
-void *context parameters) instead of just the basic signal number.
-SA_SIGINFO is a flag that tells the signal handler to expect 
-extended information about the signal through the siginfo_t and
-void *context parameters when handling the signal. This extended information 
-can include details like the process ID of the sender etc. allowing for 
-more detailed handling of signals.
-
-'sigemptyset(&sa.sa_mask)' initialises the signal mask sa_mask to an empty set,
-meaning no signals are blocked while the signal handler is executing allowing 
-all signals to be delivered while the handler runs.
-
-'sigaction(SIGUSR1, &sa, NULL)' sets up a signal handler for SIGUSR1 using the 
-configuration specified in sa. The signal handler function handle_signal will 
-handle SIGUSR1 signals. Same goes for SIGUSR2.
-*/
-
-void	setup_signal_handlers(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_sigaction = handle_signal;
-	sa.sa_flags = SA_SIGINFO;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
-}
-
 /*
 FUNCTION - send_signal
 
@@ -121,9 +56,9 @@ signal is sent to the pid using the kill function.
 - if the bit in the character is 0, a SIGUSR2 signal is sent to the pid using 
 the kill function.
 
-'usleep(100)' pauses the program execution for a short duration 
-(100 microseconds) to control the speed at which signals are sent, then bit 
-is incremented to move to the next bit of the character.
+'usleep(500)' pauses the program execution for 500 microseconds to control 
+the speed at which signals are sent, then bit is incremented to move to the 
+next bit of the character.
 */
 
 void	send_signal(int pid, unsigned char character)
@@ -171,7 +106,6 @@ program execution waiting for signals to arrive, at which point 'handle_signal'
 signal handler will be executed.
 */
 
-
 int	main(int argc, char **argv)
 {
 	int		i;
@@ -180,15 +114,13 @@ int	main(int argc, char **argv)
 	i = 0;
 	if (argc == 3)
 	{
-		setup_signal_handlers();
-		pid = ft_atoi(argv[1]);
+		pid = mt_atoi(argv[1]);
 		while(argv[2][i] != 0)
 		{
 			send_signal (pid, argv[2][i]);
 			i++;
 		}
 		send_signal(pid, '\n');
-		//pause();
 	}
 	else
 	{

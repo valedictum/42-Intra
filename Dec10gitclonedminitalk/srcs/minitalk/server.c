@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 19:18:56 by atang             #+#    #+#             */
-/*   Updated: 2023/12/10 16:48:58 by atang            ###   ########.fr       */
+/*   Updated: 2023/12/15 01:23:08 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,17 @@ for signals using 'pause()'.
 */
 
 /*
-FUNCTION - handle_signal
-
-USAGE - Accumulates bits received via SIGUSR1 signals and prints the 
-corresponding character to the standard output when 8 bits have been collected.
-
+'handle_signal' accumulates bits received via SIGUSR1 signals.
 'info' (additional signal information) and 'context' (program state information)
 are used to match the signature required by sigaction when using the 'SA_SIGINFO'
 flag but they are unused so they are silenced.
 'i' and 'bit' are both static integers which retain their values across function calls.
 If signal is SIGUSR1, i is bit-shifted to the left using the bitwise OR operator.
 If 8 bits have been accumulated, the contents of integer 'i' are written to the
-standard output as a single byte (char). 'Bit' and 'i' are then reset to zero to 
+standard output as a single byte. 'Bit' and 'i' are then reset to zero to 
 start accumulating bits for the next character from scratch. 
 */
 
-
-// WORKING
 void handle_signal(int signal, siginfo_t *info, void *context)
 {
 	(void)info;
@@ -52,19 +46,14 @@ void handle_signal(int signal, siginfo_t *info, void *context)
 	bit++;
 	if (bit == 8)
 	{
-		write(1, &i, 1);
+		ft_printf("%c", i);
 		bit = 0;
 		i = 0;
 	}
 }
 
 /*
-FUNCTION - main
-
-USAGE - Entry point.
-
 'sigaction' structure (sa) is set up to handle signalling behaviour.
-
 'sa.sa_flags = SA_SIGINFO' sets the sa_flags member of the struct 
 'sigaction' to SA_SIGINFO. This flag informs the operating system that the 
 signal handler function is using extended information (siginfo_t and 
