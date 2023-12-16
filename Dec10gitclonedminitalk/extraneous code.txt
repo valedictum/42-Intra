@@ -2,6 +2,34 @@
 
 /*
 // ORIGINAL
+FUNCTION - main
+
+USAGE - Entry point.
+
+'sigaction' structure (sa) is set up to handle signalling behaviour.
+
+'sa.sa_flags = SA_SIGINFO' sets the sa_flags member of the struct 
+'sigaction' to SA_SIGINFO. This flag informs the operating system that the 
+signal handler function is using extended information (siginfo_t and 
+void *context parameters) instead of just the basic signal number.
+SA_SIGINFO is a flag that tells the signal handler to expect 
+extended information about the signal through the siginfo_t and
+void *context parameters when handling the signal. This extended information 
+can include details like the process ID of the sender etc. allowing for 
+more detailed handling of signals.
+
+'sa.sa_sigaction = handle_signal' assigns the signal handler 
+function handle_signal to the sa_sigaction member of the struct sigaction 
+and tells the system to call 'handle_signal' when a signal is received. 
+
+If argc = 1 (server, so no command line arguments), signal handlers are set up 
+for SIGUSR1 and SIGUSR2 using sigaction. 'pause()' is used to pause the 
+program execution waiting for signals to arrive, at which point 'handle_signal' 
+signal handler will be executed.
+*/
+
+/*
+// ORIGINAL
 void	handle_signal(int signal, siginfo_t *info, void *context)
 {
 	static unsigned char	assembled_byte = 0;
