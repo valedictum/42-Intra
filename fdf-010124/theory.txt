@@ -1,0 +1,24 @@
+Since 1980's, the most popular way of displaying graphics is to use the X11 protocol (X protocol, 11th specification). 
+To keep things simple, X11 is a network-oriented protocol designed to render graphical elements other than lines of text on the screen. 
+Several implementations of this protocol exist, but the most popular/used is the Xorg one.
+For the whole thing to work, two elements are required: an X server (in our case the Xorg server), and clients that are able to request 
+things to the X server (they are basically all the GUI applications you use every day). These applications can communicate with the server 
+by using a programming interface: the most popular one (which the minilibx primarily relies on) is the Xlib.
+The Xlib handles the low level things, and there's a lot of things to understand before we can actually start rendering graphics. 
+Fortunately, more advanced libraries built on top of Xlib have been created, allowing us to focus on the most important: the app we want to build.
+The minilibx is one of them: it is not as featured as libraries like SDL2 or GTK, but it does a good job at abstracting the complicated 
+low level stuff.
+The minilibx is using the X11 protocol under the hood.
+
+// Initializing the minilibx
+When using the minilibx, you need to initialize a bunch of stuff before you can actually start to render things. 
+The library ships with a single function that precisely does this job: mlx_init. Under the hood, this function creates a structure 
+that contains all the stuff the minilibx will need in order to do its things.
+
+// void	*mlx_init();
+That's a really simple function, but there is something interesting here. What the mlx_init function actually returns is a void pointer. 
+If you're not familiar with it, a void pointer is basically an address, but the compiler doesn't know what type this address is pointing to. 
+That's the easiest way to build a kind of "generic" in C. In reality, the minilibx returns the address of a t_xvar element, which is the big
+structure containing all the useful stuff I was talking about earlier.
+
+https://aurelienbrabant.fr/blog/getting-started-with-the-minilibx
