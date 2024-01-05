@@ -1,4 +1,4 @@
---- SCALE FOR PROJECT PUSH_SWAP ---
+//--- SCALE FOR PROJECT PUSH_SWAP ---//
 
 You should evaluate 1 student in this team
 
@@ -54,7 +54,7 @@ appropriate flag.
 
 subject.pdf   checker_Mac   checker_linux
 
---- Mandatory part ---
+//--- Mandatory part ---//
 
 Reminder : Remember that for the duration of the defence, no segfault, nor 
 other unexpected, premature, uncontrolled or unexpected termination of the
@@ -204,7 +204,7 @@ validate it.
 
 Rate it from 0 (failed) through 5 (excellent)
 
-/// --- Bonus --- ///
+//--- Bonus ---//
 
 Reminder : Remember that for the duration of the defence, no segfault, nor 
 other unexpected, premature, uncontrolled or unexpected termination of the program, 
