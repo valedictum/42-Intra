@@ -1,0 +1,134 @@
+//---FROM FDF.C---//
+
+-- EXPLANATION --
+
+A computer scrren is a 2D object that has x and y co-ordinates, with the top 
+left corner being the origin (x = 0, y = 0) where x is the row, y is the 
+column.
+
+void *mlx_init() returns a void pointer (a void pointer is basicially 
+an address which the compiler doesn't know what type this address is pointing 
+to i.e. to build a generic in C).
+
+mlx_init establishes connection to the X-Window server (i.e. it returns the 
+address of an Xvar variable which contains many things, most importantly a 
+pointer to a display (connexion identifier used to communicate with the X 
+server) which is opened with XOpenDisplay). It creates a structure and 
+returns the address of a struct (Xvar) that has all the things minilibx 
+needs to work including display which is another large struct.
+
+Once we have finished with our program, we want to free our resources (call free
+and pass it to mlx_ptr). There will still be leaks because the display hasn't 
+been closed. mlx_destroy_display function needs to be called before free 
+because we need to access the mlx_ptr to retrieve the display variable. 
+
+XCloseDisplay cleans up and closes down a connection to an X-server 
+ensuring that the windows and the resources associated with that connection 
+are destroyed.
+
+void *mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title)
+mlx_new_window is a malloc-ed new window (mlx connection pointer that we got 
+from mlx_init, width(x), height(y), title i.e name of window).
+
+mlx_loop is an event loop function that keeps the process alive, basically an 
+infinite loop in which events happen e.g. clicking anywhere in the window 
+with the mouse or pressing a key. BEFORE the mlx_loop function is called, 
+mlx allows us to register events that are able to triggered after the loop 
+has started - mlx calls these functions hooks.   
+
+mlx_data struct is used to pass more elements.
+
+Hooks 'hook' into an event (i.e. they react to events). In this case, when a 
+key is pressed, handleinput() is triggered. Note: every event is linked to 
+its own prototype handler. All hooks in MiniLibX are nothing more than a 
+function that gets called whenever a event is triggered.
+
+The different hook functions are: 
+
+int	mlx_mouse_hook (void *win_ptr, int (*funct_ptr)(), void *param);
+int	mlx_key_hook (void *win_ptr, int (*funct_ptr)(), void *param);
+int	mlx_expose_hook (void *win_ptr, int (*funct_ptr)(), void *param);
+int	mlx_loop_hook (void *mlx_ptr, int (*funct_ptr)(), void *param);
+int	mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(), 
+	void *param);
+
+where win_ptr is the pointer to the window (this window will register for 
+the given event), func_ptr is a pointer to a fucntion that returns an int 
+and that takes undefined parameters, param is the address of the element 
+you want to access in your fucn_ptr when you'll be handling events (param 
+is NOT used by mlx, so it'll just help to pass arguments).
+(NOTE: (*func_ptr)() is not the same as (*func_ptr)(void): the last means
+NO argument while the first means "any set of arguments".) You can register 
+keyboard and mouse related event, as well as expose events. Expose events are 
+triggered when the content of a window gets lost (for example, when the 
+minilibx's window is covered partially or entirely by another) and needs to 
+be re-drawn.
+
+Consider an image as a buffer which you would then push to screen.
+
+int	mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);
+We've already explained what mlx_ptr and win_ptr are, and the others 
+parameters are self-explanatory. x and y are the coordinate of the pixel, 
+according to the metric considerations we just discussed.
+We can either:
+
+1)
+int	encode_rgb(uint8_t red, uint8_t green, uint8_t blue)
+{
+    return (red << 16 | green << 8 | blue);
+} 
+(We can simply set the bits of the integer directly, using 
+the << (left shift). This code will simply encode the red, green, and blue 
+values into the returned integer.)
+OR
+2)
+Hexadecimal is widely used when using encoded values because it allows us 
+to clearly distiguish the bytes that form an integer. To do so, we need to 
+think about an hexadecimal number as groups of two digits. One group of two 
+digits represents an entire byte. Be aware tho, that in hexadecimal we have 
+a total of sixteen digits used to represent a number 
+(0123456789 ((abcdef) || (ABCDEF))).
+
+minilibx complies wit h the true colour standard. True colour is an RGB 
+color model standard that specifies 256 shades for red, green and blue 
+spaces, totaling 16 million colors, much more than what the human eye 
+can distinguish, which is only 10 million colors. This allows for very 
+complex graphics and images, hence the name. With the minilibx, we need to 
+make the color fit into an int datatype. That means that we need the int 
+datatype to be 32 bits on our system. We need to encode our color into an 
+int by setting the three least significant bits to the amount of red, 
+green and blue, respectively.
+
+mlx_loop is an event loop function that keeps the process alive, basically an 
+infinite loop in which events happen e.g. clicking anywhere in the window 
+with the mouse or pressing a key. Before the mlx_loop function is called,
+mlx allows us to register events that are able to triggered after the loop 
+has started - mlx calls these functions hooks.   
+
+//---OTHER THEORY---//
+
+Since 1980's, the most popular way of displaying graphics is to use the X11 protocol (X protocol, 11th specification). 
+To keep things simple, X11 is a network-oriented protocol designed to render graphical elements other than lines of text on the screen. 
+Several implementations of this protocol exist, but the most popular/used is the Xorg one.
+For the whole thing to work, two elements are required: an X server (in our case the Xorg server), and clients that are able to request 
+things to the X server (they are basically all the GUI applications you use every day). These applications can communicate with the server 
+by using a programming interface: the most popular one (which the minilibx primarily relies on) is the Xlib.
+The Xlib handles the low level things, and there's a lot of things to understand before we can actually start rendering graphics. 
+Fortunately, more advanced libraries built on top of Xlib have been created, allowing us to focus on the most important: the app we want to build.
+The minilibx is one of them: it is not as featured as libraries like SDL2 or GTK, but it does a good job at abstracting the complicated 
+low level stuff.
+The minilibx is using the X11 protocol under the hood.
+
+// Initializing the minilibx
+When using the minilibx, you need to initialize a bunch of stuff before you can actually start to render things. 
+The library ships with a single function that precisely does this job: mlx_init. Under the hood, this function creates a structure 
+that contains all the stuff the minilibx will need in order to do its things.
+
+// void	*mlx_init();
+That's a really simple function, but there is something interesting here. What the mlx_init function actually returns is a void pointer. 
+If you're not familiar with it, a void pointer is basically an address, but the compiler doesn't know what type this address is pointing to. 
+That's the easiest way to build a kind of "generic" in C. In reality, the minilibx returns the address of a t_xvar element, which is the big
+structure containing all the useful stuff I was talking about earlier.
+
+https://aurelienbrabant.fr/blog/getting-started-with-the-minilibx
+
