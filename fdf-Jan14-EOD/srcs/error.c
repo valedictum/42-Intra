@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 17:11:10 by atang             #+#    #+#             */
-/*   Updated: 2024/01/12 17:13:43 by atang            ###   ########.fr       */
+/*   Updated: 2024/01/15 22:28:49 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+/*
+Helper function that take a file name and checks if it exists. It tries to 
+open the specified file in read-only mode using fopen() and returns 1 if the 
+file exists, otherwise it returns 0. It then closes the file using fclose().
+*/
+
 
 int	file_exists(char *file_name)
 {
@@ -29,7 +36,7 @@ int	file_exists(char *file_name)
 Helper function that checks if a given file name has the correct format i.e. 
 .fdf. 1 is returned if the file name is invalid, 0 if valid. Length of file name 
 is calculated using ft_strlen() before the last four characters of the file name 
-are checked to ensure they are the correct .fdf format using ft_strn_cmp()
+are checked to ensure they are the correct .fdf format using ft_strn_cmp().
 */
 
 int	ft_file_name_error(char	*file_name)
@@ -43,8 +50,8 @@ int	ft_file_name_error(char	*file_name)
 }
 
 /*
-Helper function which destroys the window specified by thewin_ptr,
-frees the memory allocated for mlx_ptr and data, then exits the program 
+Helper function which destroys the window specified by the win_ptr,
+frees the memory allocated for mlx_ptr and data, then exits the program.
 */
 void	handle_exit(t_fdf *data)
 {

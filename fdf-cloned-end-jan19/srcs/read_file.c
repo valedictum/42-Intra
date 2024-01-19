@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 13:05:15 by atang             #+#    #+#             */
-/*   Updated: 2024/01/19 18:38:15 by atang            ###   ########.fr       */
+/*   Updated: 2024/01/19 22:43:15 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,23 @@ void	fill_matrix(int **data, char *line)
 		num_count++;
 	*data = (int *)malloc(sizeof(int) * num_count);
 	if (*data == NULL)
+	/*
+	This is the original
 	{
 		free(nums);
 		return ;
 	}
+	*/
+	{
+		while (nums[i])
+		{
+			free(nums[i]);
+			i++;
+		}
+		free(nums);
+		return ;
+	}
+	//The above is new
 	i = 0;
 	while (nums[i])
 	{

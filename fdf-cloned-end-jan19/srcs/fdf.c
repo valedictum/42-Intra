@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:56:00 by atang             #+#    #+#             */
-/*   Updated: 2024/01/19 16:50:06 by atang            ###   ########.fr       */
+/*   Updated: 2024/01/19 22:44:21 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	main(int argc, char **argv)
 {
 	t_fdf	*data;
 
-	data = NULL;
+	//data = NULL;
 	if (argc != 2 || file_name_error(argv[1]))
 		ft_printf("Error!\nUsage: ./fdf <filename>.fdf\n");
 	else if (file_exists(argv[1]))

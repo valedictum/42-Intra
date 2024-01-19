@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:49:11 by atang             #+#    #+#             */
-/*   Updated: 2024/01/06 12:59:23 by atang            ###   ########.fr       */
+/*   Updated: 2024/01/15 22:11:54 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h" 
+
+/* 
+- gnl_strlen calculates the length of a string
+*/
 
 size_t	gnl_strlen(const char *str)
 {
@@ -23,7 +27,12 @@ size_t	gnl_strlen(const char *str)
 }
 
 /* 
-- gnl_strlen calculates the length of a string
+- gnl_strchr searches for a target character in an input string
+- fn checks if 'str' is NULL or if 'target_char' is the null-terminator, then 
+it iterates through 'str' and returns a pointer to the first occurrence of the
+'target_char' if found or NULL if not found
+- FOR GNL: used to locate the newline character ('\n') in the 'stash' buffer 
+to determine if a complete line is available for extraction   
 */
 
 char	*gnl_strchr(char *str, int target_char)
@@ -45,13 +54,15 @@ char	*gnl_strchr(char *str, int target_char)
 }
 
 /* 
-- gnl_strchr searches for a target character in an input string
-- fn checks if 'str' is NULL or if 'target_char' is the null-terminator, then 
-it iterates through 'str' and returns a pointer to the first occurrence of the
-'target_char' if found or NULL if not found
-- FOR GNL: used to locate the newline character ('\n') in the 'stash' buffer 
-to determine if a complete line is available for extraction   
-*/
+- gnl_strjoin concatenates two strings together, 'first str' and 'second str'
+- fn checks if 'first_str' is NULL, and if so, initialises it as an empty string.
+Memory is then dynamically allocated for 'joined_str' to store the concatenated 
+result and then the characters are copied from 'first_str' and 'second_str' into
+'joined str'. 'Joined_str' is then null-terminated, and the memory allocated for 
+'first_str' is freed.
+- FOR GNL: concatenates partial lines from the file with the 'stash' buffer
+to build complete lines 
+ */
 
 char	*gnl_strjoin(char *first_str, char *second_str)
 {
@@ -81,17 +92,13 @@ char	*gnl_strjoin(char *first_str, char *second_str)
 	free(first_str);
 	return (joined_str);
 }
+
 /* 
-
-- gnl_strjoin concatenates two strings together, 'first str' and 'second str'
-- fn checks if 'first_str' is NULL, and if so, initialises it as an empty string.
-Memory is then dynamically allocated for 'joined_str' to store the concatenated 
-result and then the characters are copied from 'first_str' and 'second_str' into
-'joined str'. 'Joined_str' is then null-terminated, and the memory allocated for 
-'first_str' is freed.
-- FOR GNL: concatenates partial lines from the file with the 'stash' buffer
-to build complete lines 
-
+- gnl_initialise_str initialises an empty string
+- fn dynamically allocates memory for a single null-terminated character ('\0') 
+and returns a pointer to it
+- FOR GNL: initiliases an empty 'stash' buffer when the function is first called 
+or when a line has been completely extracted
  */
 
 char	*gnl_initialise_str(void)
@@ -104,11 +111,3 @@ char	*gnl_initialise_str(void)
 	*string = '\0';
 	return (string);
 }
-
-/* 
-- gnl_initialise_str initialises an empty string
-- fn dynamically allocates memory for a single null-terminated character ('\0') 
-and returns a pointer to it
-- FOR GNL: initiliases an empty 'stash' buffer when the function is first called 
-or when a line has been completely extracted
- */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:48:14 by atang             #+#    #+#             */
-/*   Updated: 2024/01/19 19:20:35 by atang            ###   ########.fr       */
+/*   Updated: 2024/01/19 22:49:02 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,10 +181,13 @@ char	*get_next_line(int fd, char **line)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		if (stash)
-			free(stash);
+		//Got rid of if line here
+		free(stash);
 		return (NULL);
 	}
+	//Added this line here
+	free(stash);
+	// Above
 	stash = read_and_append_lines(fd, stash);
 	if (!stash)
 	{

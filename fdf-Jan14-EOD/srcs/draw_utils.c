@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:36:22 by atang             #+#    #+#             */
-/*   Updated: 2024/01/14 18:19:49 by atang            ###   ########.fr       */
+/*   Updated: 2024/01/15 22:29:07 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /*
 Helper function to calculate the maximum between 2 values (i.e. the larger 
-value)
+value).
 */
 
 int	max(int a, int b)
@@ -27,7 +27,7 @@ int	max(int a, int b)
 }
 
 /*
-Helper function to calculate the modulus to find the absolute value
+Helper function to calculate the absolute value of a given float value.
 */
 
 float	mod(float a)
