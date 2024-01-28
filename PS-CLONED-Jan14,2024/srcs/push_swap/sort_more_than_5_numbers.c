@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:28:54 by atang             #+#    #+#             */
-/*   Updated: 2024/01/15 07:16:40 by sentry           ###   ########.fr       */
+/*   Updated: 2024/01/21 11:25:21 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ void chunk_sort_3(t_stack_node **stack_a, t_stack_node **stack_b, int *operation
                     add_to_chunk(&chunk_head, &chunk_tail, current);
                 }
             }
+			//if (current->next != NULL)
             current = current->next;
+			//else 
+			//	return ;
         }
         if (chunk_head != NULL)
         {
