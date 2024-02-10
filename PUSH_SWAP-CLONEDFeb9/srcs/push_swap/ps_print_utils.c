@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ps_print_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:44:35 by atang             #+#    #+#             */
-/*   Updated: 2024/02/04 19:41:05 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/10 15:39:44 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ps_print_stack(t_stack_node *stack)
 {
-	int	position;
+	//int	position;
 
-	position = 1;
+	//position = 1;
 	while (stack != NULL)
 	{
 		ft_printf(" %d\n", stack->value);
@@ -26,9 +26,9 @@ void	ps_print_stack(t_stack_node *stack)
 
 void	ps_print_stack_start_finish(t_stack_node *stack)
 {
-	int	position;
+	//int	position;
 
-	position = 1;
+	//position = 1;
 	while (stack != NULL)
 	{
 		ft_printf(" %d (Position:%d, Rank:%d)\n", stack->value,

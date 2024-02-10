@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chunk_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 17:14:50 by atang             #+#    #+#             */
-/*   Updated: 2024/01/28 12:33:19 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:08:53 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,13 @@ void	push_chunk_to_b(t_stack_node **stack_a, t_stack_node **stack_b,
 {
 	t_stack_node	*chunk_element;
 	t_chunk_node	*temp;
-
+	
+    if (stack_a == NULL || stack_b == NULL || chunk_head == NULL || operation_count == NULL)
+	{
+        // Handle null pointer references
+        // Add appropriate error handling or logging
+        return;
+    }
 	while (*chunk_head != NULL)
 	{
 		chunk_element = (*chunk_head)->element;

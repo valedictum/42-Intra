@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations_push.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:22:25 by atang             #+#    #+#             */
-/*   Updated: 2023/10/21 10:09:32 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/10 15:39:08 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	pb(t_stack_node	**stack_a, t_stack_node **stack_b, int *operation_count)
 {
-	int				value;
+	//int				value;
 	t_stack_node	*temp;
 
 	if (*stack_a != NULL)
 	{
-		value = (*stack_a)->value;
+		//value = (*stack_a)->value;
 		temp = *stack_a;
 		*stack_a = (*stack_a)->next;
 		temp->next = *stack_b;

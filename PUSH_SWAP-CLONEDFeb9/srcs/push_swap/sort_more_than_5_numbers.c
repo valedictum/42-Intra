@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_more_than_5_numbers.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:28:54 by atang             #+#    #+#             */
-/*   Updated: 2024/02/04 19:53:09 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/10 17:05:45 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void chunk_sort_2(t_stack_node **stack_a, t_stack_node **stack_b,
     }
 }
 
+/*
+// OG 4
 void	chunk_sort_4(t_stack_node **stack_a, t_stack_node **stack_b,
 			int *operation_count)
 {
@@ -134,6 +136,48 @@ void	chunk_sort_4(t_stack_node **stack_a, t_stack_node **stack_b,
 		else
 			return ;
 	}
+}
+*/
+
+
+
+void chunk_sort_4(t_stack_node **stack_a, t_stack_node **stack_b, int *operation_count)
+{
+    t_stack_node *current;
+    t_chunk_node *chunk_head;
+    t_chunk_node *chunk_tail;
+    int max_rank = get_max_rank(*stack_a);
+    int chunk_size = max_rank / 4;
+    int remaining_elements = max_rank % 4;
+    int i;
+
+	i = 0;
+    while (i < 4)
+    {
+        current = *stack_a;
+        set_chunk_null(&chunk_head, &chunk_tail);
+        while (current != NULL && !is_sorted(*stack_a))
+        {
+            if (current->rank >= (i * chunk_size + 1) && current->rank <= ((i + 1) * chunk_size))
+                add_to_chunk(&chunk_head, &chunk_tail, current);
+            current = current->next;
+		}
+        // Handle remaining elements in the last chunk
+        if (i == 3 && remaining_elements > 0)
+        {
+            while (current != NULL)
+            {
+                add_to_chunk(&chunk_head, &chunk_tail, current);
+                current = current->next;
+            }
+        }
+		ft_printf("here");
+        if (chunk_head != NULL)
+            push_chunk_to_b(stack_a, stack_b, &chunk_head, operation_count);
+        else
+            return;
+		i++;
+    }
 }
 
 void	chunk_sort_100(t_stack_node **stack_a, t_stack_node **stack_b,

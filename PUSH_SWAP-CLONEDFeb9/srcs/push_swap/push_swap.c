@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 10:22:25 by atang             #+#    #+#             */
-/*   Updated: 2024/02/04 19:50:38 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/10 16:53:15 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,7 @@ void	choose_sorting_algorithm(t_stack_node **stack_a, t_stack_node **stack_b,
 	{
 		ps_sort_5_numbers(stack_a, stack_b, operation_count);
 	}
-	else if (num_elements == 6 || num_elements == 7)
-	{
-		chunk_sort_2(stack_a, stack_b, operation_count);
-		insertion_sort(stack_a, stack_b, operation_count);
-	}
-	else if (num_elements >= 8 && num_elements <= 19)
-	{
-		chunk_sort_3(stack_a, stack_b, operation_count);
-		insertion_sort(stack_a, stack_b, operation_count);
-	}
-	else if ((num_elements >= 20 && num_elements <= 49))
+	else if (num_elements >= 6 && num_elements <= 49)
 	{
 		chunk_sort_4(stack_a, stack_b, operation_count);
 		insertion_sort(stack_a, stack_b, operation_count);
@@ -84,6 +74,19 @@ int	main(int argc, char *argv[])
 }
 */
 
+void free_split_arguments(char **split_arguments)
+{
+    int i;
+	
+	i = 0;
+    while (split_arguments[i] != NULL)
+	{
+        free(split_arguments[i]);
+        i++;
+    }
+    free(split_arguments);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_stack_node	*stack_a;
@@ -91,14 +94,12 @@ int	main(int argc, char *argv[])
 	int				num_elements;
 	int				operation_count;
 	char			**split_arguments;
-	int				i;
 
 	stack_a = NULL;
 	stack_b = NULL;
 	num_elements = 0;
 	operation_count = 0;
-	i = 0;
-
+	argv++;
 	if (argc < 2)
 		ps_error_message_and_exit();
 	if (argc == 2)
@@ -111,13 +112,7 @@ int	main(int argc, char *argv[])
 		}
 		ps_parse_and_insert_arguments(&stack_a, split_arguments,
 			&num_elements);
-		i = 0;
-		while (split_arguments[i] != NULL)
-		{
-			free(split_arguments[i]);
-			i++;
-		}
-		free(split_arguments);
+		free_split_arguments(split_arguments);
 	}
 	else
 		ps_parse_and_insert_arguments(&stack_a, &argv[2], &num_elements);
