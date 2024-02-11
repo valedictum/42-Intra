@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:22:25 by atang             #+#    #+#             */
-/*   Updated: 2024/02/11 09:18:28 by sentry           ###   ########.fr       */
+/*   Updated: 2024/02/11 09:58:43 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	pb(t_stack_node	**stack_a, t_stack_node **stack_b, int *operation_count)
 {
-	//int				value;
 	t_stack_node	*temp;
 
 	if (*stack_a != NULL)
 	{
-		//value = (*stack_a)->value;
 		temp = *stack_a;
 		*stack_a = (*stack_a)->next;
 		temp->next = *stack_b;
@@ -29,7 +27,6 @@ void	pb(t_stack_node	**stack_a, t_stack_node **stack_b, int *operation_count)
 	(*operation_count)++;
 }
 
-
 void	pa(t_stack_node	**stack_b, t_stack_node **stack_a, int *operation_count)
 {
 	int				value;
@@ -38,7 +35,7 @@ void	pa(t_stack_node	**stack_b, t_stack_node **stack_a, int *operation_count)
 	if (*stack_a != NULL)
 	{
 		value = (*stack_a)->value;
-		*stack_b = ps_create_and_insert_node(*stack_b, value);
+		*stack_b = create_and_insert_node(*stack_b, value);
 		temp = *stack_a;
 		*stack_a = (*stack_a)->next;
 		free(temp);
@@ -46,8 +43,3 @@ void	pa(t_stack_node	**stack_b, t_stack_node **stack_a, int *operation_count)
 	ft_printf("pa\n");
 	(*operation_count)++;
 }
-
-/* 
-pa (push a): Take the first element at the top of b and put it at the top of a.
-Do nothing if b is empty.
- */

@@ -5,15 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sentry <sentry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/10 15:30:11 by sentry            #+#    #+#              #
-#    Updated: 2024/02/10 17:20:39 by sentry           ###   ########.fr        #
+#    Created: 2023/09/12 14:44:36 by atang             #+#    #+#              #
+#    Updated: 2024/02/11 10:55:07 by sentry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= push_swap
 CC				= gcc
 RM 				= rm -f
-CFLAGS 			= -fsanitize=address -g -Wall -Wextra -Werror -I$(PRINTF_DIR) -I$(INCS)
+CFLAGS 			= -fsanitize=address -Wall -Wextra -Werror -I$(PRINTF_DIR) -I$(INCS) -g
 LIBRARY 		= -L$(PRINTF_DIR) -lftprintf
 
 .SILENT:
@@ -23,39 +23,38 @@ PRINTF_DIR 		= $(ROOT_DIR)/libs/printf
 SRC_DIR 		= $(ROOT_DIR)/srcs/push_swap
 
 SRCS	= 	push_swap.c \
-			chunk_utils.c \
+			check.c \
+			error.c \
+			memory.c \
 			operations_push.c \
 			operations_reverse_rotate.c \
 			operations_rotate.c \
         	operations_swap.c \
-           	parse_arguments.c \
-           	ps_check_utils.c \
-			ps_find_utils.c \
-			ps_list_utils.c \
-			ps_memory_utils.c \
-			ps_print_utils.c \
-			ps_split.c \
-			rotate_to_top.c \
-			sort_2_or_3_numbers.c \
-			sort_5_numbers.c \
-			sort_more_than_5_numbers.c \
+           	parse.c \
+           	print.c \
+			sort_small.c \
+			split.c \
+			stack.c \
 
-OBJS	=	$(SRCS:.c=.o)
+OBJS			= $(addprefix $(SRC_DIR)/, $(SRCS:.c=.o))
 
 INCS = $(ROOT_DIR)/incs
 
-$(NAME): all
-
-all:
+$(NAME): $(OBJS)
 	make -C $(PRINTF_DIR)
-	$(CC) $(CFLAGS) -I $(INCS) -I $(PRINTF_DIR) $(addprefix $(SRC_DIR)/, $(SRCS)) -o $(NAME) $(LIBRARY)
+	$(CC) $(CFLAGS) -I $(INCS) -I $(PRINTF_DIR) $(OBJS) -o $(NAME) $(LIBRARY)
+
+all: $(NAME)
+
+$(OBJS): $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -I $(INCS) -I $(PRINTF_DIR) -c $< -o $@
 
 clean:
 	$(RM) $(OBJS)
 
-fclean:	clean
-	${RM} ${NAME}
-	$(MAKE) -C $(PRINTF_DIR) fclean
+fclean: clean
+	$(RM) $(NAME)
+	make -C $(PRINTF_DIR) fclean
 
 re: fclean all
 
