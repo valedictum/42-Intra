@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 11:40:53 by atang             #+#    #+#             */
-/*   Updated: 2024/02/11 16:23:20 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/16 11:14:33 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_stack_node
 typedef struct s_chunk_node
 {
 	t_stack_node		*element;
-	struct chunk_node	*next;
+	struct s_chunk_node	*next;
 }	t_chunk_node;
 
 typedef struct s_chunk_info
@@ -120,6 +120,8 @@ void			sort_5(t_stack_node	**stack_a, t_stack_node	**stack_b,
 // sort_large.c
 int				check_if_sorted_descending(t_stack_node *stack_a);
 void			chunk_sort_3(t_stack_node **stack_a, t_stack_node **stack_b,
+					int *operation_count);
+void			chunk_sort_500(t_stack_node **stack_a, t_stack_node **stack_b,
 					int *operation_count);
 void			insertion_sort(t_stack_node **stack_a, t_stack_node **stack_b,
 					int	*operation_count);

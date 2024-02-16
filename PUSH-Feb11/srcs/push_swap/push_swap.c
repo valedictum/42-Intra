@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 10:22:25 by atang             #+#    #+#             */
-/*   Updated: 2024/02/11 16:23:18 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/16 11:14:26 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,24 @@ void	choose_sort(t_stack_node **stack_a, t_stack_node **stack_b,
 		sort_3(stack_a, operation_count);
 	else if (num_elements <= 10)
 		sort_5(stack_a, stack_b, operation_count);
-	/*
-	else
+	else if (num_elements < 500)
 	{
 		chunk_sort_3(stack_a, stack_b, operation_count);
+		//ft_printf ("After chunk A:\n");
+		//print_stack(*stack_a);
+		//ft_printf ("After chunk B:\n");
+		//print_stack(*stack_b);
 		insertion_sort(stack_a, stack_b, operation_count);
 	}
-	*/
+	else if (num_elements <= 500)
+	{
+		chunk_sort_500(stack_a, stack_b, operation_count);
+		//ft_printf ("After chunk A:\n");
+		//print_stack(*stack_a);
+		//ft_printf ("After chunk B:\n");
+		//print_stack(*stack_b);
+		insertion_sort(stack_a, stack_b, operation_count);
+	}
 }
 
 int	main(int argc, char **argv)
@@ -65,8 +76,8 @@ int	main(int argc, char **argv)
 	stack_rank(stack_a);
 	//ft_printf ("Before choose sort:\n");
 	choose_sort(&stack_a, &stack_b, &operation_count, num_elements);
-	ft_printf ("After:\n");
-	print_stack(stack_a);
+	//ft_printf ("After:\n");
+	//print_stack(stack_a);
 	free_stack(&stack_a);
 	free_stack(&stack_b);
 	return (0);

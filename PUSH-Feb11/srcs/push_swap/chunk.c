@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   chunk.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:40:18 by atang             #+#    #+#             */
-/*   Updated: 2024/02/11 16:20:21 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/16 11:14:34 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*
 t_chunk_node	*create_chunk_node(t_stack_node *element)
 {
 	t_chunk_node	*new_chunk_node;
@@ -65,4 +64,3 @@ void	push_chunk_to_b(t_stack_node **stack_a, t_stack_node **stack_b,
 		free(temp);
 	}
 }
-*/
