@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 10:22:25 by atang             #+#    #+#             */
-/*   Updated: 2024/02/16 20:36:13 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/16 23:03:17 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ void	choose_sort(t_stack_node **stack_a, t_stack_node **stack_b,
 		sort_2(stack_a, operation_count);
 	else if (num_elements == 3)
 		sort_3(stack_a, operation_count);
+	else if (num_elements == 5)
+		sort_5(stack_a, stack_b, operation_count);
 	else if (num_elements < 500)
 	{
 		chunk_sort_3(stack_a, stack_b, operation_count);
 		insertion_sort(stack_a, stack_b, operation_count);
 	}
-	else if (num_elements <= 500)
+	else if (num_elements >= 500)
 	{
 		chunk_sort_500(stack_a, stack_b, operation_count);
 		insertion_sort(stack_a, stack_b, operation_count);

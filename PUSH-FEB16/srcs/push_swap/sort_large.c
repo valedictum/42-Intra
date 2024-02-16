@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_large.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:38:12 by atang             #+#    #+#             */
-/*   Updated: 2024/02/16 19:08:57 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/16 22:32:34 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ void	chunk_sort_500(t_stack_node **stack_a, t_stack_node **stack_b,
 	int				i;
 
 	i = 0;
-	while (i < 20)
+	while (i < 10)
 	{
 		current = *stack_a;
 		set_chunk_null(&chunk_head, &chunk_tail);
-		while (current != NULL && !check_if_sorted_descending(*stack_a))
+		while (current != NULL && !is_sorted(*stack_a))
 		{
-			if (current->rank >= (i * (max_rank(*stack_a) / 20) + 1)
+			if (current->rank >= (i * (max_rank(*stack_a) / 10) + 1)
 				&& current->rank <= ((i + 1) * (max_rank(*stack_a)
-						/ 20)))
+						/ 10)))
 				add_to_chunk(&chunk_head, &chunk_tail, current);
 			current = current->next;
 		}
