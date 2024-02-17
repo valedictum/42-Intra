@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 10:22:25 by atang             #+#    #+#             */
-/*   Updated: 2024/02/16 11:14:26 by sentry           ###   ########.fr       */
+/*   Updated: 2024/02/16 22:13:16 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	choose_sort(t_stack_node **stack_a, t_stack_node **stack_b,
 		sort_3(stack_a, operation_count);
 	else if (num_elements <= 10)
 		sort_5(stack_a, stack_b, operation_count);
-	else if (num_elements < 500)
+	else if (num_elements >= 500)
 	{
 		chunk_sort_3(stack_a, stack_b, operation_count);
 		//ft_printf ("After chunk A:\n");
@@ -30,7 +30,8 @@ void	choose_sort(t_stack_node **stack_a, t_stack_node **stack_b,
 		//print_stack(*stack_b);
 		insertion_sort(stack_a, stack_b, operation_count);
 	}
-	else if (num_elements <= 500)
+	/*
+	else if (num_elements < 500)
 	{
 		chunk_sort_500(stack_a, stack_b, operation_count);
 		//ft_printf ("After chunk A:\n");
@@ -39,6 +40,7 @@ void	choose_sort(t_stack_node **stack_a, t_stack_node **stack_b,
 		//print_stack(*stack_b);
 		insertion_sort(stack_a, stack_b, operation_count);
 	}
+	*/
 }
 
 int	main(int argc, char **argv)

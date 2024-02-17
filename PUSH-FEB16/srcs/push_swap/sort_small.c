@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_small.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:16:37 by sentry            #+#    #+#             */
-/*   Updated: 2024/02/16 16:28:38 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/16 23:33:59 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,79 +44,20 @@ void	sort_3(t_stack_node **stack_a, int *operation_count)
 		ra(stack_a, operation_count);
 }
 
-/*
-void	sort_5(t_stack_node	**stack_a, t_stack_node	**stack_b,
-		int	*operation_count)
+void	insertion_sort_small(t_stack_node **stack_a, t_stack_node **stack_b,
+		int *operation_count)
 {
 	t_stack_node	*current;
-	t_stack_node	*target_element;
-	int				target_rank;
-
-	current = *stack_a;
-	target_element = NULL;
-	target_rank = 1;
-	while ((current != NULL) && target_rank <= stack_size(*stack_a))
-	{
-		while (current != target_element)
-		{
-			target_element = find_rank(stack_a, target_rank);
-			if (target_element == *stack_a)
-			{
-				pb(stack_a, stack_b, operation_count);
-				target_rank++;
-				current = *stack_a;
-				// TESTING FROM HERE
-				if (*stack_a != NULL && (*stack_a)->next != NULL
-					&& (*stack_a)->rank > (*stack_a)->next->rank)
-				{
-					if (*stack_b != NULL && (*stack_b)->next != NULL
-						&& (*stack_b)->rank < (*stack_b)->next->rank)
-						ss(stack_a, stack_b, operation_count);
-					else
-						sa(stack_a, operation_count);
-				}
-				break;
-				// TO HERE
-			}
-			else if (current->position <= stack_size(*stack_a) / 2)
-				ra(stack_a, operation_count);
-			else
-				rra(stack_a, operation_count);
-			if (current == target_element)
-				break ;
-		}
-	}
-	while (*stack_b != NULL)
-	{
-		pa(stack_a, stack_b, operation_count);
-	}
-}
-*/
-
-void	insert_in_order(t_stack_node **stack_a, t_stack_node **stack_b,
-					int *operation_count)
-{
-	int	current_rank;
 
 	while (*stack_b != NULL)
 	{
-		current_rank = (*stack_b)->rank;
-		if (*stack_b != NULL && (*stack_a == NULL
-				|| current_rank >= (*stack_a)->rank))
-		{
+		current = *stack_b;
+		if (*stack_a == NULL || current->value > (*stack_a)->value)
 			pa(stack_a, stack_b, operation_count);
-		}
-		while (*stack_a != NULL && current_rank > (*stack_a)->rank)
-		{
+		else
 			ra(stack_a, operation_count);
-		}
-		while (*stack_a != NULL && current_rank < (*stack_a)->rank)
-		{
-			rra(stack_a, operation_count);
-		}
 	}
 }
-
 void	sort_5(t_stack_node **stack_a, t_stack_node **stack_b,
 			int *operation_count)
 {
@@ -125,20 +66,18 @@ void	sort_5(t_stack_node **stack_a, t_stack_node **stack_b,
 		pb(stack_a, stack_b, operation_count);
 		if (stack_size(*stack_a) == 3)
 		{
-			ft_printf("Now sorted 3 on A:\n");
+			//ft_printf("Now sorted 3 on A:\n");
 			sort_3(stack_a, operation_count);
-			ft_printf("Sorted 2 on B:\n");
-			sort_2(stack_b, operation_count);
-			ft_printf("Now both sorted\n");
-			ft_printf("Stack A:\n");
-			print_stack(*stack_a);
-			ft_printf("Stack B:\n");
-			print_stack(*stack_b);
+			//ft_printf("Sorted 2 on B:\n");
+			if (*stack_b != NULL && (*stack_b)->next != NULL)
+			{
+				if ((*stack_b)->value < (*stack_b)->next->value)
+				{
+					sb(stack_b, operation_count);
+				}
+			}
+			insertion_sort_small(stack_a, stack_b, operation_count);
 			break ;
 		}
-	}
-	while (*stack_b != NULL)
-	{
-		insert_in_order(stack_a, stack_b, operation_count);
 	}
 }
