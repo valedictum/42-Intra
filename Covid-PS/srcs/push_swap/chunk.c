@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:40:18 by atang             #+#    #+#             */
-/*   Updated: 2024/02/20 15:57:48 by sentry           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:58:08 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	push_chunk_to_b(t_stack_node **stack_a, t_stack_node **stack_b,
 {
 	t_stack_node	*chunk_element;
 	t_chunk_node	*temp;
-	
+
 	while (*chunk_head != NULL)
 	{
 		chunk_element = (*chunk_head)->element;

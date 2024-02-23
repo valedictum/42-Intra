@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_helpers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:20:53 by atang             #+#    #+#             */
-/*   Updated: 2024/02/17 12:36:48 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/21 14:02:46 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	process_chunk_500(t_stack_node **stack_a, t_stack_node **stack_b,
 	set_chunk_null(&chunk_head, &chunk_tail);
 	while (current != NULL && !check_if_sorted_descending(*stack_a))
 	{
-		if (is_in_chunk_range(current, stack_a, i, 20))
+		if (is_in_chunk_range(current, stack_a, i, 10))
 			add_to_chunk(&chunk_head, &chunk_tail, current);
 		current = current->next;
 	}

@@ -3,59 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 22:32:56 by sentry            #+#    #+#             */
-/*   Updated: 2024/02/17 10:50:35 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/21 14:10:17 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*
-// OG
-int	ps_atoi(const char *str)
-{
-	int	result;
-	int	sign;
-	int	sign_encountered;
-	int	digit;
-
-	result = 0;
-	sign = 1;
-	sign_encountered = 0;
-	while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r'
-		|| *str == '\v' || *str == '\f')
-	{
-		str++;
-	}
-	if (*str == '-')
-	{
-		sign = -1;
-		sign_encountered = 1;
-		str++;
-	}
-	else if (*str == '+')
-	{
-		sign_encountered = 1;
-		str++;
-	}
-	while (*str >= '0' && *str <= '9')
-	{
-		digit = *str - '0';
-		if (result > (INT_MAX - digit) / 10)
-		{
-			error_message();
-			exit(1);
-		}
-		result = (result * 10) + digit;
-		str++;
-	}
-	if (sign_encountered && result == 0)
-		error_message();
-	return (result * sign);
-}
-*/
 const char	*skip_whitespace(const char *str)
 {
 	while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r'

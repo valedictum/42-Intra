@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 09:16:37 by sentry            #+#    #+#             */
-/*   Updated: 2024/02/20 13:27:30 by sentry           ###   ########.fr       */
+/*   Updated: 2024/02/21 12:41:03 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,37 +44,39 @@ void	sort_3(t_stack_node **stack_a, int *operation_count)
 		ra(stack_a, operation_count);
 }
 
+static void	move_element_back(t_stack_node **stack_a, t_stack_node **stack_b,
+			int *operation_count, int *i)
+{
+	pa(stack_a, stack_b, operation_count);
+	(*i)--;
+}
+
 void	sort_5(t_stack_node **stack_a, t_stack_node **stack_b,
 			int *operation_count)
 {
-	int		target_rank;
-	int 	i;
-	
+	int				target_rank;
+	int				i;
+	t_stack_node	*target_element;
+
 	i = 0;
 	target_rank = 1;
 	while (!is_sorted(*stack_a))
 	{
 		while (*stack_a != NULL && target_rank <= 2)
 		{
-			t_stack_node *target_element = find_rank(stack_a, target_rank);
+			target_element = find_rank(stack_a, target_rank);
 			rotate_to_top_of_a(stack_a, target_element, operation_count);
 			pb(stack_a, stack_b, operation_count);
 			target_rank++;
 			i++;
 		}
 		if (stack_size(*stack_a) == 3)
-		{
 			sort_3(stack_a, operation_count);
-		}
 		if (i > 0)
 		{
-			pa(stack_a, stack_b, operation_count);
-			i--;
+			move_element_back(stack_a, stack_b, operation_count, &i);
 		}
 		else
-        {
-			break;
-        }
+			break ;
 	}
 }
-

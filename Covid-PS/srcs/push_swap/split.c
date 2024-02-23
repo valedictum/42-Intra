@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 22:38:21 by sentry            #+#    #+#             */
-/*   Updated: 2024/02/16 16:28:40 by atang            ###   ########.fr       */
+/*   Updated: 2024/02/21 14:10:11 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,39 +98,3 @@ char	**ft_split(char const *s, char c)
 	result[i] = NULL;
 	return (result);
 }
-
-/*
-// VERSION WHICH PRINTS ELEMENT COUNT AND ELEMENTS
-char	**ft_split(char const *s, char c)
-{
-	int		word_count;
-	char	**result;
-	int		i;
-
-	i = 0;
-	if (s == NULL)
-		return (NULL);
-	word_count = count_words(s, c);
-	// Element count below:
-	ft_printf("Element count: %d\n", word_count);
-	result = (char **)malloc((word_count + 1) * sizeof(char *));
-	if (result == NULL)
-		return (NULL);
-	i = 0;
-	while (i < word_count)
-	{
-		result[i] = extract_word(&s, c);
-		if (!result[i])
-		{
-			free_words(result);
-			free(result);
-			return (NULL);
-		}
-		// Elements below:
-		ft_printf("Element %d: %s\n", i, result[i]);
-		i++;
-	}
-	result[i] = NULL;
-	return (result);
-}
-*/

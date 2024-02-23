@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:38:12 by atang             #+#    #+#             */
-/*   Updated: 2024/02/20 16:12:14 by sentry           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:02:53 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	is_in_range(int rank, int i, int max_rank)
 			<= (i + 1) * (max_rank / 3));
 }
 
-
 void	chunk_sort_3(t_stack_node **stack_a, t_stack_node **stack_b,
 			int *operation_count, int max_rank)
 {
@@ -50,12 +49,14 @@ void	chunk_sort_3(t_stack_node **stack_a, t_stack_node **stack_b,
 	{
 		current = *stack_a;
 		set_chunk_null(&chunk_head, &chunk_tail);
-		while (current != NULL && !is_sorted(*stack_a)) {
+		while (current != NULL && !is_sorted(*stack_a))
+		{
 			if (is_in_range(current->rank, i, max_rank))
 				add_to_chunk(&chunk_head, &chunk_tail, current);
 			current = current->next;
 		}
-		if (chunk_head != NULL) {
+		if (chunk_head != NULL)
+		{
 			push_chunk_to_b(stack_a, stack_b, &chunk_head, operation_count);
 			i++;
 		}
@@ -70,14 +71,13 @@ void	chunk_sort_500(t_stack_node **stack_a, t_stack_node **stack_b,
 	int	i;
 
 	i = 0;
-	while (i < 20)
+	while (i < 10)
 	{
 		process_chunk_500(stack_a, stack_b, operation_count, i);
 		i++;
 	}
 }
 
-// OG
 void	insertion_sort(t_stack_node **stack_a, t_stack_node **stack_b,
 			int *operation_count)
 {
