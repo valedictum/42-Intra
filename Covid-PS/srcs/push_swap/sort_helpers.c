@@ -6,11 +6,35 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:20:53 by atang             #+#    #+#             */
-/*   Updated: 2024/02/21 14:02:46 by sentry           ###   ########.fr       */
+/*   Updated: 2024/02/25 12:14:51 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	check_if_sorted_descending(t_stack_node *stack_a)
+{
+	int	prev_value;
+
+	prev_value = INT_MAX;
+	while (stack_a)
+	{
+		if (prev_value < stack_a->value)
+			return (0);
+		prev_value = stack_a->value;
+		stack_a = stack_a->next;
+	}
+	return (1);
+}
+
+int	is_in_range(int rank, int i, int max_rank)
+{
+	if (i == 2)
+		return (rank >= i * (max_rank / 3) + 1 && rank <= max_rank);
+	else
+		return (rank >= i * (max_rank / 3) + 1 && rank
+			<= (i + 1) * (max_rank / 3));
+}
 
 int	is_in_chunk_range(t_stack_node *current, t_stack_node **stack_a, int i,
 		int total_chunks)

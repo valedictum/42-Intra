@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
+#    By: sentry <sentry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/12 14:44:36 by atang             #+#    #+#              #
-#    Updated: 2024/02/17 11:46:55 by atang            ###   ########.fr        #
+#    Updated: 2024/02/25 12:05:50 by sentry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= push_swap
 CC				= gcc
 RM 				= rm -f
-CFLAGS 			= -Wall -Wextra -Werror -I$(PRINTF_DIR) -I$(INCS) -g
+CFLAGS 			= -g -Wall -Wextra -Werror -I$(PRINTF_DIR) -I$(INCS) -g
 LIBRARY 		= -L$(PRINTF_DIR) -lftprintf
 
 .SILENT:
@@ -33,7 +33,6 @@ SRCS	= 	push_swap.c \
 			operations_rotate.c \
         	operations_swap.c \
            	parse.c \
-           	print.c \
 			sort_helpers.c \
 			sort_small.c \
 			sort_large.c \
