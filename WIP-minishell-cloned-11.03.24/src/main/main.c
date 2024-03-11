@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:38:42 by tday              #+#    #+#             */
-/*   Updated: 2024/03/11 15:05:37 by atang            ###   ########.fr       */
+/*   Updated: 2024/03/11 17:16:36 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv, char **envv)
 {
 	t_msh	*msh;
 	char	*input = NULL;
+	int		exit_status;
 
 	(void)argv;
 	if (argc != 1)
@@ -38,9 +39,20 @@ int	main(int argc, char **argv, char **envv)
 		if (ft_strcmp((char *)msh->tokens->data, "pwd") == 0)
 			ft_pwd(msh);
 		if (ft_strcmp((char *)msh->tokens->data, "exit") == 0)
-			ft_exit(msh);
+		{
+			if (msh->tokens->next != NULL)
+			{
+				exit_status = ft_atoi((char *)msh->tokens->next->data);
+				lst_del_all(&(msh)->tokens, free_string);
+				free(input);
+				ft_exit(exit_status);
+				continue ;
+			}
+			else
+				ft_exit(exit_status);
+		}
 		if (ft_strcmp((char *)msh->tokens->data, "export") == 0)
-			ft_export(msh); 
+			ft_export(msh);
 		if (msh->tokens)
 		{
 			debug("still tokens");

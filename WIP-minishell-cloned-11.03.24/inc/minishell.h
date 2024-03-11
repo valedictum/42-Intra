@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:45:23 by tday              #+#    #+#             */
-/*   Updated: 2024/03/11 15:05:36 by atang            ###   ########.fr       */
+/*   Updated: 2024/03/11 15:51:39 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		extract_commands(t_msh *msh);
 void		ft_pwd(t_msh *msh);
 void		ft_echo(t_msh *msh);
 void		ft_env(t_msh *msh);
-void		ft_exit(t_msh *msh);
+void		ft_exit(int exit_status);
 void		ft_export(t_msh *msh);
 
 /* clean_up */
