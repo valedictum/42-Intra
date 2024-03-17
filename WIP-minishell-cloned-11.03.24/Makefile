@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
+#    By: sentry <sentry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 21:50:54 by tday              #+#    #+#              #
-#    Updated: 2024/03/11 15:06:39 by atang            ###   ########.fr        #
+#    Updated: 2024/03/17 14:10:27 by sentry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC_DIRS		:=		src/builtins src/main #src/(add folder names)
 INC_DIR			:=		inc
 LIBFT_DIR		:=		libft
 LIBFT			:=		$(LIBFT_DIR)/libft.a
-SRCS 			:= 		$(addprefix src/builtins/, pwd.c echo.c env.c exit.c export.c)\
+SRCS 			:= 		$(addprefix src/builtins/, pwd.c echo.c env.c exit.c export.c cd.c)\
 						$(addprefix src/main/, main.c)							\
 						$(addprefix src/initialisation/, init_minishell.c		\
 									clone_envv_to_dlist.c)						\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:38:42 by tday              #+#    #+#             */
-/*   Updated: 2024/03/11 17:16:36 by atang            ###   ########.fr       */
+/*   Updated: 2024/03/17 16:39:30 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,24 @@ int	main(int argc, char **argv, char **envv)
 			ft_env(msh);
 		if (ft_strcmp((char *)msh->tokens->data, "pwd") == 0)
 			ft_pwd(msh);
+		if (ft_strcmp((char *)msh->tokens->data, "cd") == 0)
+            ft_cd(msh);
 		if (ft_strcmp((char *)msh->tokens->data, "exit") == 0)
 		{
 			if (msh->tokens->next != NULL)
 			{
 				exit_status = ft_atoi((char *)msh->tokens->next->data);
-				lst_del_all(&(msh)->tokens, free_string);
-				free(input);
-				ft_exit(exit_status);
-				continue ;
+				if (exit_status > 255 || exit_status < 0 || !exit_status)
+					error_exit("Invalid exit status");
+				else
+				{
+					lst_del_all(&(msh)->tokens, free_string);
+					cleanup_and_exit(input, msh, exit_status);
+					continue ;
+				}
 			}
 			else
-				ft_exit(exit_status);
+				cleanup_and_exit(input, msh, exit_status);
 		}
 		if (ft_strcmp((char *)msh->tokens->data, "export") == 0)
 			ft_export(msh);

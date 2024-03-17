@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:45:23 by tday              #+#    #+#             */
-/*   Updated: 2024/03/11 15:51:39 by atang            ###   ########.fr       */
+/*   Updated: 2024/03/17 16:34:25 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void		extract_commands(t_msh *msh);
 /* builtins */
 
 void		ft_pwd(t_msh *msh);
+void    	ft_cd(t_msh	*msh);
 void		ft_echo(t_msh *msh);
 void		ft_env(t_msh *msh);
 void		ft_exit(int exit_status);
@@ -92,6 +93,7 @@ void		ft_export(t_msh *msh);
 /* clean_up */
 
 void		clean_exit(t_msh *msh, int exit_status);
+void		cleanup_and_exit(char *input, t_msh *msh, int exit_status);
 void		msh_error_exit(t_msh *msh, char *error_message);
 void		free_cloned_list(t_dlist *head);
 void		free_everything(t_msh *msh);
