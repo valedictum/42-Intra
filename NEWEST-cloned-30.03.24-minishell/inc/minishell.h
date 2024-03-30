@@ -96,8 +96,8 @@ void		process_fds(t_msh *msh);
 
 /* signals.c */
 
-void		handle_interrupt(int signal);
-void		handle_quit(int	signal);
+void		handle_interrupt(int sig);
+void		handle_quit(int	sig);
 void		setup_signal_handlers(void);
 void		reset_signal_handlers(void);
 
