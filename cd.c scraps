@@ -1,0 +1,276 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/17 11:53:35 by sentry            #+#    #+#             */
+/*   Updated: 2024/03/24 15:43:36 by atang            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../inc/minishell.h"
+
+/*
+void ft_cd(t_msh *msh) 
+{
+    char cwd[PATH_MAX];
+    t_cmd *cmd_struct;
+    char *path;
+    t_dlist *current;
+    char *home_dir;
+    t_envv *env_var;
+    t_dlist *oldpwd_node = find_envvar_node(msh->envvar, "OLDPWD");
+    char *old_pwd;
+    char *new_pwd;
+
+    cmd_struct = (t_cmd *)msh->cmd_queue->data;
+    if (!cmd_struct->arguments || (ft_strcmp(cmd_struct->arguments->data,
+		".") == 0))
+	{
+        if (ft_strcmp(cmd_struct->arguments->data, ".") == 0)
+            return;
+        home_dir = getenv("HOME");
+        if (home_dir == NULL)
+		{
+            printf("cd: HOME directory not set\n");
+            return;
+        }
+        path = ft_strdup(home_dir);
+        if (path == NULL)
+		{
+            perror("strdup");
+            return;
+        }
+    }
+	else if (ft_strcmp(cmd_struct->arguments->data, "..") == 0)
+	{
+        if (chdir("..") != 0)
+		{
+            perror("cd");
+            return;
+        }
+    }
+	else
+	{
+        path = ft_strdup(cmd_struct->arguments->data);
+        if (path == NULL)
+		{
+            perror("strdup");
+            return;
+        }
+    }
+    old_pwd = getcwd(NULL, 0);
+    if (old_pwd == NULL)
+	{
+        perror("getcwd");
+        free(path);
+        return;
+    }
+    if (path && chdir(path) != 0)
+	{
+        perror("cd");
+        free(path);
+        free(old_pwd);
+        return;
+    }
+    new_pwd = getcwd(cwd, sizeof(cwd));
+    if (new_pwd == NULL)
+	{
+        perror("getcwd");
+        free(path);
+        free(old_pwd);
+        return;
+    }
+    current = msh->envvar;
+    while (current)
+	{
+        env_var = (t_envv *)current->data;
+        if (ft_strcmp(env_var->env_key, "PWD") == 0)
+		{
+            free(env_var->env_value);
+            env_var->env_value = ft_strdup(new_pwd);
+            if (env_var->env_value == NULL)
+			{
+                perror("strdup");
+                free(path);
+                return;
+            }
+        }
+        current = current->next;
+    }
+    if (oldpwd_node)
+	{
+        update_node_value(oldpwd_node, old_pwd);
+    }
+    printf("%s\n", cwd);
+    free(path);
+    free(old_pwd);
+}
+*/
+
+static char	*get_new_path(t_cmd	*cmd_struct)
+{
+	char	*path;
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!cmd_struct->arguments)
+		path = ft_strdup(getenv("HOME"));
+	else if (ft_strcmp(cmd_struct->arguments->data, ".") == 0)
+		path = ft_strdup(cwd);
+	else if (ft_strcmp(cmd_struct->arguments->data, "..") == 0)
+		path = NULL;
+	else
+		path = ft_strdup(cmd_struct->arguments->data);
+	free(cwd);
+	return (path);
+}
+
+static void	update_env_vars(t_msh	*msh, char	*old_pwd, char	*new_pwd)
+{
+	t_dlist	*current;
+	t_envv	*env_var;
+
+	current = msh->envvar;
+	while (current)
+	{
+		env_var = (t_envv *)current->data;
+		if (ft_strcmp(env_var->env_key, "PWD") == 0)
+		{
+			free(env_var->env_value);
+			env_var->env_value = ft_strdup(new_pwd);
+		}
+		current = current->next;
+	}
+	update_node_value(find_envvar_node(msh->envvar, "OLDPWD"), old_pwd);
+}
+
+/*
+static void	free_resources(char	*path, char	*old_pwd)
+{
+	if (path)
+		free(path);
+	if (old_pwd)
+		free(old_pwd);
+}
+*/
+
+static void	free_resources(char *path, char *old_pwd)
+{
+	if (path && path != NULL)
+	{
+		free(path);
+	}
+	if (old_pwd && old_pwd != NULL)
+	{
+		free(old_pwd);
+	}
+}
+
+static void	free_and_return(char	*path, char	*old_pwd)
+{
+	free_resources(path, old_pwd);
+	return ;
+}
+
+void	ft_cd(t_msh	*msh)
+{
+	char	cwd[PATH_MAX];
+	char	*old_pwd;
+	char	*new_pwd;
+	char	*path;
+
+	path = get_new_path((t_cmd *)msh->cmd_queue->data);
+	if (path && access(path, F_OK) != 0)
+	{
+		perror("");
+		free_resources(path, NULL);
+		return ;
+	}
+	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd)
+		free_and_return(path, old_pwd);
+	if (path)
+	{
+		if (chdir(path) != 0)
+			free_and_return(path, old_pwd);
+	}
+	new_pwd = getcwd(cwd, sizeof(cwd));
+	if (!new_pwd)
+		free_and_return(path, old_pwd);
+	update_env_vars(msh, old_pwd, new_pwd);
+	//printf("%s\n", cwd);
+	free_resources(path, old_pwd);
+}
+
+/*
+void	ft_cd(t_msh	*msh)
+{
+	char	cwd[PATH_MAX];
+	char	*old_pwd;
+	char	*new_pwd;
+	char	*path;
+
+	path = get_new_path((t_cmd *)msh->cmd_queue->data);
+	if (!path && chdir("..") != 0)
+	{
+		//perror("cd");
+		return ;
+	}
+	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd)
+	{
+		//perror("getcwd");
+		free_and_return(path, NULL);
+	}
+	if (path && chdir(path) != 0)
+	{
+		//perror("cd");
+		free_and_return(path, old_pwd);
+	}
+	new_pwd = getcwd(cwd, sizeof(cwd));
+	if (!new_pwd)
+	{
+		//perror("getcwd");
+		free_and_return(path, old_pwd);
+	}
+	update_env_vars(msh, old_pwd, new_pwd);
+	printf("%s\n", cwd);
+	free_resources(path, old_pwd);
+}
+*/
+
+/*
+// THIS IS THE ONE
+void	ft_cd(t_msh	*msh)
+{
+	char	cwd[PATH_MAX];
+	char	*old_pwd;
+	char	*new_pwd;
+	char	*path;
+
+	path = get_new_path((t_cmd *)msh->cmd_queue->data);
+	if (!path && chdir("..") != 0)
+	{
+		perror("No such file or directory");
+		return ;
+		//free_and_return(path, NULL);
+	}
+	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd)
+		free_and_return(path, NULL);
+	if (path)
+	{
+		if (chdir(path) != 0)
+			free_and_return(path, old_pwd);
+	}
+	new_pwd = getcwd(cwd, sizeof(cwd));
+	if (!new_pwd)
+		free_and_return(path, old_pwd);
+	update_env_vars(msh, old_pwd, new_pwd);
+	printf("%s\n", cwd);
+	free_resources(path, old_pwd);
+}
+*/

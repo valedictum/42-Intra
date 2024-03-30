@@ -6,7 +6,7 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 21:50:54 by tday              #+#    #+#              #
-#    Updated: 2024/03/22 17:43:29 by atang            ###   ########.fr        #
+#    Updated: 2024/03/24 15:52:13 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRCS 			:= 		$(addprefix src/builtins/, pwd.c echo.c env.c export.c	\
 						#$(addprefix src/(add folder names)/, (add file names))
 OBJS 			:=		$(SRCS:.c=.o)
 CC				:=		gcc
-CFLAGS			:=		-Wall -Wextra -Werror -I$(INC_DIR) -g -fsanitize=address
+CFLAGS			:=		-Wall -Wextra -Werror -I$(INC_DIR)
 RM				:=		rm -f
 
 # Function definition
