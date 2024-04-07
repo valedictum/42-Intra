@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sentry <sentry@student.42.fr>              +#+  +:+       +#+         #
+#    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/03 21:50:54 by tday              #+#    #+#              #
-#    Updated: 2024/04/07 01:04:27 by sentry           ###   ########.fr        #
+#    Updated: 2024/04/07 15:55:38 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ WHITE			:=		\033[1;37m
 all:			$(NAME)
 
 $(NAME):		$(LIBFT) $(OBJS)
-				@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
+				@$(CC) $(CFLAGS) -L$(LIBFT_DIR) -lft -lreadline $(OBJS) -o $(NAME)
 				@echo "$(CYAN)Everything compiled and linked into executable: $(BLUE)$(NAME)$(DEFAULT_COLOUR)"
 				@echo "\n"
 
