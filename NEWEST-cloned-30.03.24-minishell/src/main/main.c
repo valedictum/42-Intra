@@ -12,6 +12,8 @@
 
 #include "../../inc/minishell.h"
 
+//extern int last_exit_status;
+
 int	main(int argc, char **argv, char **envv)
 {
 	t_msh	*msh;
@@ -36,9 +38,11 @@ int	main(int argc, char **argv, char **envv)
 		}
 		process_input(msh, input);
 		execute_commands(msh);
+		printf("Last exit status: %d\n", last_exit_status);
 		msh->num_of_cmds = 0;
 		free_input(msh, input);
 	}
+	//printf("Last exit status: %d\n", last_exit_status);
 	reset_signal_handlers(); // <- (CTRL-C and CTRL-\) ADD this line
 	free_everything(msh);
 	return (0);

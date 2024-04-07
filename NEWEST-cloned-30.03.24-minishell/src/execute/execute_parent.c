@@ -12,6 +12,8 @@
 
 #include "../../inc/minishell.h"
 
+int last_exit_status = 0;;
+
 static void	free_exec_arrays(char **env, char **arg)
 {
 	if (!env || !arg)
@@ -20,7 +22,8 @@ static void	free_exec_arrays(char **env, char **arg)
 	free(arg);
 }
 
-void	execute_parent(t_msh *msh, t_cmd *cmd_data)
+//void	execute_parent(t_msh *msh, t_cmd *cmd_data)
+int	execute_parent(t_msh *msh, t_cmd *cmd_data)
 {
 	char	**env;
 	char	**arg;
@@ -37,9 +40,22 @@ void	execute_parent(t_msh *msh, t_cmd *cmd_data)
 	else if (*pid == 0)
 		execute_child(msh, env, arg);
 	waitpid(*pid, &exit_status, 0); // move later
+	//Added
+	if (WIFEXITED(exit_status))
+	{
+        last_exit_status = WEXITSTATUS(exit_status);
+    }
+	else
+	{
+        last_exit_status = -1;
+    }
+	//
 	new_node = lst_new_node(pid);
 	if (!new_node)
 		msh_error_exit(msh, "exec_parent new_node error");
 	lst_add_tail(&msh->pids, new_node);
 	free_exec_arrays(env, arg);
+	//
+	return (exit_status);
+	//
 }

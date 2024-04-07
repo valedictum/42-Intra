@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace_substr.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tday <tday@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:06:16 by tday              #+#    #+#             */
-/*   Updated: 2024/02/25 21:39:33 by tday             ###   ########.fr       */
+/*   Updated: 2024/04/06 22:02:51 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 	none. The function modifies the str string by copying characters from the
 	temp string before the specified start index.
 */
+
+//OG TAS CODE
 static void	copy_pre_substr(char **str, char *temp, int *i, int start)
 {
 	while (*i < start)
@@ -37,6 +39,7 @@ static void	copy_pre_substr(char **str, char *temp, int *i, int start)
 		(*i)++;
 	}
 }
+
 
 /*
 	Summary
@@ -52,6 +55,8 @@ static void	copy_pre_substr(char **str, char *temp, int *i, int start)
 	Outputs
 	none. The function modifies the string str in place.
 */
+
+//OG TAS CODE
 static void	copy_substr(char **str, char *substr, int *i)
 {
 	int	j;
@@ -59,7 +64,13 @@ static void	copy_substr(char **str, char *substr, int *i)
 	j = 0;
 	while (substr[j])
 	{
-		str[0][*i] = substr[j];
+		// 06.04.24 - The below is the corrected version
+		 (*str)[*i] = substr[j];
+		//str[0][*i] = substr[j];
+		// The above causes the segmentation fault
+		// The above is incorrect as str is a pointer to char *
+		// but str[0] is dereferencing as it were an array of char 
+		// pointers  
 		(*i)++;
 		j++;
 	}
@@ -82,6 +93,8 @@ static void	copy_substr(char **str, char *substr, int *i)
 	Outputs
 	none. The function modifies the string str in place.
 */
+
+// OG TAS CODE
 static void	copy_post_substr(char **str, char *temp, int *i, int end)
 {
 	int	j;
@@ -109,6 +122,8 @@ static void	copy_post_substr(char **str, char *temp, int *i, int end)
 	Outputs
 	none. The modified string is passed back through the str parameter.
 */
+
+// OG TAS CODE
 void	ft_replace_substr(char **str, int start, int end, char *substr)
 {
 	int		total_length;
@@ -117,6 +132,10 @@ void	ft_replace_substr(char **str, int start, int end, char *substr)
 	int		i;
 	char	*temp;
 
+	// 06.04.24 Added 
+	if (!str || !*str)
+        return;
+	//
 	temp = ft_strdup(*str);
 	if (!temp)
 		return ;
@@ -131,7 +150,10 @@ void	ft_replace_substr(char **str, int start, int end, char *substr)
 	}
 	i = 0;
 	copy_pre_substr(str, temp, &i, start);
-	copy_substr(str, substr, &i);
+	// NEW below
+	copy_substr(&(*str)[0], substr, &i);
+	//OLD BELOW
+	//copy_substr(str, substr, &i);
 	copy_post_substr(str, temp, &i, end);
 	free(temp);
 }

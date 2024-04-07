@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_envvar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tday <tday@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 20:50:08 by tday              #+#    #+#             */
-/*   Updated: 2024/02/25 22:23:53 by tday             ###   ########.fr       */
+/*   Updated: 2024/04/06 22:29:50 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 	none. the function expands the environment variable in place within the
 	string.
 */
+
 void	expand_envvar(t_dlist *envvar, char **str, int *i)
 {
 	int		length;
