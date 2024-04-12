@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:38:42 by tday              #+#    #+#             */
-/*   Updated: 2024/03/24 15:52:14 by atang            ###   ########.fr       */
+/*   Updated: 2024/03/24 17:01:21 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,18 @@ int	main(int argc, char **argv, char **envv)
 	while (1)
 	{
 		input = get_input(msh, "prompt: ");
-		if (!input || input[0] == '\0')
+		if (!input)
+		//if (!input || input[0] == '\0')
 		{
 			free(input);
 			continue ;
 		}
+		if (input[0] == EOF)
+		{ // Check for EOF (Ctrl+D)
+            printf("\nExiting shell...\n");
+            free(input);
+            break;
+        }
 		if (input[0] == '1') // enter 1 to exit input loop
 		{
 			free(input);

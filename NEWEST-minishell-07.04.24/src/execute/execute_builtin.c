@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tday <tday@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:48:40 by tday              #+#    #+#             */
-/*   Updated: 2024/03/24 13:40:44 by tday             ###   ########.fr       */
+/*   Updated: 2024/04/07 17:49:38 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ void	execute_builtin(t_msh *msh, t_dlist *curr_cmd)
 		ft_cd(msh, cmd);
 	else if (ft_strcmp(cmd->command, "unset") == 0)
 		ft_unset(msh, cmd);
+	
 }
