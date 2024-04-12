@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tday <tday@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 16:37:02 by tday              #+#    #+#             */
-/*   Updated: 2023/12/23 21:39:48 by tday             ###   ########.fr       */
+/*   Updated: 2024/04/12 22:41:15 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,20 @@
 	Inputs
 	error: a string containing the error message to be printed.
 */
+
+/*
+// OG TAS CODE
 void	error_exit(const char *error)
 {
 	printf(RED"%s\n"DEF, error);
 	exit(EXIT_FAILURE);
+}
+*/
+
+void	error_exit(const char *error, t_msh *msh)
+{
+	printf(RED"%s\n"DEF, error);
+	exit(msh->last_exit_status);
 }
 
 /*

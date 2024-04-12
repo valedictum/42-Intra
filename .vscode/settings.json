@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "random": "c",
+        "unistd.h": "c",
+        "stdlib.h": "c",
+        "stddef.h": "c",
+        "push_swap.h": "c",
+        "functional": "c",
+        "sstream": "c",
+        "list.h": "c",
+        "minishell.h": "c"
+    }
+}
