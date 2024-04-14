@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tday <tday@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:50:49 by tday              #+#    #+#             */
-/*   Updated: 2024/04/13 19:46:37 by tday             ###   ########.fr       */
+/*   Updated: 2024/04/13 21:35:50 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*get_input(t_msh *msh)
 //	char	*input;
 
 	prompt = get_prompt(msh);
-	line = readline("prompt");
+	line = readline("prompt: ");
 	if (!line)
 	{
 		ft_printf("exit\n");
