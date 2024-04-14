@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:03:45 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/13 23:00:44 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/14 14:56:48 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_exit(t_msh *msh, t_cmd *cmd)
 		}
 		else
 		{
-			msh->last_exit_status = 2;
+			msh->last_exit_status = 255;
 			msh_error_exit(msh, "exit\nnumeric argument required");
 		}
 	}

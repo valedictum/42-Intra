@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:53:35 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/12 23:26:48 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/13 17:34:49 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ static void	free_and_return(char	*path, char	*old_pwd)
 	return ;
 }
 
-int		ft_cd(t_msh	*msh, t_cmd *cmd_struct)
-//void	ft_cd(t_msh	*msh, t_cmd *cmd_struct)
+int	ft_cd(t_msh	*msh, t_cmd *cmd_struct)
 {
 	char	cwd[PATH_MAX];
 	char	*old_pwd;

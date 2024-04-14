@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:38:42 by tday              #+#    #+#             */
-/*   Updated: 2024/04/14 15:39:02 by atang            ###   ########.fr       */
+/*   Updated: 2024/04/14 16:15:33 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ int	main(int argc, char **argv, char **envv)
 		debug("after get input");
 		if (ft_strcmp(msh->input, "") == 0)
 			continue ;
-		/* if (msh->input && msh->input[0] == '1') // enter 1 to exit input loop, remove later
-		{
-			free(msh->input);
-			break ;
-		} */
 		process_input(msh);
 		execute_commands(msh);
 		msh->num_of_cmds = 0;

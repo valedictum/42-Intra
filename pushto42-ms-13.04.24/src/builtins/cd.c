@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:53:35 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/14 12:48:56 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/14 14:37:14 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,14 @@ static int	free_and_return(char	*path, char	*old_pwd, int return_value)
 	Exit status of the builtin.
 */
 
+
+
+int	handle_too_many_args(void)
+{
+	ft_printf("cd: too many arguments\n");
+	return (1);
+}
+
 int	ft_cd(t_msh *msh, t_cmd *cmd_struct)
 {
 	char	cwd[PATH_MAX];
@@ -170,8 +178,9 @@ int	ft_cd(t_msh *msh, t_cmd *cmd_struct)
 
 	if (cmd_struct->arguments && cmd_struct->arguments->next != NULL)
 	{
-		ft_printf("cd: too many arguments\n");
-		return (1);
+		//ft_printf("cd: too many arguments\n");
+		//return (1);
+		return (handle_too_many_args());
 	}
 	path = get_new_path(cmd_struct);
 	if (path && access(path, F_OK) != 0)

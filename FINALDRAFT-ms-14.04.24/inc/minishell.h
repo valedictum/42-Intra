@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:45:23 by tday              #+#    #+#             */
-/*   Updated: 2024/04/14 15:06:11 by atang            ###   ########.fr       */
+/*   Updated: 2024/04/14 15:56:32 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ void		extract_commands(t_msh *msh);
 void		process_input(t_msh *msh);
 void		process_fds(t_msh *msh);
 void		handle_redirection(t_cmd *cmd, t_list **token_ptr);
-bool 		file_exists(const char *file_name);
+bool		file_exists(const char *file_name);
 
 /* signals.c */
 
 void		handle_interrupt(int sig);
-void		handle_quit(int	sig);
+void		handle_quit(int sig);
 void		setup_signal_handlers(void);
 void		reset_signal_handlers(void);
 
