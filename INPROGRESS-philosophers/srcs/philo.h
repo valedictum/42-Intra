@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:02:38 by atang             #+#    #+#             */
-/*   Updated: 2024/04/25 11:43:33 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/25 18:25:26 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define PHILO_H
 
 #include	<unistd.h> // write, usleep
-#include 	<stdio.h> //printf
+#include 	<stdio.h> // printf
 #include	<stdlib.h> // malloc, free
 #include    <limits.h>
 #include    <stdbool.h> 
@@ -22,7 +22,9 @@
                         // threads: create, join, detach
 #include    <sys/time.h> // gettimeofday
 #include    <limits.h> // INT_MAX
+#include 	<errno.h>
 
+/*
 ** ANSI Escape Sequences for Bold Text Colors
 ** Usage: 
 **     printf(R "This is red text." RST);
@@ -38,6 +40,18 @@
 # define M      "\033[1;35m"   /* Bold Magenta */
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
+
+// OPCODE for mutex | thread fns
+typedef enum e_opcode
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH,
+}		t_opcode;
 
 typedef pthread_mutex_t t_mtx;
 
@@ -82,9 +96,12 @@ typedef struct s_data
     t_philo *philos; // array of philos
 }		t_data;
 
-
 // init.c //
 void    init_data(t_data    *data);
+
+// safe.c //
+void	*safe_malloc(size_t bytes);
+void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
 
 // utils.c //
 void	error_and_exit(const char	*error_msg);

@@ -1,0 +1,49 @@
+Mac Sticky Note
+
+Compilation
+cc -Wall -Wextra -Werror
+
+Memory
+export MallocStackLogging=1
+unset MallocStackLogging
+
+Leaks: leaks --atExit --list -- ./prog arg
+
+AddressSanitizer: -g -fsanitize=address
+
+Git
+Drop local changes:
+git checkout -- folder/file
+
+Delete all changes not staged for commit:
+git status -s | grep ' D ' | awk '{print $2}' | xargs git rm
+
+Resets the current branch to the state of the last commit (HEAD); it resets both the index and the working directory to match the specified commit (effectively removes all the changes since the last commit):
+git reset --hard HEAD
+
+Removes untracked files (‘-f’) and directories (‘-d’) from the working directory; it ensures that any new files or directories added since the last commit are also removed:
+git clean -df
+
+Man
+Quit: Command + q
+
+Makefile: 
+At least contain the rules: $ (NAME), all, clean, fclean, and re.
+
+Bonuses: 
+Rule bonus in Makefile (to add the various headers, libraries or functions forbidden in the main project)
+(Bonuses must be in a different file  _bonus. {c/h} if the subject doesn’t specify anything else)
+
+Libft:
+If your project allows you to use your lift, you must copy its sources and its associated Makefile in a libft folder with its associated Makefile. Your project’s Makefile must compile the library by using its Makefile, then compile the project.
+ GNL:
+gcc -o GNL get_next_line_utils.c get_next_line.c -g
+
+Cleaner_42:
+cclean
+
+macOS shortcuts
+Screenshot: Shift + Command + 3
+
+VS Code shortcuts (macOS)
+Header: ⌘ + ALT + H

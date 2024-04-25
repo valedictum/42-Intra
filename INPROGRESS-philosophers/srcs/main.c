@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:02:30 by atang             #+#    #+#             */
-/*   Updated: 2024/04/25 11:43:30 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/25 17:54:10 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// ./philo 5 8000 200 200 [5]
+// ./philo 5 800 200 200 [5]
 
 int	main(int argc, char **argv)
 {
@@ -20,10 +20,16 @@ int	main(int argc, char **argv)
 
 	if (argc == 5 || argc == 6)
 	{
+		// correct_input
+		// 1) Error checking, filling data
 		parse_input(&data, argv);
-		//init_data;
-		//start_dinner;
-		//clean;
+		// 2) Creating the actual thing
+		//init_data(&data);
+		// 3)
+		//start_dinner(&data);
+		// 4) No leaks -> philos full | 1 philo died
+		//clean(&data);
+
 	}
 	else
 	{

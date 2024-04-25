@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sentry <sentry@student.42.fr>              +#+  +:+       +#+         #
+#    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/03 16:35:36 by atang             #+#    #+#              #
-#    Updated: 2024/03/04 22:30:47 by sentry           ###   ########.fr        #
+#    Updated: 2024/04/25 17:54:22 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CC				= gcc
 RM				= -rm -f
 CFLAGS			= -Wall -Wextra -Werror -I$(INCS) -g
 
+# Define colours 
 DEFAULT_COLOUR = \033[0m
 RED = \033[1;31m
 BLUE = \033[1;34m
@@ -26,7 +27,7 @@ SRC_DIR			= $(ROOT_DIR)/srcs
 
 .SILENT:
 
-SRCS	=	philo.c utils.c parse.c
+SRCS	=	main.c safe.c utils.c parse.c
 OBJS	= 	$(addprefix $(SRC_DIR)/, $(SRCS:.c=.o))
 INCS	= 	$(ROOT_DIR)/INCS
 

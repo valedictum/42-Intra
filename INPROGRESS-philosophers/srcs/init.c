@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 07:46:30 by sentry            #+#    #+#             */
-/*   Updated: 2024/03/06 21:12:38 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/25 17:54:10 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*
+	MY: init_philos and init_data - 2 functions
+
+- 1 -
 static void init_philos(t_data *data)
 {
     int         i;
@@ -32,6 +36,7 @@ static void init_philos(t_data *data)
     }
 }
 
+- 2 -
 void    init_data(t_data    *data)
 {
     int i;
@@ -49,3 +54,11 @@ void    init_data(t_data    *data)
     //fork_num;
     init_philos(data);
 }
+*/
+
+void	init_data(t_data	*data)
+{
+	data->end_sim = false;
+	data->philos = safe_malloc(data->num_of_philos);
+}
+
