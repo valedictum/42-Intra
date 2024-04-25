@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:02:38 by atang             #+#    #+#             */
-/*   Updated: 2024/04/25 18:25:26 by atang            ###   ########.fr       */
+/*   Updated: 2024/04/25 23:16:56 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ typedef struct s_philo
     long            meal_count;
     bool            full;
     long            last_meal_time; // time passed from last meal
-    t_fork          *left_fork;
-    t_fork          *right_fork;
+    t_fork          *first_fork;
+    t_fork          *second_fork;
     pthread_t       thread_id; // a philo is a thread
     struct s_data  *data;
 }       t_philo;
@@ -102,6 +102,8 @@ void    init_data(t_data    *data);
 // safe.c //
 void	*safe_malloc(size_t bytes);
 void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
+void	safe_thread_handle(pthread_t *thread, void *(foo)(void *),
+            void *data, t_opcode opcode);
 
 // utils.c //
 void	error_and_exit(const char	*error_msg);
