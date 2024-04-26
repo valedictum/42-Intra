@@ -6,11 +6,27 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:23:01 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/25 23:33:46 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:34:32 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/*
+    1) Wait all philos, synchronise start
+    2) Endless loop philo
+*/
+
+void    *dinner_simulation(void *data)
+{
+    t_philo *philo;
+
+    philo = (t_philo *)data;
+
+    wait_all_threads(); // TO DO
+}
+
+
 
 /*
 	./philo 	5	800 	200 	200 	[5]

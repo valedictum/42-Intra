@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:02:38 by atang             #+#    #+#             */
-/*   Updated: 2024/04/25 23:16:56 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:34:29 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_data
     long    num_limit_meals; // [5] optional | FLAG if -1
     long    start_sim; // time
     bool    end_sim; // triggered when a philo dies | all philos are full
+    bool    all_threads_ready; // synchro philos
     //bool    all_philos_ready;
     //bool    all_philos_full;
     //long    num_of_threads;
