@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 07:46:30 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/26 23:28:04 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/27 22:17:44 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void assign_forks(t_philo *philo, t_fork *forks, int philo_position)
     
     philo->first_fork = &forks[(philo_position + 1) % philo_num];
     philo->second_fork = &forks[philo_position];
-    if ((philo->philo_id % 2) == 0)
+    if (philo->philo_id % 2 == 0)
     {
         philo->first_fork = &forks[philo_position];
         philo->second_fork = &forks[(philo_position + 1) % philo_num];
@@ -100,6 +100,7 @@ void	init_data(t_data	*data)
     i = -1;
 	data->end_sim = false;
     data->all_threads_ready = false;
+    data->threads_running_num = 0;
 	data->philos = safe_malloc(sizeof(t_philo) * data->num_of_philos);
     data->forks = safe_malloc(sizeof(t_fork) * data->num_of_philos);
     safe_mutex_handle(&data->write_mutex, INIT);

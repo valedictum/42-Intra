@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:02:38 by atang             #+#    #+#             */
-/*   Updated: 2024/04/26 23:29:44 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/27 23:31:20 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define W      "\033[1;37m"   /* Bold White */
 
 // Write fn MACRO
-# define DEBUG_MODE 0
+# define DEBUG_MODE 1
 
 // PHILO STATES
 typedef enum e_status
@@ -98,6 +98,7 @@ typedef struct s_philo
     t_fork          *second_fork;
     pthread_t       thread_id; // a philo is a thread
     t_mtx           philo_mutex; // useful for races with the monitor
+    pthread_t       monitor;
     t_data          *data;
     //struct s_data  *data;
 }       t_philo;
@@ -112,6 +113,8 @@ typedef struct s_data
     long    num_limit_meals; // [5] optional | FLAG if -1
     long    start_sim; // time
     bool    end_sim; // triggered when a philo dies | all philos are full
+    long    threads_running_num;
+    pthread_t   monitor;
     bool    all_threads_ready; // synchro philos
     t_mtx   table_mutex; // avoid races while reading from table/data
     t_mtx   write_mutex;
@@ -123,6 +126,7 @@ typedef struct s_data
 }		t_data;
 
 // dinner.c //
+void    thinking (t_philo *philo, bool pre_simulation);
 void    start_dinner(t_data *data);
 
 // init.c //
@@ -144,10 +148,17 @@ bool    sim_finished(t_data *data);
 
 // synchro_utils.c //
 void    wait_all_threads(t_data *data);
+bool    all_threads_running(t_mtx *mutex, long *threads, long philo_num);
+void    increase_long(t_mtx *mutex, long *value);
+void    desynchronize_philos(t_philo *philo);
+
+// monitor.c //
+void    *monitor_dinner(void *data);
 
 // utils.c //
 long	get_time(t_time_code time_code);
 void	precise_usleep(long usec, t_data *data);
+void	clean(t_data *data);
 void	error_and_exit(const char	*error_msg);
 
 // parse.c //

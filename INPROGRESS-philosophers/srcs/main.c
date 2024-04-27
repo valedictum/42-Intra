@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:02:30 by atang             #+#    #+#             */
-/*   Updated: 2024/04/27 09:58:21 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/27 23:07:41 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 		// 3)
 		start_dinner(&data);
 		// 4) No leaks -> philos full | 1 philo died
-		//clean(&data);
+		clean(&data);
 
 	}
 	else

@@ -6,15 +6,51 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:23:01 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/27 09:58:22 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/27 23:32:20 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void thinking (t_philo *philo)
+void thinking (t_philo *philo, bool pre_simulation)
 {
-    write_status(THINKING, philo, DEBUG_MODE);
+    long    t_eat;
+    long    t_sleep;
+    long    t_think;
+
+    if (!pre_simulation)
+        write_status(THINKING, philo, DEBUG_MODE);
+    // if the system is even, we don't care, system already fair
+    if (philo->data->num_of_philos % 2 == 0)
+        return ;
+    // ODD, not always fair
+    t_eat = philo->data->time_to_eat;
+    t_sleep = philo->data->time_to_sleep;
+    t_think = t_eat * 2 - t_sleep; // available time to think
+    if (t_think < 0)
+        t_think = 0;
+    // precise control I wanna make on philo
+    precise_usleep(t_think * 0.42, philo->data);
+}
+
+/*
+    same algo but...
+    1) Fake to lock the fork
+    2) Sleep until the monitor will bust it
+*/
+
+void    *lone_philo(void*arg)
+{
+    t_philo *philo;
+
+    philo = (t_philo *)arg;
+    wait_all_threads(philo->data);
+    set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILLISECOND));
+    increase_long(&philo->data->table_mutex, &philo->data->threads_running_num);
+    write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
+    while (!sim_finished(philo->data))
+        usleep(200);   
+    return (NULL);
 }
 
 /*
@@ -59,6 +95,15 @@ void    *dinner_simulation(void *data)
     philo = (t_philo *)data;
     // spinlock
     wait_all_threads(philo->data);
+    // set time last meal
+    set_long(&philo->philo_mutex, &philo->last_meal_time,
+            get_time(MILLISECOND));
+    // synchro with monitor
+    // increase a data variable counter, with all threads running
+    increase_long(&philo->data->table_mutex, 
+            &philo->data->threads_running_num);
+    // desynchronizing philos
+    desynchronize_philos(philo);
     // set last meal time
     while(!sim_finished(philo->data))
     {
@@ -71,7 +116,7 @@ void    *dinner_simulation(void *data)
         write_status(SLEEPING, philo, DEBUG_MODE);
         precise_usleep(philo->data->time_to_sleep, philo->data);
         // 4) Think
-        thinking(philo); // TO DO
+        thinking(philo, false); // TO DO
     }
     return (NULL);
 }
@@ -96,13 +141,15 @@ void    start_dinner(t_data *data)
     if (data->num_limit_meals == 0)
         return ; // back to main, clean
     else if (data->num_of_philos == 1)
-        ;// TO DO
+        safe_thread_handle(&data->philos[i].thread_id, lone_philo, &data->philos[0], CREATE); // TO DO
     else
     {
         while (i++ < data->num_of_philos)
             safe_thread_handle(&data->philos[i].thread_id, dinner_simulation,
                 &data->philos[i], CREATE);
     }
+    // monitor thread
+    safe_thread_handle(&data->monitor, monitor_dinner, data, CREATE);
     // start of simulation
     data->start_sim = get_time(MILLISECOND);
     // now all threads are ready!
@@ -111,5 +158,8 @@ void    start_dinner(t_data *data)
     i = -1;
     while (i++ < data->num_of_philos)
         safe_thread_handle(&data->philos[i].thread_id, NULL, NULL, JOIN);
-    // If we manage to reach this line, all philos are full! 
+    // If we manage to reach this line, all philos are full!
+    set_bool(&data->table_mutex, &data->end_sim, true);
+    
+    safe_thread_handle(&data->monitor, NULL, NULL, JOIN);
 }

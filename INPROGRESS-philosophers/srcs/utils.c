@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:46:22 by atang             #+#    #+#             */
-/*   Updated: 2024/04/26 22:39:46 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/27 23:29:20 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,23 @@ void	precise_usleep(long usec, t_data *data)
 				;
 		}
 	}
+}
+
+void	clean(t_data *data)
+{
+	t_philo	*philo;
+	int		i;
+
+	i = -1;
+	while (++i < data->num_of_philos)
+	{
+		philo = data->philos + i;
+		safe_mutex_handle(&philo->philo_mutex, DESTROY);
+	}
+	safe_mutex_handle(&data->write_mutex, DESTROY);
+	safe_mutex_handle(&data->table_mutex, DESTROY);
+	free(data->forks);
+	free(data->philos);
 }
 
 void	error_and_exit(const char	*error_msg)
