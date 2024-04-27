@@ -6,11 +6,46 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:23:01 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/26 11:34:32 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/27 09:58:22 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void thinking (t_philo *philo)
+{
+    write_status(THINKING, philo, DEBUG_MODE);
+}
+
+/*
+    EAT ROUTINE
+    1) Grab forks : here first and second fork are handy (don't worry about R and L)
+    2) Eat: write eat, update last meal, update meal_count
+        eventually bool full
+    3) Release forks
+*/
+
+static void    eat(t_philo *philo)
+{
+    // 1)
+    safe_mutex_handle(&philo->first_fork->fork, LOCK);
+    write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
+    safe_mutex_handle(&philo->second_fork->fork, LOCK);
+    write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
+
+    // 2) Actual eating
+    set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILLISECOND));
+    philo->meal_count++;
+    write_status(EATING, philo, DEBUG_MODE);
+    precise_usleep(philo->data->time_to_eat, philo->data);
+    if (philo->data->num_limit_meals > 0 
+        && philo->meal_count == philo->data->num_limit_meals)
+        set_bool(&philo->philo_mutex, &philo->full, true);
+    
+    // 3)
+    safe_mutex_handle(&philo->first_fork->fork, UNLOCK);
+    safe_mutex_handle(&philo->second_fork->fork, UNLOCK);
+}
 
 /*
     1) Wait all philos, synchronise start
@@ -22,11 +57,24 @@ void    *dinner_simulation(void *data)
     t_philo *philo;
 
     philo = (t_philo *)data;
-
-    wait_all_threads(); // TO DO
+    // spinlock
+    wait_all_threads(philo->data);
+    // set last meal time
+    while(!sim_finished(philo->data))
+    {
+        // 1) Am I full?
+        if(philo->full) // TO DO thread safe?
+            break ;
+        // 2) Eat
+        eat(philo);
+        // 3) Sleep -> write_status & precise usleep
+        write_status(SLEEPING, philo, DEBUG_MODE);
+        precise_usleep(philo->data->time_to_sleep, philo->data);
+        // 4) Think
+        thinking(philo); // TO DO
+    }
+    return (NULL);
 }
-
-
 
 /*
 	./philo 	5	800 	200 	200 	[5]
@@ -40,7 +88,7 @@ void    *dinner_simulation(void *data)
     6) JOIN everyone
 */
 
-void    dinner_start (t_data *data)
+void    start_dinner(t_data *data)
 {
     int     i;
 
@@ -54,5 +102,14 @@ void    dinner_start (t_data *data)
         while (i++ < data->num_of_philos)
             safe_thread_handle(&data->philos[i].thread_id, dinner_simulation,
                 &data->philos[i], CREATE);
-
+    }
+    // start of simulation
+    data->start_sim = get_time(MILLISECOND);
+    // now all threads are ready!
+    set_bool(&data->table_mutex, &data->all_threads_ready, true);
+    // Wait for everyone
+    i = -1;
+    while (i++ < data->num_of_philos)
+        safe_thread_handle(&data->philos[i].thread_id, NULL, NULL, JOIN);
+    // If we manage to reach this line, all philos are full! 
 }

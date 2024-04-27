@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:02:30 by atang             #+#    #+#             */
-/*   Updated: 2024/04/25 17:54:10 by atang            ###   ########.fr       */
+/*   Updated: 2024/04/27 09:58:21 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	main(int argc, char **argv)
 		// 1) Error checking, filling data
 		parse_input(&data, argv);
 		// 2) Creating the actual thing
-		//init_data(&data);
+		init_data(&data);
 		// 3)
-		//start_dinner(&data);
+		start_dinner(&data);
 		// 4) No leaks -> philos full | 1 philo died
 		//clean(&data);
 

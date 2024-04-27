@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:02:38 by atang             #+#    #+#             */
-/*   Updated: 2024/04/26 11:34:29 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/26 23:29:44 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
+// Write fn MACRO
+# define DEBUG_MODE 0
+
+// PHILO STATES
+typedef enum e_status
+{
+    EATING,
+    SLEEPING,
+    THINKING,
+    TAKE_FIRST_FORK,
+    TAKE_SECOND_FORK,
+    DIED,
+}       t_philo_status;
+
 // OPCODE for mutex | thread fns
 typedef enum e_opcode
 {
@@ -53,11 +67,18 @@ typedef enum e_opcode
 	DETACH,
 }		t_opcode;
 
+// CODES for gettime
+typedef enum e_time_code
+{
+    SECOND,
+    MILLISECOND,
+    MICROSECOND,
+}       t_time_code;
+
 typedef pthread_mutex_t t_mtx;
 
 // IOU FOR COMPILER//
 typedef struct s_data t_data;  
-
 
 // FORK //
 typedef struct s_fork
@@ -76,7 +97,9 @@ typedef struct s_philo
     t_fork          *first_fork;
     t_fork          *second_fork;
     pthread_t       thread_id; // a philo is a thread
-    struct s_data  *data;
+    t_mtx           philo_mutex; // useful for races with the monitor
+    t_data          *data;
+    //struct s_data  *data;
 }       t_philo;
 
 // DATA //
@@ -90,12 +113,17 @@ typedef struct s_data
     long    start_sim; // time
     bool    end_sim; // triggered when a philo dies | all philos are full
     bool    all_threads_ready; // synchro philos
+    t_mtx   table_mutex; // avoid races while reading from table/data
+    t_mtx   write_mutex;
+    t_fork  *forks; // array of forks
+    t_philo *philos; // array of philos
     //bool    all_philos_ready;
     //bool    all_philos_full;
     //long    num_of_threads;
-    t_fork  *forks; // array of forks
-    t_philo *philos; // array of philos
 }		t_data;
+
+// dinner.c //
+void    start_dinner(t_data *data);
 
 // init.c //
 void    init_data(t_data    *data);
@@ -106,10 +134,26 @@ void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
 void	safe_thread_handle(pthread_t *thread, void *(foo)(void *),
             void *data, t_opcode opcode);
 
+// setters and getters.c, very useful to write DRY code // 
+
+void    set_bool(t_mtx *mutex, bool *dest, bool value);
+bool    get_bool(t_mtx *mutex, bool *value);
+long    get_long(t_mtx *mutex, long *value);
+void    set_long(t_mtx *mutex, long *dest, long value);
+bool    sim_finished(t_data *data);
+
+// synchro_utils.c //
+void    wait_all_threads(t_data *data);
+
 // utils.c //
+long	get_time(t_time_code time_code);
+void	precise_usleep(long usec, t_data *data);
 void	error_and_exit(const char	*error_msg);
 
 // parse.c //
 void    parse_input(t_data *data, char **argv);
+
+// write.c //
+void    write_status(t_philo_status status, t_philo *philo, bool debug);
 
 #endif

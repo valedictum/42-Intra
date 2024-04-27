@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:47:44 by atang             #+#    #+#             */
-/*   Updated: 2024/04/25 22:43:06 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/27 09:58:18 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,20 @@ void	*safe_malloc(size_t bytes)
 
 static void	handle_mutex_error(int status, t_opcode opcode)
 {
-	if (status == 0)
+	if (0 == status)
 		return ;
-	if (EINVAL == status && (LOCK == opcode || UNLOCK == opcode || DESTROY == opcode))
-		error_and_exit("The value specified by mutex is invalid.");
+	if (EINVAL == status && (LOCK == opcode || UNLOCK == opcode))
+		error_and_exit("The value specified by mutex is invalid");
 	else if (EINVAL == status && INIT == opcode)
 		error_and_exit("The value specified by attr is invalid.");
 	else if (EDEADLK == status)
-		error_and_exit("A deadlock would occur if the thread blocked waiting for mutex.");
+		error_and_exit("A deadlock would occur if the thread "
+			"blocked waiting for mutex.");
 	else if (EPERM == status)
-		error_and_exit("The current thread does not hold a lock on mutex");
+		error_and_exit("The current thread does not hold a lock on mutex.");
 	else if (ENOMEM == status)
-		error_and_exit("The process cannot allocate enough memory to create another mutex.");
+		error_and_exit("The process cannot allocate enough memory"
+			" to create another mutex.");
 	else if (EBUSY == status)
 		error_and_exit("Mutex is locked");
 }

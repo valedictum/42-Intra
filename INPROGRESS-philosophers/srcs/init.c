@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 07:46:30 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/26 11:34:28 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/26 23:28:04 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,20 @@ static void assign_forks(t_philo *philo, t_fork *forks, int philo_position)
     }
 }
 
-static void init_philos(t_data  *data)
+static void init_philo(t_data  *data)
 {
-    int         i;i;
+    int         i;
+    t_philo     *philo;
 
     i = -1;
     while (i++ < data->num_of_philos)
     {
         philo = data->philos + 1;
-        philo->id = i + 1;
+        philo->philo_id = i + 1;
         philo->full = false;
         philo->meal_count = 0;
-        phil->data = data;
+        philo->data = data;
+        safe_mutex_handle(&philo->philo_mutex, INIT);
         // Ad hoc...i-position in the table
         assign_forks(philo, data->forks, i);
     }
@@ -98,12 +100,14 @@ void	init_data(t_data	*data)
     i = -1;
 	data->end_sim = false;
     data->all_threads_ready = false;
-	data->philos = safe_malloc(sizeof(t_philo)_* data->num_of_philos);
-    data->forks = safe_malloc(sizeof(t_fork)_* data->num_of_philos);
-    while(i++ < data->num_of_philos)
+	data->philos = safe_malloc(sizeof(t_philo) * data->num_of_philos);
+    data->forks = safe_malloc(sizeof(t_fork) * data->num_of_philos);
+    safe_mutex_handle(&data->write_mutex, INIT);
+    safe_mutex_handle(&data->table_mutex, INIT);
+    while(++i < data->num_of_philos)
     {
         safe_mutex_handle(&data->forks[i].fork, INIT);
         data->forks[i].fork_id = i; // for debug
     }
-    philo_init(data); // TO DO
+    init_philo(data); // TO DO
 }

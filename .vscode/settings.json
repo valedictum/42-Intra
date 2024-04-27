@@ -9,6 +9,7 @@
         "functional": "c",
         "sstream": "c",
         "list.h": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "philo.h": "c"
     }
 }
