@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:23:01 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/28 11:48:38 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/28 15:48:57 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ static void    *dinner_simulation(void *data)
     -> It's a "2 way" bool for threads communication
 */
 
+/*
+// OG
 void    start_dinner(t_table *table)
 {
     int     i;
@@ -170,8 +172,39 @@ void    start_dinner(t_table *table)
             safe_thread_handle(&table->philos[i].thread_id, dinner_simulation,
                 &table->philos[i], CREATE);
     }
+	debug("Created thread");
     safe_thread_handle(&table->monitor, monitor_dinner, table, CREATE);
     table->start_sim = get_time(MILLISECOND);
+    set_bool(&table->table_mutex, &table->all_threads_ready, true);
+    i = -1;
+    while (i++ < table->philos_num)
+        safe_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
+    set_bool(&table->table_mutex, &table->end_sim, true);
+    safe_thread_handle(&table->monitor, NULL, NULL, JOIN);
+}
+*/
+
+void    start_dinner(t_table *table)
+{
+    int     i;
+
+    i = -1;
+    if (table->num_limit_meals == 0)
+        return ;
+    else if (table->philos_num == 1)
+        safe_thread_handle(&table->philos[0].thread_id, lone_philo, &table->philos[0], CREATE);
+    else
+    {
+        while (i++ < table->philos_num)
+            safe_thread_handle(&table->philos[i].thread_id, dinner_simulation,
+                &table->philos[i], CREATE);
+    }
+	debug("Created thread");
+    safe_thread_handle(&table->monitor, monitor_dinner, table, CREATE);
+    table->start_sim = get_time(MILLISECOND);
+    safe_mutex_handle(&table->all_threads_ready_mutex, LOCK);
+    table->all_threads_ready = true;
+    safe_mutex_handle(&table->all_threads_ready_mutex, UNLOCK);
     set_bool(&table->table_mutex, &table->all_threads_ready, true);
     i = -1;
     while (i++ < table->philos_num)

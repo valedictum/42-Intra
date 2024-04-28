@@ -6,9 +6,12 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 14:42:40 by tday              #+#    #+#             */
-/*   Updated: 2024/04/28 18:46:44 by atang            ###   ########.fr       */
+/*   Updated: 2024/04/28 19:01:30 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PHILO_H
+#define PHILO_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,7 +20,7 @@
 #include <pthread.h>
 #include <sys/time.h>
 #include <errno.h>
-
+//#include <limits.h>
 
 typedef pthread_mutex_t	t_mtx;
 //typedef pthread_t		t_pthrd;
@@ -48,7 +51,6 @@ typedef struct s_table	t_table;
 # ifndef PHILO_MAX
 #   define PHILO_MAX 200 
 # endif
-
 
 /* OPCODE for mutexe & thread functions */
 
@@ -109,19 +111,19 @@ typedef struct s_philo
 
 struct			s_table
 {
-	long	num_of_philos;
+	long	philos_num;
 	long	time_to_die;
 	long	time_to_eat;
 	long	time_to_sleep;
-	long	meals_limit;
-	long	start_of_sim;
+	long	num_limit_meals;
+	long	start_sim;
 	bool	all_philos_full;
 	bool	end_sim;
 	bool	all_threads_ready;
-	long	num_threads_running;
-	t_pthrd	monitor;
-	t_mutex	data_mutex;
-	t_mutex	write_mutex;
+	long	threads_running_num;
+	pthread_t	monitor;
+	t_mtx	table_mutex;
+	t_mtx	write_mutex;
 	t_fork	*forks;
 	t_philo	*philos;
 };
@@ -130,49 +132,47 @@ struct			s_table
 
 /* utils */
 
-void	error_exit(const char *error);
-long	get_time(t_time_code time_code);
-void	precise_usleep(long usec, t_data *data);
-void	clean(t_data *data);
+// dinner.c //
+void    think (t_philo *philo);
+void    dinner_start(t_table *data);
 
-/* safe_functions */
+// init.c //
+void	init_table(t_table	*table);
 
+// safe.c //
 void	*safe_malloc(size_t bytes);
-void	safe_mutex(t_mutex *mutex, t_opcode opcode);
-void	safe_thread(pthread_t *thread, void *(*foo)(void *), void *data, \
-		t_opcode opcode);
+void	safe_mutex(t_mtx *mutex, t_opcode opcode);
+void	safe_thread(pthread_t *thread, void *(*foo)(void *),
+	void *data, t_opcode opcode);
 
-/* inputs */
+// getters_setters.c // 
 
-void	parse_input(t_data *data, char *argv[]);
+void    set_bool(t_mtx *mutex, bool *dest, bool value);
+bool    get_bool(t_mtx *mutex, bool *value);
+long    get_long(t_mtx *mutex, long *value);
+void    set_long(t_mtx *mutex, long *dest, long value);
+bool    sim_finished(t_table *data);
 
-/* init */
+// synchro_utils.c //
+void    wait_all_threads(t_table *data);
+bool    all_threads_running(t_mtx *mutex, long *threads, long philo_num);
+void    increase_long(t_mtx *mutex, long *value);
+void    desync_philos(t_philo *philo);
 
-void	data_init(t_data *data);
+// monitor.c //
+void    *monitor_dinner(void *data);
 
-/* dinner */
+// parse.c //
+void	parse_input(t_table *table, char **argv);
 
-void	dinner_start(t_data *data);
-void	think(t_philo *philo);
+// utils.c //
+long	get_time(t_time_code time_code);
+void	precise_usleep(long usec, t_table *data);
+void	clean(t_table *data);
+void	error_exit(const char	*error_msg);
+void	debug(const char *msg);
 
-/* set_and_get */
+// write.c //
+void    write_status(t_philo_status status, t_philo *philo, bool debug);
 
-void	set_bool(t_mutex *mutex, bool *dest, bool value);
-bool	get_bool(t_mutex *mutex, bool *value);
-void	set_long(t_mutex *mutex, long *dest, long value);
-long	get_long(t_mutex *mutex, long *value);
-bool	simulation_finished(t_data *data);
-
-/* synchro */
-
-void	wait_all_threads(t_data *data);
-bool	all_threads_running(t_mutex *mutex, long *threads, long num_of_philos);
-void	increase_long(t_mutex *mutex, long *value);
-void	desync_philos(t_philo *philo);
-
-/* write */
-
-void	write_status(t_philo_status status, t_philo *philo, bool debug);
-
-/* monitor */
-void	*monitor_dinner(void *info);
+#endif

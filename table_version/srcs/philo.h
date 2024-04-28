@@ -25,6 +25,10 @@
 #include    <limits.h> // INT_MAX
 #include 	<errno.h>
 
+typedef pthread_mutex_t t_mtx;
+// IOU FOR COMPILER//
+typedef struct s_table t_table;  
+
 /*
 ** ANSI Escape Sequences for Bold Text Colors
 ** Usage: 
@@ -50,7 +54,6 @@
 # ifndef PHILO_MAX
 #   define PHILO_MAX 200 
 # endif
-
 
 // PHILO STATES
 typedef enum e_status
@@ -83,11 +86,6 @@ typedef enum e_time_code
     MICROSECOND,
 }       t_time_code;
 
-typedef pthread_mutex_t t_mtx;
-
-// IOU FOR COMPILER//
-typedef struct s_table t_table;  
-
 // FORK //
 typedef struct s_fork
 {
@@ -108,7 +106,6 @@ typedef struct s_philo
     t_mtx           philo_mutex; // useful for races with the monitor
     pthread_t       monitor;
     t_table          *table;
-    //struct s_data  *data;
 }       t_philo;
 
 // TABLE //
@@ -123,14 +120,12 @@ struct s_table
     bool    end_sim; // triggered when a philo dies | all philos are full
     long    threads_running_num;
     pthread_t   monitor;
+	t_mtx       all_threads_ready_mutex; // ADDED
     bool    all_threads_ready; // synchro philos
     t_mtx   table_mutex; // avoid races while reading from table/data
     t_mtx   write_mutex;
     t_fork  *forks; // array of forks
     t_philo *philos; // array of philos
-    //bool    all_philos_ready;
-    //bool    all_philos_full;
-    //long    num_of_threads;
 };
 
 // dinner.c //
@@ -171,6 +166,7 @@ long	get_time(int time_code);
 void	precise_usleep(long usec, t_table *data);
 void	clean(t_table *data);
 void	error_exit(const char	*error_msg);
+void	debug(const char *msg);
 
 // write.c //
 void    write_status(t_philo_status status, t_philo *philo, bool debug);

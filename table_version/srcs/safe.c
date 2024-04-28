@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:47:44 by atang             #+#    #+#             */
-/*   Updated: 2024/04/28 09:32:44 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/28 15:49:01 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static void	handle_mutex_error(int status, t_opcode opcode)
 {
 	if (0 == status)
 		return ;
-	if (EINVAL == status && (LOCK == opcode || UNLOCK == opcode))
+	if (EINVAL == status && (LOCK == opcode || UNLOCK == opcode || \
+	DESTROY == opcode))
 		error_exit("The value specified by mutex is invalid");
 	else if (EINVAL == status && INIT == opcode)
 		error_exit("The value specified by attr is invalid.");
@@ -94,6 +95,11 @@ static void	handle_thread_error(int status, t_opcode opcode)
 
 void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode)
 {
+	if (!mutex)
+    {
+        fprintf(stderr, "safe_mutex_handle called with NULL mutex\n");
+        abort();
+    }
 	if (LOCK == opcode)
 		handle_mutex_error(pthread_mutex_lock(mutex), opcode);
 	else if (UNLOCK == opcode)
@@ -108,10 +114,11 @@ void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode)
 }
 
 /*
-	One funCtion to handle threads
+	One function to handle threads
 	create join detach
 */
-
+/*
+//OG
 void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *),
 	void *data, t_opcode opcode)
 {
@@ -124,4 +131,30 @@ void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *),
 	else
 		error_exit("Wrong opcode for thread handle:"
 			" Use <CREATE> <JOIN> <DETACH>");
+}
+*/
+
+void    safe_thread_handle(pthread_t *thread, void *(*foo)(void *),
+    void *data, t_opcode opcode)
+{
+    printf("safe_thread_handle called with opcode %d\n", opcode);
+
+    if (CREATE == opcode)
+    {
+        printf("Creating thread with function %p and data %p\n", foo, data);
+        handle_thread_error(pthread_create(thread, NULL, foo, data), opcode);
+    }
+    else if (JOIN == opcode)
+    {
+        printf("Joining thread %p\n", *thread);
+        handle_thread_error(pthread_join(*thread, NULL), opcode);
+    }
+    else if (DETACH == opcode)
+    {
+        printf("Detaching thread %p\n", *thread);
+        handle_thread_error(pthread_detach(*thread), opcode);
+    }
+    else
+        error_exit("Wrong opcode for thread handle:"
+            " Use <CREATE> <JOIN> <DETACH>");
 }

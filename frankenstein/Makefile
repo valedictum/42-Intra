@@ -6,7 +6,7 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/03 16:35:36 by atang             #+#    #+#              #
-#    Updated: 2024/04/28 15:19:38 by atang            ###   ########.fr        #
+#    Updated: 2024/04/28 18:10:20 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRC_DIR			= $(ROOT_DIR)/srcs
 
 .SILENT:
 
-SRCS	=	main.c safe.c getters_setters.c dinner.c init.c synchro_utils.c \
+SRCS	=	main.c safe.c get_and_set.c dinner.c init.c synchro.c \
 			monitor.c utils.c write.c parse.c
 OBJS	= 	$(addprefix $(SRC_DIR)/, $(SRCS:.c=.o))
 INCS	= 	$(ROOT_DIR)/INCS

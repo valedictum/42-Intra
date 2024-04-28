@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   synchro_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:51:47 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/28 10:54:29 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/28 15:49:01 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,27 @@
     condition the variable
 */
 
+/*
 void    wait_all_threads(t_table *table)
 {
     while(!get_bool(&table->table_mutex, &table->all_threads_ready))
         ;
+}
+*/
+
+void wait_all_threads(t_table *table)
+{
+    bool all_threads_ready;
+
+    while (1)
+    {
+        safe_mutex_handle(&table->all_threads_ready_mutex, LOCK);
+        all_threads_ready = table->all_threads_ready;
+        safe_mutex_handle(&table->all_threads_ready_mutex, UNLOCK);
+        printf("wait_all_threads: all_threads_ready = %d\n", all_threads_ready);
+        if (all_threads_ready)
+            break;
+    }
 }
 
 /*

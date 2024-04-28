@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 07:46:30 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/28 15:48:59 by atang            ###   ########.fr       */
+/*   Updated: 2024/04/28 18:59:30 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void init_philo(t_table  *table)
         philo->philo_id = i + 1;
         philo->full = false;
         philo->meal_count = 0;
-        safe_mutex_handle(&philo->philo_mutex, INIT);
+        safe_mutex(&philo->philo_mutex, INIT);
         philo->table = table;
         assign_forks(philo, table->forks, i);
     }
@@ -117,12 +117,12 @@ void	init_table(t_table	*table)
     table->threads_running_num = 0;
     table->philos = safe_malloc(table->philos_num * sizeof(t_philo));
 	table->forks = safe_malloc(table->philos_num * sizeof(t_fork));
-    safe_mutex_handle(&table->write_mutex, INIT);
-    safe_mutex_handle(&table->table_mutex, INIT);
-	safe_mutex_handle(&table->all_threads_ready_mutex, INIT); // ADDED
+    safe_mutex(&table->write_mutex, INIT);
+    safe_mutex(&table->table_mutex, INIT);
+	//safe_mutex(&table->all_threads_ready_mutex, INIT); // ADDED
     while (++i < table->philos_num)
     {
-        safe_mutex_handle(&table->forks[i].fork, INIT);
+        safe_mutex(&table->forks[i].fork, INIT);
         table->forks[i].fork_id = i;
     }
     init_philo(table);

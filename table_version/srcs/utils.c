@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:46:22 by atang             #+#    #+#             */
-/*   Updated: 2024/04/28 11:08:04 by sentry           ###   ########.fr       */
+/*   Updated: 2024/04/28 15:10:51 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,9 @@ void	error_exit(const char	*error_msg)
 {
 	printf(RED"%s\n"RST, error_msg);
 	exit(EXIT_FAILURE);
+}
+
+void	debug(const char *msg)
+{
+	printf(Y"%s\n"RST, msg);
 }

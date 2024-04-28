@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:02:30 by atang             #+#    #+#             */
-/*   Updated: 2024/04/28 15:27:16 by atang            ###   ########.fr       */
+/*   Updated: 2024/04/28 18:41:51 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	{
 		parse_input(&table, argv);
 		init_table(&table);
-		start_dinner(&table);
+		dinner_start(&table);
 		clean(&table);
 	}
 	else
