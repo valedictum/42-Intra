@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:47:44 by atang             #+#    #+#             */
-/*   Updated: 2024/04/28 15:49:01 by atang            ###   ########.fr       */
+/*   Updated: 2024/04/29 20:52:24 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,12 @@ void    safe_thread_handle(pthread_t *thread, void *(*foo)(void *),
     }
     else if (JOIN == opcode)
     {
-        printf("Joining thread %p\n", *thread);
+        printf("Joining thread %ld\n", *thread);
         handle_thread_error(pthread_join(*thread, NULL), opcode);
     }
     else if (DETACH == opcode)
     {
-        printf("Detaching thread %p\n", *thread);
+        printf("Detaching thread %ld\n", *thread);
         handle_thread_error(pthread_detach(*thread), opcode);
     }
     else

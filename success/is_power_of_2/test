@@ -1,0 +1,42 @@
+<<<<<<<<<<<<<<  ✨ Codeium Command 🌟 >>>>>>>>>>>>>>>>
++/**
++ * Checks if an unsigned integer is a power of 2.
++ *
++ * @param n The unsigned integer to check.
++ * @return 1 if n is a power of 2, 0 otherwise.
++ */
+int	    is_power_of_2(unsigned int n)
+{
++    /**
++     * The idea here is to check if n is a power of 2 by ANDing n with n-1.
++     * If n is a power of 2, then n would have only one bit set, which is
++     * also the most significant bit. For example, 8 is 1000 in binary, and
++     * 7 is 0111. When you AND 8 with 7, you get 0000, which is equal to 0.
++     * So, if the result of the AND operation is 0, it means that n is a
++     * power of 2.
++     */
++
++    /**
++     * First, check if n is not equal to 0. If it is equal to 0, then it
++     * is not a power of 2, so return 0.
++     */
++    if (n == 0)
++        return 0;
++
++    /**
++     * Now, n is not 0, so we can do the AND operation between n and n-1.
++     * If n is a power of 2, then the result of the AND operation would be 0,
++     * because n would have only one bit set, which is also the most
++     * significant bit.
++     */
++    if ((n & (n - 1)) == 0)
++        return 1;
++
++    /**
++     * If we reached this point, it means that n is not a power of 2, so
++     * return 0.
++     */
++    return 0;
+-    return ((n != 0) && ((n & (n - 1)) == 0));
+}
+<<<<<<<  8ae762ff-5e8f-4aea-9c64-08a06d62ba10  >>>>>>>

@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
+#    By: sentry <sentry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/03 16:35:36 by atang             #+#    #+#              #
-#    Updated: 2024/04/28 15:19:38 by atang            ###   ########.fr        #
+#    Updated: 2024/04/29 20:50:48 by sentry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= philo
 CC				= gcc
 RM				= -rm -f
-CFLAGS			= -Wall -Wextra -Werror -I$(INCS) -g -fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -pthread -I$(INCS) -g -fsanitize=address
 
 # Define colours 
 DEFAULT_COLOUR = \033[0m

@@ -64,6 +64,7 @@ typedef enum e_status
     TAKE_FIRST_FORK,
     TAKE_SECOND_FORK,
     DIED,
+    FULL,
 }       t_philo_status;
 
 // OPCODE for mutex | thread fns
@@ -104,8 +105,9 @@ typedef struct s_philo
     t_fork          *second_fork;
     pthread_t       thread_id; // a philo is a thread
     t_mtx           philo_mutex; // useful for races with the monitor
-    pthread_t       monitor;
+    //pthread_t       monitor;
     t_table          *table;
+    t_mtx           eat_die_mutex;
 }       t_philo;
 
 // TABLE //
@@ -120,7 +122,7 @@ struct s_table
     bool    end_sim; // triggered when a philo dies | all philos are full
     long    threads_running_num;
     pthread_t   monitor;
-	t_mtx       all_threads_ready_mutex; // ADDED
+	t_mtx   all_threads_ready_mutex; // ADDED
     bool    all_threads_ready; // synchro philos
     t_mtx   table_mutex; // avoid races while reading from table/data
     t_mtx   write_mutex;
