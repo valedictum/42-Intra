@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 07:46:30 by sentry            #+#    #+#             */
-/*   Updated: 2024/04/28 15:48:59 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/04 23:43:36 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void init_philo(t_table  *table)
     i = -1;
     while (i++ < table->philos_num)
     {
-        philo = table->philos + 1;
+        philo = table->philos + i;
         philo->philo_id = i + 1;
         philo->full = false;
         philo->meal_count = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tquemato <tquemato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 23:16:00 by tquemato          #+#    #+#             */
-/*   Updated: 2024/04/30 23:34:24 by tquemato         ###   ########.fr       */
+/*   Updated: 2024/05/04 23:46:07 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	philo_init(t_data *data)
 	int		i;
 	t_ph	*philo;
 
-	i = 0;
+	i = -1;
 	while (i < data->ph_total)
 	{
 		philo = data->philos_arr + i;
@@ -67,7 +67,7 @@ void	data_init(t_data *data)
 {
 	int		i;
 
-	i = 0;
+	i = -1;
 	data->end_time = false;
 	data->threads_ready = false;
 	data->active_philos_count = 0;
