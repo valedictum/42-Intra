@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:46:22 by atang             #+#    #+#             */
-/*   Updated: 2024/05/05 09:03:23 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/05 13:14:05 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,11 @@ void	clean(t_data *data)
 	int		i;
 
 	i = -1;
-	//i = 0; in thuy's
-	while (i < data->philo_count)
+	while (++i < data->philo_count)
 	{
 		philo = data->philos_arr + i;
 		safe_mutex(&philo->philo_mutex, DESTROY);
-		i++;
+		safe_mutex(&philo->eat_die_mutex, DESTROY);
 	}
 	safe_mutex(&data->write_mutex, DESTROY);
 	safe_mutex(&data->access_mutex, DESTROY);

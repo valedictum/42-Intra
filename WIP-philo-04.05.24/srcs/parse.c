@@ -3,110 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 23:12:22 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/04 20:46:04 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/05 14:07:00 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/* 
-	MY: is_digit, valid_integer, skip_whitespace, handle_sign, philo_atol, and
-	parse_input - 6 functions
-
-- 1 -
-static int	is_digit(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-- 2 -
-bool	valid_integer(const char *str)
-{
-	if (*str == '-' || *str == '+')
-		str++;
-	while (*str)
-	{
-		if (!is_digit(*str))
-			return (false);
-		str++;
-	}
-	return (true);
-}
-
-- 3 -
-const char	*skip_whitespace(const char *str)
-{
-	while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r'
-		|| *str == '\v' || *str == '\f')
-	{
-		str++;
-	}
-	return (str);
-}
-
-- 4 -
-static int	handle_sign(const char **str)
-{
-	int	sign;
-
-	sign = 1;
-	if (**str == '-')
-	{
-        error_and_exit("Negative input invalid");
-	}
-	else if (**str == '+')
-	{
-		(*str)++;
-	}
-	return (sign);
-}
-
-- 5 -
-static long	philo_atol(const char *str)
-{
-	long	result;
-    int		sign;
-    int		digit;
-
-	result = 0;
-	str = skip_whitespace(str);
-    sign = handle_sign(&str);
-    if (!valid_integer(str))
-    {
-        error_and_exit("Non-integer input invalid");
-    }
-    while (is_digit(*str))
-	{
-		digit = *str - '0';
-		if (result > (INT_MAX - digit) / 10)
-		{
-			error_and_exit("Overflow");
-		}
-		result = (result * 10) + digit;
-		str++;
-	}
-	return (result * sign);
-}
-
-- 6 -
-void    parse_input(t_data *data, char **argv)
-{
-    data->num_of_philos = philo_atol(argv[1]);
-    data->time_to_die = philo_atol(argv[2]);
-    data->time_to_eat = philo_atol(argv[3]);
-    data->time_to_sleep = philo_atol(argv[4]);
-    if (argv[5])
-        data->num_limit_meals = philo_atol(argv[5]);
-}
-*/
-
 /*
-	Bool to check is digit
+	A static inline bool that checks if the character is a digit. If the 
+	character is between 0 and 9, it'll return true...otherwise it'll return 
+	false (if the character is NOT a digit).
 */
 
 static	inline bool	is_digit(char c)
@@ -115,7 +24,10 @@ static	inline bool	is_digit(char c)
 }
 
 /*
-	Bool to check is space
+	A static inline bool that checks if the character is a space character. If 
+	it is between 9 and 13 (horizontal and vertical tabs, new line, form feed 
+	or carriage return OR == 32 (which is space), it'll return true...otherwise 
+	it'll return false (if the character is NOT a whitespace character).
 */
 
 static inline bool	is_space(char c)
@@ -124,11 +36,21 @@ static inline bool	is_space(char c)
 }
 
 /*
-	1) 	Check for negatives
-	2) 	Check if legit number "       +77%^" YES vs "    +#$42" NO
-	3)	Check for INT_MAX 37648263864349659349579348797395767389467
-		(check len > 10, sure > INT_MAX)
-	Returns ptr to the actual number for atol
+	valid_input() takes a string as input and returns a pointer to the first 
+	character of a valid number within the string
+
+	Input:	
+	str - a ptr to a string
+
+	Flow: 
+	- whitespace characters are skipped, as is '+'
+	- only positive numbers are allowed so if the first non-whitespace 
+	character is '-', or if the character is NOT a digit -> error_exit()
+	- number ptr is then set to the current position in the string
+	- str++ until non-digit is reached, counting with len
+	- if len > 10 digits -> error_exit()
+	- number ptr is returned which points to the first character of a 
+	valid number within the string 
 */
 static const char	*valid_input(const char *str)
 {
@@ -153,13 +75,22 @@ static const char	*valid_input(const char *str)
 }
 
 /*
-	Convert the input to a long, created a valid_input fn() to check input
-	validity - this INT_MAX check is for 2_147_483_648 <-> 9_999_999_999  
+	ft_atol() converts a string to a long integer.
+
+	Input:	
+	str - a ptr to a string that needs to be converted
+
+	Flow: 
+	- valid_input check
+	- inside a while loop, current value is x 10 and the numerical 
+	value of the current digit character is added
+	- if the resultant num > INT_MAX -> error_exit()
+	- converted long integer returned
 */
 
 static long	ft_atol(const char *str)
 {
-	long 	num;
+	long	num;
 
 	num = 0;
 	str = valid_input(str);
@@ -171,29 +102,27 @@ static long	ft_atol(const char *str)
 }
 
 /*
-					ms		ms		ms
-	./philo 	5	800 	200 	200 	[5]
-	1) Actual numbers
-	2) Not > INT_MAX
-	3) Timestamps > 60ms
+	parse_input() takes a t_data struct ptr and argv as inputs to parse
+	the input arguments and assigns the values to the corresponding 
+	fields in the t_data struct. 
 
-	Time is in millisecond BUT usleep fn() wants microseconds 
-	(convert by x 1000 (1e3 is 1 with 3 zeros in scientific notation
-	i.e. 1000))
+	Inputs:
+	data - a ptr to a t_data struct
+	argv
 
-	~1e3 = 1_000
- 	~1e6 = 1_000_000
-
-	INPUT 
- 	[0] ./philo
-	[1] number_of_philosophers
-	[2] time_to_die
-	[3] time_to_eat
-	[4] time_to_sleep
-	[5] [number_of_times_each_philosopher_must_eat]
-
-	- Check for max 200 philos and timestamps > 60ms
-	- nbr_limit_meals -1 acts as a flag: NO LIMITS
+	Flow:
+	- argv[1] assigned to philo_count (after conversion to long int)
+	- if philo_count > 200 (PHILO_MAX) -> error_exit()
+	- argv[2] assigned to time_to die field in data struct
+	- argv[3] assigned to time_to eat field in data struct
+	- argv[4] assigned to time_to sleep field in data struct
+	- these 3 are all assigned after conversion to long int and x 1000
+	(as usleep works in MICROseconds but input is in MILLIseconds)
+	- if any of the time values are < the minimum 60000 (60 MILLIseconds) 
+	then -> error_exit()
+	- optional arg [5] in converted, multiplied, and assigned to meal_limit 
+	field of data struct if it exists (if no argv[5], it is assigned -1 
+	to indicate NO meal_limit)
 */
 
 void	parse_input(t_data *data, char **argv)
@@ -204,14 +133,14 @@ void	parse_input(t_data *data, char **argv)
 		printf(RED"Maximum number of philosophers cannnot exceed 200"RST);
 		exit(EXIT_FAILURE);
 	}
-    data->time_to_die = ft_atol(argv[2]) * 1e3;
-    data->time_to_eat = ft_atol(argv[3]) * 1e3;
-    data->time_to_sleep = ft_atol(argv[4]) * 1e3;
+	data->time_to_die = ft_atol(argv[2]) * 1e3;
+	data->time_to_eat = ft_atol(argv[3]) * 1e3;
+	data->time_to_sleep = ft_atol(argv[4]) * 1e3;
 	if (data->time_to_die < 6e4 || data->time_to_eat < 6e4
 		|| data->time_to_sleep < 6e4)
 		error_exit("Use timestamps > 60ms for TTDIE, TTEAT, TTSLEEP");
-    if (argv[5])
-        data->meal_limit = ft_atol(argv[5]);
+	if (argv[5])
+		data->meal_limit = ft_atol(argv[5]);
 	else
-		data->meal_limit = -1; 
+		data->meal_limit = -1;
 }

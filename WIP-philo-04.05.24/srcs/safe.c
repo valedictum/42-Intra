@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:47:44 by atang             #+#    #+#             */
-/*   Updated: 2024/05/04 21:39:56 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/05 14:23:39 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	thread_error(int status, t_opcode opcode)
 	if (status == 0)
 		return ;
 	if (EAGAIN == status)
-		error_exit("No resources to create another thread"); 
+		error_exit("No resources to create another thread");
 	else if (EPERM == status)
 		error_exit("The caller does not have apporpriate permission\n");
 	else if (EINVAL == status && CREATE == opcode)

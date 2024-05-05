@@ -12,18 +12,18 @@
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include	<unistd.h> // write, usleep
-#include 	<stdio.h> // printf
-#include	<stdlib.h> // malloc, free
-#include    <limits.h>
-#include    <stdbool.h> 
-#include	<pthread.h> // mutex: init, destroy, lock, unlock
-                        // threads: create, join, detach
-#include    <sys/time.h> // gettimeofday
-#include    <limits.h> // INT_MAX
-#include 	<errno.h>
+# include <unistd.h> // write, usleep
+# include <stdio.h> // printf
+# include <stdlib.h> // malloc, free
+# include <limits.h>
+# include <stdbool.h> 
+# include <pthread.h> // mutex: init, destroy, lock, unlock 
+//+ threads: create, join, detach
+# include <sys/time.h> // gettimeofday
+# include <limits.h> // INT_MAX
+# include <errno.h>
 
 /*
 ** ANSI Escape Sequences for Bold Text Colors
@@ -45,23 +45,21 @@
 // Write fn MACRO
 # define DEBUG_MODE 0
 
-
 // PHILO MAX - by default is 200
 # ifndef PHILO_MAX
-#   define PHILO_MAX 200 
+#  define PHILO_MAX 200 
 # endif
-
 
 // PHILO STATES
 typedef enum e_status
 {
-    EATING,
-    SLEEPING,
-    THINKING,
-    TAKE_FIRST_FORK,
-    TAKE_SECOND_FORK,
-    DIED,
-}       t_philo_status;
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FIRST_FORK,
+	TAKE_SECOND_FORK,
+	DIED,
+}			t_philo_status;
 
 // OPCODE for mutex | thread fns
 typedef enum e_opcode
@@ -78,88 +76,87 @@ typedef enum e_opcode
 // CODES for gettime
 typedef enum e_time_code
 {
-    SECOND,
-    MILLISECOND,
-    MICROSECOND,
-}       t_time_code;
+	SECOND,
+	MILLISECOND,
+	MICROSECOND,
+}			t_time_code;
 
-typedef pthread_mutex_t t_mtx;
+typedef pthread_mutex_t	t_mtx;
 
 // IOU FOR COMPILER//
-typedef struct s_data t_data;  
+typedef struct s_data	t_data;
 
 // FORK //
 typedef struct s_fork
 {
-    t_mtx   fork_mutex;   
-    int     fork_id;
-}       t_fork;
+	t_mtx	fork_mutex;
+	int		fork_id;
+}				t_fork;
 
 // PHILO //
 typedef struct s_philo
 {
-    int             philo_id;
-    long            meal_count;
-    bool            full;
-    long            last_meal_time; // time passed from last meal
-    t_fork          *first_fork;
-    t_fork          *second_fork;
-    pthread_t       thread_id; // a philo is a thread
-    t_mtx           philo_mutex; // useful for races with the monitor
-    t_mtx           eat_die_mutex;
-    pthread_t       monitor;
-    t_data          *data;
-    //struct s_data  *data;
-}       t_philo;
+	int			philo_id;
+	long		meal_count;
+	bool		full;
+	long		last_meal_time; // time passed from last meal
+	t_fork		*first_fork;
+	t_fork		*second_fork;
+	pthread_t	thread_id; // a philo is a thread
+	t_mtx		philo_mutex; // useful for races with the monitor
+	t_mtx		eat_die_mutex;
+	pthread_t	monitor;
+	t_data		*data;
+}				t_philo;
 
 // DATA //
 struct s_data
 {
-    long    philo_count;
-    long    time_to_die;
-    long    time_to_eat;
-    long    time_to_sleep;
-    long    meal_limit; // [5] optional | FLAG if -1
-    long    sim_start_time; // time
-    bool    sim_finish_time; // triggered when a philo dies | all philos are full
-    long    threads_running_count;
-    pthread_t   monitor;
-    bool    all_threads_ready; // synchro philos
-    t_mtx   access_mutex; // avoid races while reading from data
-    t_mtx   write_mutex;
-    t_fork  *forks_arr; // array of forks
-    t_philo *philos_arr; // array of philos
+	long		philo_count;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	long		meal_limit; // [5] optional | FLAG if -1
+	long		sim_start_time; // time
+	bool		sim_finish_time; // when a philo dies | all philos are full
+	long		threads_running_count;
+	pthread_t	monitor;
+	bool		all_threads_ready; // synchro philos
+	t_mtx		access_mutex; // avoid races while reading from data
+	t_mtx		write_mutex;
+	t_fork		*forks_arr; // array of forks
+	t_philo		*philos_arr; // array of philos
 };
 
 // dinner.c //
-void    thinking (t_philo *philo);
-void    start_dinner(t_data *data);
+void	thinking(t_philo *philo);
+void	start_dinner(t_data *data);
 
 // init.c //
-void	init_data(t_data   *data);
+void	init_data(t_data *data);
 
 // safe.c //
 void	*safe_malloc(size_t bytes);
 void	safe_mutex(t_mtx *mutex, t_opcode opcode);
 void	safe_thread(pthread_t *thread, void *(*foo)(void *),
-	void *data, t_opcode opcode);
+			void *data, t_opcode opcode);
 
 // getters_setters.c // 
 
-void    set_bool(t_mtx *mutex, bool *dest, bool value);
-bool    get_bool(t_mtx *mutex, bool *value);
-long    get_long(t_mtx *mutex, long *value);
-void    set_long(t_mtx *mutex, long *dest, long value);
-bool    sim_finished(t_data *data);
+void	set_bool(t_mtx *mutex, bool *dest, bool value);
+bool	get_bool(t_mtx *mutex, bool *value);
+long	get_long(t_mtx *mutex, long *value);
+void	set_long(t_mtx *mutex, long *dest, long value);
+bool	sim_finished(t_data *data);
 
 // synchro_utils.c //
-void    wait_all_threads(t_data *data);
-bool    all_threads_running(t_mtx *mutex, long *threads, long philo_num);
-void    increase_long(t_mtx *mutex, long *value);
-void    synchronize_philos(t_philo *philo);
+void	wait_all_threads(t_data *data);
+bool	all_threads_running(t_mtx *mutex, long *threads, long philo_num);
+void	increase_long(t_mtx *mutex, long *value);
+void	synchronize_philos(t_philo *philo);
 
 // monitor.c //
-void    *monitor_dinner(void *data);
+void	*monitor_dinner(void *data);
 
 // parse.c //
 void	parse_input(t_data *data, char **argv);
@@ -172,6 +169,6 @@ void	error_exit(const char	*error_msg);
 void	debug(const char *msg);
 
 // write.c //
-void    write_status(t_philo_status status, t_philo *philo, bool debug);
+void	write_status(t_philo_status status, t_philo *philo, bool debug);
 
 #endif

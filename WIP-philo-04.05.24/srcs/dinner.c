@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:23:01 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 09:31:31 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/05 14:40:37 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,22 @@
     I tried many cases, but not sure if 100% robust.   
 */
 
-void thinking (t_philo *philo)
+void	thinking(t_philo *philo)
 //static void thinking (t_philo *philo, bool pre_simulation)
 {
-    long    eating_time;
-    long    sleeping_time;
-    long    thinking_time;
+	long	eating_time;
+	long	sleeping_time;
+	long	thinking_time;
 
-    //if (!pre_simulation)
-    //    write_status(THINKING, philo, DEBUG_MODE);
-    if (philo->data->philo_count % 2 == 0)
-        return ;
-    write_status(THINKING, philo, DEBUG_MODE);
-    eating_time = philo->data->time_to_eat;
-    sleeping_time = philo->data->time_to_sleep;
-    thinking_time = (eating_time * 2) - sleeping_time;
-    if (thinking_time < 0)
-        thinking_time = 0;
-    // precise control I wanna make on philo
-    precise_usleep(thinking_time * 0.42, philo->data);
+	if (philo->data->philo_count % 2 == 0)
+		return ;
+	write_status(THINKING, philo, DEBUG_MODE);
+	eating_time = philo->data->time_to_eat;
+	sleeping_time = philo->data->time_to_sleep;
+	thinking_time = (eating_time * 2) - sleeping_time;
+	if (thinking_time < 0)
+		thinking_time = 0;
+	precise_usleep(thinking_time * 0.42, philo->data);
 }
 
 /*
@@ -55,23 +52,26 @@ void thinking (t_philo *philo)
     the philo death, turning on end_sim)
 */
 
-void    *lone_philo(void    *arg)
+void	*lone_philo(void	*arg)
 {
-    t_philo *philo;
+	t_philo	*philo;
 
-    philo = (t_philo *)arg;
-    wait_all_threads(philo->data);
-    set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILLISECOND));
-    increase_long(&philo->data->access_mutex, &philo->data->threads_running_count);
-    write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
-    while (!sim_finished(philo->data))
-        precise_usleep(200, philo->data);
-    return (NULL);
+	philo = (t_philo *)arg;
+	wait_all_threads(philo->data);
+	set_long(&philo->philo_mutex, &philo->last_meal_time,
+		get_time(MILLISECOND));
+	increase_long(&philo->data->access_mutex,
+		&philo->data->threads_running_count);
+	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
+	while (!sim_finished(philo->data))
+		precise_usleep(200, philo->data);
+	return (NULL);
 }
 
 /*
     EAT ROUTINE
-    1) Grab forks : here first and second fork are handy (don't worry about R and L)
+    1) Grab forks : here first and second fork are handy 
+	(don't worry about R and L)
     2) Eat: write eat, update last meal, update meal_count
         eventually bool full
     3) Release forks
@@ -80,21 +80,22 @@ void    *lone_philo(void    *arg)
     a philo is eating
 */
 
-static void    eating(t_philo *philo)
+static void	eating(t_philo *philo)
 {
-    safe_mutex(&philo->first_fork->fork_mutex, LOCK);
-    write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
-    safe_mutex(&philo->second_fork->fork_mutex, LOCK);
-    write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
-    set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILLISECOND));
-    philo->meal_count++;
-    write_status(EATING, philo, DEBUG_MODE);
-    precise_usleep(philo->data->time_to_eat, philo->data);
-    if (philo->data->meal_limit > 0 
-        && philo->meal_count == philo->data->meal_limit)
-        set_bool(&philo->philo_mutex, &philo->full, true);
-    safe_mutex(&philo->first_fork->fork_mutex, UNLOCK);
-    safe_mutex(&philo->second_fork->fork_mutex, UNLOCK);
+	safe_mutex(&philo->first_fork->fork_mutex, LOCK);
+	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
+	safe_mutex(&philo->second_fork->fork_mutex, LOCK);
+	write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
+	set_long(&philo->philo_mutex, &philo->last_meal_time,
+		get_time(MILLISECOND));
+	philo->meal_count++;
+	write_status(EATING, philo, DEBUG_MODE);
+	precise_usleep(philo->data->time_to_eat, philo->data);
+	if (philo->data->meal_limit > 0
+		&& philo->meal_count == philo->data->meal_limit)
+		set_bool(&philo->philo_mutex, &philo->full, true);
+	safe_mutex(&philo->first_fork->fork_mutex, UNLOCK);
+	safe_mutex(&philo->second_fork->fork_mutex, UNLOCK);
 }
 
 /*
@@ -107,27 +108,27 @@ static void    eating(t_philo *philo)
         flag before writing
 */
 
-static void    *dinner_simulation(void *data)
+static void	*dinner_simulation(void *data)
 {
-    t_philo *philo;
+	t_philo	*philo;
 
-    philo = (t_philo *)data;
-    wait_all_threads(philo->data);
-    set_long(&philo->philo_mutex, &philo->last_meal_time,
-            get_time(MILLISECOND));
-    increase_long(&philo->data->access_mutex, 
-            &philo->data->threads_running_count);
-    synchronize_philos(philo);
-    while(!sim_finished(philo->data))
-    {
-        if (get_bool(&philo->philo_mutex, &philo->full))
-            break ;
-        eating(philo);
-        write_status(SLEEPING, philo, DEBUG_MODE);
-        precise_usleep(philo->data->time_to_sleep, philo->data);
-        thinking(philo);
-    }
-    return (NULL);
+	philo = (t_philo *)data;
+	wait_all_threads(philo->data);
+	set_long(&philo->philo_mutex, &philo->last_meal_time,
+		get_time(MILLISECOND));
+	increase_long(&philo->data->access_mutex,
+		&philo->data->threads_running_count);
+	synchronize_philos(philo);
+	while (!sim_finished(philo->data))
+	{
+		if (get_bool(&philo->philo_mutex, &philo->full))
+			break ;
+		eating(philo);
+		write_status(SLEEPING, philo, DEBUG_MODE);
+		precise_usleep(philo->data->time_to_sleep, philo->data);
+		thinking(philo);
+	}
+	return (NULL);
 }
 
 /*
@@ -158,33 +159,29 @@ static void    *dinner_simulation(void *data)
     -> It's a "2 way" bool for threads communication
 */
 
-void    start_dinner(t_data *data)
+void	start_dinner(t_data	*data)
 {
-    int     i;
+	int	i;
 
-    //i = -1;
-    i = 0; //in thuy's
-    if (data->meal_limit == 0)
-        return ;
-    else if (data->philo_count == 1)
-        safe_thread(&data->philos_arr[0].thread_id, lone_philo, &data->philos_arr[0], CREATE);
-    else
-    {
-        while (i < data->philo_count)
-        {
-            safe_thread(&data->philos_arr[i].thread_id, dinner_simulation,
-                &data->philos_arr[i], CREATE);
-            i++;
-        }
-        printf("philo %d created\n", i);
-    }
-    safe_thread(&data->monitor, monitor_dinner, data, CREATE);
-    data->sim_start_time = get_time(MILLISECOND);
-    set_bool(&data->access_mutex, &data->all_threads_ready, true);
-    //i = -1;
-    i = 0; //in thuy's
-    while (i < data->philo_count)
-        safe_thread(&data->philos_arr[i++].thread_id, NULL, NULL, JOIN);
-    set_bool(&data->access_mutex, &data->sim_finish_time, true);
-    safe_thread(&data->monitor, NULL, NULL, JOIN);
+	i = -1;
+	if (data->meal_limit == 0)
+		return ;
+	else if (data->philo_count == 1)
+		safe_thread(&data->philos_arr[0].thread_id, lone_philo,
+			&data->philos_arr[0], CREATE);
+	else
+	{
+		while (++i < data->philo_count)
+			safe_thread(&data->philos_arr[i].thread_id, dinner_simulation,
+				&data->philos_arr[i], CREATE);
+		printf("philo %d created\n", i);
+	}
+	safe_thread(&data->monitor, monitor_dinner, data, CREATE);
+	data->sim_start_time = get_time(MILLISECOND);
+	set_bool(&data->access_mutex, &data->all_threads_ready, true);
+	i = -1;
+	while (++i < data->philo_count)
+		safe_thread(&data->philos_arr[i++].thread_id, NULL, NULL, JOIN);
+	set_bool(&data->access_mutex, &data->sim_finish_time, true);
+	safe_thread(&data->monitor, NULL, NULL, JOIN);
 }
