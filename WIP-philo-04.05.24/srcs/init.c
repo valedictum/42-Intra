@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 07:46:30 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 15:53:24 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/05 17:58:34 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ static void	init_philo(t_data *data)
 		philo->data = data;
 		safe_mutex(&philo->philo_mutex, INIT);
 		safe_mutex(&philo->eat_die_mutex, INIT);
-		printf("philo %d created\n", data->philos_arr[i].philo_id);
 		assign_forks(philo, data->forks_arr, i);
+		printf("philo %d created\n", data->philos_arr[i].philo_id);
 	}
 }
 

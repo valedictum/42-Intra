@@ -6,14 +6,14 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/03 16:35:36 by atang             #+#    #+#              #
-#    Updated: 2024/05/05 13:10:27 by atang            ###   ########.fr        #
+#    Updated: 2024/05/05 17:39:20 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= philo
 CC				= gcc
 RM				= -rm -f
-CFLAGS			= -Wall -Wextra -Werror -I$(INCS) -g -fsanitize=thread
+CFLAGS			= -Wall -Wextra -Werror -I$(INCS) -g -fsanitize=address
 
 # Define colours 
 DEFAULT_COLOUR = \033[0m

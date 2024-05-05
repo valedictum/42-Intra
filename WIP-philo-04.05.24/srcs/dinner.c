@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:23:01 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 14:40:37 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/05 18:17:44 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	thinking(t_philo *philo)
 	thinking_time = (eating_time * 2) - sleeping_time;
 	if (thinking_time < 0)
 		thinking_time = 0;
-	precise_usleep(thinking_time * 0.42, philo->data);
+	precise_usleep(thinking_time, philo->data);
 }
 
 /*
@@ -174,7 +174,6 @@ void	start_dinner(t_data	*data)
 		while (++i < data->philo_count)
 			safe_thread(&data->philos_arr[i].thread_id, dinner_simulation,
 				&data->philos_arr[i], CREATE);
-		printf("philo %d created\n", i);
 	}
 	safe_thread(&data->monitor, monitor_dinner, data, CREATE);
 	data->sim_start_time = get_time(MILLISECOND);
@@ -182,6 +181,6 @@ void	start_dinner(t_data	*data)
 	i = -1;
 	while (++i < data->philo_count)
 		safe_thread(&data->philos_arr[i++].thread_id, NULL, NULL, JOIN);
-	set_bool(&data->access_mutex, &data->sim_finish_time, true);
+	//set_bool(&data->access_mutex, &data->sim_finish_time, true);
 	safe_thread(&data->monitor, NULL, NULL, JOIN);
 }

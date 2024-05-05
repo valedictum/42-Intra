@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:46:22 by atang             #+#    #+#             */
-/*   Updated: 2024/05/05 13:14:05 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/05 18:19:35 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ long	get_time(t_time_code time_code)
 	if (gettimeofday(&current_time, NULL))
 		error_exit("Gettimeofday failed");
 	if (time_code == SECOND)
-		return (current_time.tv_sec + current_time.tv_usec / 1e6);
+		return (current_time.tv_sec + (current_time.tv_usec / 1e6));
 	else if (time_code == MILLISECOND)
 		return ((current_time.tv_usec * 1e3) + (current_time.tv_usec / 1e3));
 	else if (time_code == MICROSECOND)
@@ -59,7 +59,7 @@ void	precise_usleep(long usec, t_data *data)
 			break ;
 		elapsed = get_time(MICROSECOND) - start;
 		remaining = usec - elapsed;
-		if (remaining > 1e4)
+		if (remaining > 1e3)
 			usleep(remaining / 2);
 		else
 		{
