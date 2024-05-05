@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 21:54:55 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 14:38:11 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/05 22:28:18 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@
 static bool	philo_died(t_philo *philo)
 {
 	long	elapsed;
-	long	t_to_die;
+	long	time_to_die;
 
 	if (get_bool(&philo->philo_mutex, &philo->full))
 		return (false);
 	safe_mutex(&philo->eat_die_mutex, LOCK);
 	elapsed = get_time(MILLISECOND) - get_long(&philo->philo_mutex,
 			&philo->last_meal_time);
-	t_to_die = philo->data->time_to_die / 1e3;
-	if (elapsed > t_to_die)
+	time_to_die = philo->data->time_to_die / 1e3;
+	if (elapsed > time_to_die)
 	{
 		write_status(DIED, philo, DEBUG_MODE);
 		safe_mutex(&philo->eat_die_mutex, UNLOCK);
@@ -44,6 +44,18 @@ static bool	philo_died(t_philo *philo)
 	}
 	safe_mutex(&philo->eat_die_mutex, UNLOCK);
 	return (false);
+}
+
+static bool	all_full(t_philo *philos, long philo_count)
+{
+	int	i;
+
+	i = -1;
+	while (++i < philo_count)
+		if (philos[i].full == false)
+			return (false);
+	set_bool(&philos->data->access_mutex, &philos->data->all_philos_full, true);
+	return (true);
 }
 
 /*
@@ -70,9 +82,11 @@ void	*monitor_dinner(void *ph_data)
 		while (++i < data->philo_count && !sim_finished(data))
 		{
 			if (philo_died(data->philos_arr + i))
+				set_bool(&data->access_mutex, &data->sim_finish_time, true);
+			else if (all_full(data->philos_arr, data->philo_count))
 			{
 				set_bool(&data->access_mutex, &data->sim_finish_time, true);
-				write_status(DIED, data->philos_arr + i, DEBUG_MODE);
+				write_status(FULL, data->philos_arr + i, DEBUG_MODE);
 			}
 		}
 	}

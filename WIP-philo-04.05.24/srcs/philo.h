@@ -59,6 +59,7 @@ typedef enum e_status
 	TAKE_FIRST_FORK,
 	TAKE_SECOND_FORK,
 	DIED,
+	FULL,
 }			t_philo_status;
 
 // OPCODE for mutex | thread fns
@@ -124,6 +125,7 @@ struct s_data
 	bool		all_threads_ready; // synchro philos
 	t_mtx		access_mutex; // avoid races while reading from data
 	t_mtx		write_mutex;
+	bool		all_philos_full;
 	t_fork		*forks_arr; // array of forks
 	t_philo		*philos_arr; // array of philos
 };

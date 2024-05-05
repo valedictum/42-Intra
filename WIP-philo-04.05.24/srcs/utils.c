@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:46:22 by atang             #+#    #+#             */
-/*   Updated: 2024/05/05 18:19:35 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/05 21:38:50 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ long	get_time(t_time_code time_code)
 	if (time_code == SECOND)
 		return (current_time.tv_sec + (current_time.tv_usec / 1e6));
 	else if (time_code == MILLISECOND)
-		return ((current_time.tv_usec * 1e3) + (current_time.tv_usec / 1e3));
+		return ((current_time.tv_sec * 1e3) + (current_time.tv_usec / 1e3));
 	else if (time_code == MICROSECOND)
-		return ((current_time.tv_usec * 1e6) + current_time.tv_usec);
+		return ((current_time.tv_sec * 1e6) + current_time.tv_usec);
 	else
 		error_exit("Wrong input to gettime:"
 			"use <MILLISECOND> <MICROSECOND> <SECONDS>");

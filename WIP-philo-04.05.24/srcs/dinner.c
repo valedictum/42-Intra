@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:23:01 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 18:17:44 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/05 22:27:54 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	thinking(t_philo *philo)
 	write_status(THINKING, philo, DEBUG_MODE);
 	eating_time = philo->data->time_to_eat;
 	sleeping_time = philo->data->time_to_sleep;
-	thinking_time = (eating_time * 2) - sleeping_time;
+	thinking_time = eating_time * 2 - sleeping_time;
 	if (thinking_time < 0)
 		thinking_time = 0;
-	precise_usleep(thinking_time, philo->data);
+	precise_usleep(thinking_time * 0.30, philo->data);
 }
 
 /*
@@ -64,7 +64,7 @@ void	*lone_philo(void	*arg)
 		&philo->data->threads_running_count);
 	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	while (!sim_finished(philo->data))
-		precise_usleep(200, philo->data);
+		usleep(200);
 	return (NULL);
 }
 
@@ -86,10 +86,12 @@ static void	eating(t_philo *philo)
 	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	safe_mutex(&philo->second_fork->fork_mutex, LOCK);
 	write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
+	safe_mutex(&philo->eat_die_mutex, LOCK);
 	set_long(&philo->philo_mutex, &philo->last_meal_time,
 		get_time(MILLISECOND));
 	philo->meal_count++;
 	write_status(EATING, philo, DEBUG_MODE);
+	safe_mutex(&philo->eat_die_mutex, UNLOCK);
 	precise_usleep(philo->data->time_to_eat, philo->data);
 	if (philo->data->meal_limit > 0
 		&& philo->meal_count == philo->data->meal_limit)
@@ -108,11 +110,11 @@ static void	eating(t_philo *philo)
         flag before writing
 */
 
-static void	*dinner_simulation(void *data)
+static void	*dinner_simulation(void *philosopher)
 {
 	t_philo	*philo;
 
-	philo = (t_philo *)data;
+	philo = (t_philo *)philosopher;
 	wait_all_threads(philo->data);
 	set_long(&philo->philo_mutex, &philo->last_meal_time,
 		get_time(MILLISECOND));
@@ -121,7 +123,7 @@ static void	*dinner_simulation(void *data)
 	synchronize_philos(philo);
 	while (!sim_finished(philo->data))
 	{
-		if (get_bool(&philo->philo_mutex, &philo->full))
+		if (philo->full)
 			break ;
 		eating(philo);
 		write_status(SLEEPING, philo, DEBUG_MODE);
@@ -181,6 +183,5 @@ void	start_dinner(t_data	*data)
 	i = -1;
 	while (++i < data->philo_count)
 		safe_thread(&data->philos_arr[i++].thread_id, NULL, NULL, JOIN);
-	//set_bool(&data->access_mutex, &data->sim_finish_time, true);
 	safe_thread(&data->monitor, NULL, NULL, JOIN);
 }

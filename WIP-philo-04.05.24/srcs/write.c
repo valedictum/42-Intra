@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:47:08 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 14:13:19 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/05 22:14:22 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ static void	write_status_debug(t_philo_status status, t_philo *philo,
 			"\t\t\t"B"🍴 #%d\n"RST, elapsed, philo->philo_id,
 			philo->second_fork->fork_id);
 	else if (EATING == status && !sim_finished(philo->data))
-		printf(W"%-6ld"RST" %d is eating\n"
-			"\t"Y"🍝 #%ld\n"RST, elapsed, philo->philo_id, philo->meal_count);
+		printf(W"%-6ld"G" %d is eating\n"
+			"\t\t🍝 #%ld\n"RST, elapsed, philo->philo_id, philo->meal_count);
 	else if (SLEEPING == status && !sim_finished(philo->data))
-		printf(W"%6ld"RST" %d is sleeping\n", elapsed, philo->philo_id);
+		printf(W"%-6ld"B" %d is sleeping\n"RST, elapsed, philo->philo_id);
 	else if (THINKING == status && !sim_finished(philo->data))
-		printf(W"%6ld"RST" %d is thinking\n", elapsed, philo->philo_id);
+		printf(W"%-6ld"Y" %d is thinking\n"RST, elapsed, philo->philo_id);
 	else if (DIED == status)
-		printf(RED"%6ld %d died 💀\n"RST, elapsed, philo->philo_id);
+		printf(RED"%-6ld %d died 💀\n"RST, elapsed, philo->philo_id);
 }
 
 /*
@@ -64,13 +64,13 @@ void	write_status(t_philo_status status, t_philo *philo, bool debug)
 			printf(W"%-6ld"RST" %d has taken a fork\n", elapsed,
 				philo->philo_id);
 		else if (EATING == status && !sim_finished(philo->data))
-			printf(W"%-6ld"RST" %d is eating\n", elapsed, philo->philo_id);
+			printf(W"%-6ld"G" %d is eating\n"RST, elapsed, philo->philo_id);
 		else if (SLEEPING == status && !sim_finished(philo->data))
-			printf(W"%-6ld"RST" %d is sleeping\n", elapsed, philo->philo_id);
+			printf(W"%-6ld"B" %d is sleeping\n"RST, elapsed, philo->philo_id);
 		else if (THINKING == status && !sim_finished(philo->data))
-			printf(W"%-6ld"RST" %d is thinking\n", elapsed, philo->philo_id);
+			printf(W"%-6ld"Y" %d is thinking\n"RST, elapsed, philo->philo_id);
 		else if (DIED == status)
-			printf(W"%-6ld"RST" %d died\n", elapsed, philo->philo_id);
+			printf(W"%-6ld"RED" %d died\n"RST, elapsed, philo->philo_id);
 	}
 	safe_mutex(&philo->data->write_mutex, UNLOCK);
 }
