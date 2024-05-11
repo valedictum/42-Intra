@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   synchro_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:51:47 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 14:23:17 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/11 21:45:07 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /*
-    Wait for all threads to be ready,
-    busy waiting (SPINLOCK) to synchronize philos start
-
-    Use a getter function to read with no race 
-    condition the variable
+	wait_all_threads() waits until all threads are ready to synchronise philos 
+	start. It does this via a spinlock mechanism (where a thread attempts to 
+	acquire a lock by continuously (in a loop) checking a shared variable 
+	until it becomes available) to check the value of boolean 
+	variable data->all_threads_ready by calling the get_bool function with 
+	&data->access_mutex and &data->all_threads_ready as arguments. 
+	The function loops until the value of data->all_threads_ready becomes true.
 */
 
 void	wait_all_threads(t_data *data)
@@ -27,11 +29,18 @@ void	wait_all_threads(t_data *data)
 }
 
 /*
-    Synchronizes monitoring thread and philos. Monitor busy waits 
-    until all threads are running (monitor thread can start only when all
-    threads are ready).
-    Monitor waits all threads are running the simulation before searching 
-    deaths
+	all_threads_running() checks if all threads are running by comparing the
+	value of the variable 'threads' to the total number of philosophers.
+
+	Flow:
+	- fn() first acquires a lock on the mutex 'mutex' to ensure that 
+	multiple threads do not access the variable 'threads' at the same time
+	- once the lock is acquired, fn() checks if the value of 'threads' is
+	equal to the number of philosophers 'philo_count'. If it is, the function
+	sets the return value to true. Otherwise, it sets the return value to 
+	false
+	- fn() unlocks the mutex to allow other threads to access the variable 
+	'threads'
 */
 
 bool	all_threads_running(t_mtx *mutex, long *threads, long philo_count)
@@ -47,8 +56,8 @@ bool	all_threads_running(t_mtx *mutex, long *threads, long philo_count)
 }
 
 /*
-    Increase threads running to synchro with the monitor i.e. when a philo
-	enters the loop, threads count ++
+    increase_long() increases threads running to synchronise with the 
+	monitor i.e. when a philo enters the loop, thread_count++
 */
 
 void	increase_long(t_mtx *mutex, long *value)
@@ -59,15 +68,15 @@ void	increase_long(t_mtx *mutex, long *value)
 }
 
 /*
-    Make the system fair
-    
-    Synchronize the philos to minimize resource contention and improve fairness
-    1) if even, just 30ms (half the min value 60ms)
+    desynchronize_philos() is used to desynchronise the philos 
+	to minimise resource contention and improve fairness
+    1) if philo_count is even and philo_id is even, start by 
+	sleeping for 30000 microseconds
     2) if odd, start by thinking
 */
 
 // can static this if needed like Thuy
-void	synchronize_philos(t_philo *philo)
+void	desynchronize_philos(t_philo *philo)
 {
 	if (philo->data->philo_count % 2 == 0)
 	{

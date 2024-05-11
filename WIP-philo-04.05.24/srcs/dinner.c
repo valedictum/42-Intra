@@ -6,27 +6,29 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:23:01 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 22:27:54 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/11 23:03:50 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /*
-    Refine control over thinking
-    1) Print the status and then check.
-    If the philo nbr is even, i don't care return.
-    Else
-    Force to think philo 42% of the time and the % remaining is handled by 
-    contention.
-    Unconventional solution, 42 is a "Magic number" but in test cases it works.
-    The thing is that I want to avoid a philo immediately eating after sleeping 
-    without waiting a little for neighbour philo. 
-    I tried many cases, but not sure if 100% robust.   
+	thinking() simulates the philosopher thinking for a certain amount of time 
+	before eating or sleeping.
+
+	Flow:
+	- if the philosopher number is even, fn() does nothing and returns (this is 
+	because the even numbered philosophers will always take turns to just eat 
+	or sleep)
+	- if the philosopher number is odd, the fn() calculates the time to think 
+	(from 2 x eating time - sleeping time). If the result is less than 0, it 
+	is set to 0. This is so that 2 x (thinking + sleeping) = eating time in 
+	order for the philos to be occupied with those actions whilst not able to 
+	eat.  
+	- the philo then thinks for the calculated time
 */
 
 void	thinking(t_philo *philo)
-//static void thinking (t_philo *philo, bool pre_simulation)
 {
 	long	eating_time;
 	long	sleeping_time;
@@ -40,16 +42,18 @@ void	thinking(t_philo *philo)
 	thinking_time = eating_time * 2 - sleeping_time;
 	if (thinking_time < 0)
 		thinking_time = 0;
-	precise_usleep(thinking_time * 0.30, philo->data);
+	precise_usleep(thinking_time, philo->data);
 }
 
 /*
-    LONE PHILO
-    Same algo preliminary code as all the threads but...
-    1) Fake to lock the first_fork with write_status just for output 
-    purposes
-    2) Sleep until the monitor will bust it (monitor wil eventually spot 
-    the philo death, turning on end_sim)
+    lone_philo() will handle the situation where there is only one philo
+	using pretty much the same code as for >1 philo BUT essentially it 
+	will:
+	- lock the first_fork with write_status just for output 
+    purposes (philo cannot eat with only one fork so it will just wait to 
+	die)
+    - wait by sleeping until monitor busts it and sets the sim_finish_time 
+	boolean to true i.e simulation finished
 */
 
 void	*lone_philo(void	*arg)
@@ -69,15 +73,21 @@ void	*lone_philo(void	*arg)
 }
 
 /*
-    EAT ROUTINE
-    1) Grab forks : here first and second fork are handy 
-	(don't worry about R and L)
-    2) Eat: write eat, update last meal, update meal_count
-        eventually bool full
-    3) Release forks
+    eating() simulates the philosopher eating for a certain amount of time.
 
-    last_meal_time happens before eating : this is helpful to avoid deaths while 
-    a philo is eating
+	Flow:
+    - fn() locks two forks (first_fork and second_fork) using safe_mutex()
+	indicating that the philosopher hastaken posesssion of the forks and 
+	outputs as such
+	-fn() then locks the eat_die_mutex which is used to ensure that the philo
+	is given exclusive access to eating
+	- fn() updates last_meal_time, meal_count++, and outputs EATING 
+	(last_meal_time happens before eating in order to avoid deaths while 
+    a philo is eating)
+	- fn() then releases eat_die_mutex(), and the fn() sleeps for a period of 
+	time 
+	- if the meal_limit is reached, fn() sets the full boolean to true
+    - fn() then releases both forks
 */
 
 static void	eating(t_philo *philo)
@@ -101,13 +111,20 @@ static void	eating(t_philo *philo)
 }
 
 /*
-    DINNER SIMULATION i.e. ACTUALY DINNER
-    1) Wait all philos, synchronise start i.e. wait for all threads to be ready
-    2) Increase the number of running threads, useful for monitor
-    3) desynchronize_philos-> useful for fairness
-    4) Start an endless loop, until a philo eventually dies or becomes full. 
-        write_status will always check for end_simulation 
-        flag before writing
+	dinner_simulation() i.e. the actual dinner simulates the dinner routine 
+	where philosopher(s) are either eating, sleeping, or thinking.
+
+	Flow:
+	- the value of the philosopher argument is assigned to the philo
+	variable
+	- wait_all_threads() is then called to wait for all threads to be ready
+	- set_long() is then called to set the last_meal_time to the current time
+	(in milliseconds)
+	- increase_long() is then called to increase the number of running threads
+	- desynchronize_philos() is then called to desynchronize the philos 
+	(for fairness)
+	- an endless loop is started, while the sim is not finished or philo 
+	object is not full, where: philo eats, sleeps, and thinks
 */
 
 static void	*dinner_simulation(void *philosopher)
@@ -120,7 +137,7 @@ static void	*dinner_simulation(void *philosopher)
 		get_time(MILLISECOND));
 	increase_long(&philo->data->access_mutex,
 		&philo->data->threads_running_count);
-	synchronize_philos(philo);
+	desynchronize_philos(philo);
 	while (!sim_finished(philo->data))
 	{
 		if (philo->full)
@@ -134,31 +151,24 @@ static void	*dinner_simulation(void *philosopher)
 }
 
 /*
-	./philo 	5	800 	200 	200 	[5]
-	1) If no meals, return to main and clean
-	2) If only 1 philo ->ad hoc function
-	3) Create all threads, all philos
-    4) Create a monitor thread -> dead
-    5) Synchronize the beginning of the sim
-        pthread_create->philo starts running!
-        every philo start simultaneously
-    6) JOIN everyone
+	start_dinner() orchestrates the start of the dinner simulation involving 
+	multiple philos. It creates all the threads for each philo to run the fn() 
+	concurrently, and then creates the monitor thread to oversee the 
+	simulation.
 
-    1) Create all the philosophers
-    2) Create another one thread searching for death ones
-    3) Set time_start_simulation and set true ready all, so they can 
-    start simulation
-    4) Wait for all
-    5) If we pass line 188 it means all philos are full so set 
-    end_sim for monitor
-    6) Wait for monitor as well. Then jump to clean in main
-    
-    If we join all threads it means they are all full, so the simulation 
-    is finished, therefore we set the end_simulation ON
- 
-    Useful cause also monitor uses this boolean, can be turned on by philos 
-    ending cause full or by monitor cause a philo died
-    -> It's a "2 way" bool for threads communication
+	Flow:
+	- if meal_limit == 0, fn() returns
+	- if only 1 philo, fn() creates 1 thread, and runs lone_philo()
+	- else fn() creates all the philos
+	- fn() then creates the monitor thread to search for deaths
+	- sim_start_time is set 
+	- all_threads_ready is set to true and a thread is created for each philo,
+	with the thread_id stored in the data->philos_arr[i].thread_id field
+	- JOIN is used to wait for each philo's thread to finish its execution
+	before going to the next iteration
+	- after the loop, safe_thread() is called again to create the monitor 
+	thread which manages the dinner simulation (JOIN is again used to wait 
+	for the monitor's thread to finish its execution)
 */
 
 void	start_dinner(t_data	*data)

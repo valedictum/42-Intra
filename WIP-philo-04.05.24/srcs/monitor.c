@@ -6,23 +6,29 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 21:54:55 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 22:28:18 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/11 22:48:29 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /*
-                    t_die
-    last_meal----------------------last_meal
+	philo_died() is a bool that checks if the philosopher has died.
 
-    Maybe philo full?
-    1) Check if the philo is full, he has already finished his own simulation. 
-    Monitor does not care. Return.
- 
-    2) Check if the philo is died reading in a thread safe manner the last_meal 
-
-    time_to_die / 1e3 - need to convert back from micro to milli t_to_die
+	Flow:
+	- fn() checks if the philosopher is full, he has already finished his 
+	own simulation. Monitor does not care. Return.
+	- fn() checks if the philosopher is dead by reading in a thread safe manner 
+	the last_meal time. Acquire the lock on the eat_die_mutex to prevent
+	multiple threads from checking the last_meal_time simultaneously
+	- fn() calculates the elapsed time since the philosopher last ate using the 
+	current time and the last_meal_time
+	- time_to_die in converted from microseconds to milliseconds
+	- fn() checks if the elapsed time is greater than the time_to_die, if so 
+	return true indicating the philosopher is dead
+	- fn() releases the lock on the eat_die_mutex since we are done checking the 
+	last_meal_time
+	- fn() returns false indicating the philosopher is still alive
 */
 
 static bool	philo_died(t_philo *philo)
@@ -46,6 +52,13 @@ static bool	philo_died(t_philo *philo)
 	return (false);
 }
 
+/*
+	all_full() is a bool that checks if all philos are full by iterating
+	through the philos array and checking if the full field is true. It 
+	returns flase if any philo is not full otherwise it sets the flag to
+	indicate all philos are full and returrns true. 
+*/
+
 static bool	all_full(t_philo *philos, long philo_count)
 {
 	int	i;
@@ -59,14 +72,15 @@ static bool	all_full(t_philo *philos, long philo_count)
 }
 
 /*
-    THREAD continuosly monitoring death philos
-    Two conditions to finish
-
-    1) if philo is death, set the flag end simulation to true and return
-    2) All philos are full, end_simulation will be turned on by the main
-    (monitor) thread in this case, when all the philos are JOINED
-        end_simulation is changed by the main thread | monitor💡
+	monitor_dinner() is a thread that continuously monitors for any dead philos
+	or if all of them are full.
+  
+	Flow:
+	- fn() checks if the all_threads_running
+	- fn() checks if any philos died -> sets flag to end simulation if so
+	- fn() checks if all philos are full -> also sets flag to end simulation
 */
+
 void	*monitor_dinner(void *ph_data)
 {
 	int		i;

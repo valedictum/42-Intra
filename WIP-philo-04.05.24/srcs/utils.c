@@ -6,18 +6,18 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:46:22 by atang             #+#    #+#             */
-/*   Updated: 2024/05/05 21:38:50 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/11 23:03:11 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /*
-	gettimeofday (monitor function)
-	time_code -> SECONDS MILLISECONDS MICROSECONDS
-	Returns time in milliseconds, microseconds, hence scientific notation is
-	used.
-	Return is used to trick -Werror as error_exit will already exit
+	get_time() returns the current time in different units (seconds, 
+	milliseconds, or microseconds) based on the input parameter time_code.
+	It uses gettimeofday() to get the current time and performs 
+	some calculations to convert it to the desired unit. If the time_code is 
+	not valid, it exits with an error message.
 */
 
 long	get_time(t_time_code time_code)
@@ -39,11 +39,25 @@ long	get_time(t_time_code time_code)
 }
 
 /*
-	HYBRID APPROACH
-	Precise usleep - the real one sucks
-	Why data? Is the simulation finished?
-	1) usleep the majority of the time, not CPU intensive
-	2) refine last microsecond with spinlock/busy wait
+	precise_usleep() pauses the execution for a specified time period 
+	in microseconds. It uses a hybrid approach of usleep and spinlock 
+	to ensure precise timing. It checks if the simulation is finished 
+	and adjusts the sleep duration to achieve the desired precision.
+
+	Flow:
+	- fn() gets the current time in microseconds
+	- while the elapsed time is less than the desired pause time:
+		a. check if the simulation is finished
+		b. calculate the elapsed time and remaining time
+		c. if the remaining time is greater than 1000us, usleep for half
+		the remaining time.
+		d. otherwise, spinlock for the remaining time.
+		(this is done to minimise the time spent in usleep; usleep is not 
+		very precise and can sleep for longer than the desired amount of time.
+		Spinlocking for a short period of time is almost as fast as usleeping 
+		for the same amount of time...basically the total time spent sleeping 
+		is minimised.
+	- when the desired pause time is reached, exit the loop
 */
 
 void	precise_usleep(long usec, t_data *data)
@@ -69,7 +83,13 @@ void	precise_usleep(long usec, t_data *data)
 	}
 }
 
-// To clean to avoid memory leaks
+/*
+	clean() is the clean up fn() that releases resources used by the program.
+	It destroys mutexes and frees memory allocated for the forks and 
+	philosophers before freeeing the forks array and philosophers array. 
+	It is called at the end of the simulation.
+*/
+
 void	clean(t_data *data)
 {
 	t_philo	*philo;
@@ -88,7 +108,7 @@ void	clean(t_data *data)
 	free(data->philos_arr);
 }
 /*
-	Print a custom error message and exit
+	error_exit() prints a custom error message and exit
  	R->RED
 	RST->RESET
 */
@@ -98,6 +118,10 @@ void	error_exit(const char	*error_msg)
 	printf(RED"%s\n"RST, error_msg);
 	exit(EXIT_FAILURE);
 }
+
+/*
+	Custom debug function
+*/
 
 void	debug(const char *msg)
 {

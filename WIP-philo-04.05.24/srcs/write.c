@@ -6,14 +6,15 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:47:08 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 22:14:22 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/11 23:16:06 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /*
-    same as write, just with more information to help when debugging
+    Same as write_status, just with more information to help when debugging 
+	(i.e. DEBUG_MODE = 1)
 */
 
 static void	write_status_debug(t_philo_status status, t_philo *philo,
@@ -39,12 +40,17 @@ static void	write_status_debug(t_philo_status status, t_philo *philo,
 }
 
 /*
-    fn () to write the philo status to standard output in a threadsafe manner
+    write_status() writes the philo status to standard output in a 
+	threadsafe manner
 
-    [time_ms] [philo_id] [action]
-    LOCK write
-    LOCK philo's mutex to read meal_count
-    LOCK table's lock to read if end_sim
+	Flow:
+	- get_time is used to calculate elapsed time (in milliseconds)
+	- get_bool is used to check if the philo is full, if so it returns
+	- write_mutex is locked
+	- if debug, write_status_debug is called, otherwise fn() checks the 
+	value of status and prints a corresponding message to the console using 
+	printf
+	- write_mutex is unlocked
 */
 
 void	write_status(t_philo_status status, t_philo *philo, bool debug)

@@ -30,7 +30,7 @@
 ** Usage: 
 **     printf(R "This is red text." RST);
 **     printf(B "This is blue text." RST);
-** Remember to use RST to reset the color after setting it.
+** RST to reset the color after setting it.
 */
 
 # define RST    "\033[0m"      /* Reset to default color */
@@ -42,7 +42,7 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-// Write fn MACRO
+// Write fn() MACRO
 # define DEBUG_MODE 0
 
 // PHILO MAX - by default is 200
@@ -62,7 +62,7 @@ typedef enum e_status
 	FULL,
 }			t_philo_status;
 
-// OPCODE for mutex | thread fns
+// OPCODE for mutex | thread fns()
 typedef enum e_opcode
 {
 	LOCK,
@@ -155,7 +155,7 @@ bool	sim_finished(t_data *data);
 void	wait_all_threads(t_data *data);
 bool	all_threads_running(t_mtx *mutex, long *threads, long philo_num);
 void	increase_long(t_mtx *mutex, long *value);
-void	synchronize_philos(t_philo *philo);
+void	desynchronize_philos(t_philo *philo);
 
 // monitor.c //
 void	*monitor_dinner(void *data);

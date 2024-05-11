@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:47:44 by atang             #+#    #+#             */
-/*   Updated: 2024/05/05 14:23:39 by atang            ###   ########.fr       */
+/*   Updated: 2024/05/11 23:13:48 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 	Contains thread and mutex functions with embedded chekcs for errors
-	on return. 2 clean wrappers (safe_mutex_handle and safe_thread_handle) 
+	on return. 2 clean wrappers (safe_mutex and safe_thread) 
 	are used with OPCODE (enum) for safer, cleaner, more readbale code.
 */
 

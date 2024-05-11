@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 07:46:30 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/05 22:34:29 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/11 16:20:08 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ static void	init_philo(t_data *data)
 		safe_mutex(&philo->philo_mutex, INIT);
 		safe_mutex(&philo->eat_die_mutex, INIT);
 		assign_forks(philo, data->forks_arr, i);
-		printf("philo %d created\n", data->philos_arr[i].philo_id);
+		if (DEBUG_MODE == 1)
+			printf("philo %d created\n", data->philos_arr[i].philo_id);
 	}
 }
 
@@ -122,7 +123,8 @@ void	init_data(t_data	*data)
 	{
 		safe_mutex(&data->forks_arr[i].fork_mutex, INIT);
 		data->forks_arr[i].fork_id = i;
-		printf("fork %d created\n", data->forks_arr[i].fork_id);
+		if (DEBUG_MODE == 1)
+			printf("fork %d created\n", data->forks_arr[i].fork_id);
 	}
 	init_philo(data);
 }
