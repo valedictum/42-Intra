@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:47:44 by atang             #+#    #+#             */
-/*   Updated: 2024/05/11 23:13:48 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/12 11:14:00 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,18 @@
 	are used with OPCODE (enum) for safer, cleaner, more readbale code.
 */
 
-//	MALLOC
+/*
+	safe_malloc() makes sure that the malloc call was successful. If the 
+	malloc function fails, the program will exit with an error message.
+	The function first calls the standard malloc function to allocate the
+	requested number of bytes. If the malloc function fails (i.e., it
+	returns a NULL pointer), the function will print an error message and
+	exit the program.
+	If the malloc function is successful, the function will return a
+	pointer to the allocated memory. This pointer is the return value of
+	the function.
+*/
+
 void	*safe_malloc(size_t bytes)
 {
 	void	*ret;
@@ -30,13 +41,29 @@ void	*safe_malloc(size_t bytes)
 }
 
 /*
-	HANDLING ERRORS
-	If successful, all the mutex and thread fns with return (0),
-	otherwise, they return an error number indicating the reason.
+	mutex_error() handles errors related to mutex operations and is called 
+	whenever a mutex operation is performed to check for errors. It takes an 
+	integer representing the return value of the mutex operation and an 
+	enumeration value indicating the type of mutex operation to perform. It 
+	then calls error_exit() with the corresponding error message if there was
+	an error i.e. mutex_error() checks the return value of the mutex operation 
+	(status) and calls the error_exit function if there was an error.
+	The mutex operation is one of the following: LOCK, UNLOCK, INIT.
 
-	Basicallly recreating perror but:
-	1)	These fns () don't set errno
-	2)	We can't use perror 
+	Flow:
+	- if the mutex operation is successful, the function will simply return.
+	- possible error messages are as follows:
+		- "The value specified by mutex is invalid" - if the mutex operation	
+		is either LOCK or UNLOCK and the return value is EINVAL.
+		- "The value specified by attr is invalid." - if the mutex operation
+		is INIT and the return value is EINVAL.
+		- "A deadlock would occur if the thread blocked waiting for mutex." -
+		if the return value is EDEADLK.
+		- "The current thread does not hold a lock on mutex." - if the return
+		value is EPERM.
+		- "The process cannot allocate enough memory to create another mutex."
+		- if the return value is ENOMEM.
+		- "Mutex is locked" - if the return value is EBUSY.
 */
 
 static void	mutex_error(int status, t_opcode opcode)
@@ -60,7 +87,32 @@ static void	mutex_error(int status, t_opcode opcode)
 }
 
 /*
-	THREADS - thread errors 
+	thread_error() handles errors related to thread operations. It is called 
+	whenever a thread operation is performed to check for errors. It takes an 
+	integer representing the return value of the thread operation and an 
+	enumeration value indicating the type of thread operation
+	to perform. It then calls the error_exit function with the corresponding
+	error message if there was an error i.e. fn() checks the return value of the 
+	thread operation (status) and calls the error_exit function with the 
+	corresponding error message based on the value of status and the type of 
+	thread operation (opcode).
+
+	Flow: 
+	- if status is 0, the function returns without doing anything (no error)
+	- if status is EAGAIN, the function calls error_exit(); this 
+	indicates that there are no resources to create another thread
+	- if status is EPERM, the function calls error_exit(); this
+	indicates that the caller does not have the necessary permissions to
+	perform the thread operation
+	- If status is EINVAL and opcode is CREATE, the function calls the
+	error_exit(); this indicates that the value of attr is invalid
+	- if status is EINVAL and opcode is JOIN or DETACH, the function calls
+	error_exit(); this indicates that the value of thread is not joinable
+	- if status is ESRCH, the function calls the error_exit(); this indicates 
+	that no thread could be found corresponding to the given thread ID
+	- if status is EDEADLK, the function calls the error_exit(); this indicates 
+	that a deadlock was detected or the value of thread specifies the calling 
+	thread
 */
 
 static void	thread_error(int status, t_opcode opcode)
@@ -84,12 +136,15 @@ static void	thread_error(int status, t_opcode opcode)
 }
 
 /*
-	ONE FN () TO HANDLE SAFELY
-	SAFE MUTEX
-	init
-	destroy
-	lock
-	unlock
+	safe_mutex() is a safe way to use mutexes in pthreads with error 
+	handling inbuilt.
+
+	With error handling:
+	- if the opcode is LOCK, lock the mutex
+	- if the opcode is UNLOCK, unlock the mutex
+	- if the opcode is INIT, init the mutex
+	- if the opcode is DESTROY, destroy the mutex
+	- if the opcode is not one of the above, error
 */
 
 void	safe_mutex(t_mtx *mutex, t_opcode opcode)
@@ -108,8 +163,14 @@ void	safe_mutex(t_mtx *mutex, t_opcode opcode)
 }
 
 /*
-	One funCtion to handle threads
-	create join detach
+	safe_thread() handles threads safely where thread is the thread to 
+	work with, foo is the function to run in the thread, data is the data to 
+	pass to the function and opcode is the operation to perform
+
+	- <CREATE> to create a new thread with the given fuction and data
+	- <JOIN> to wait for a thread to finish
+	- <DETACH> to detach a thread (let it run in the background)
+	- any other value will cause an error
 */
 
 void	safe_thread(pthread_t *thread, void *(*foo)(void *),
