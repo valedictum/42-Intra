@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:23:01 by sentry            #+#    #+#             */
-/*   Updated: 2024/05/11 23:03:50 by sentry           ###   ########.fr       */
+/*   Updated: 2024/05/17 12:34:32 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	thinking(t_philo *philo)
 
 	if (philo->data->philo_count % 2 == 0)
 		return ;
-	write_status(THINKING, philo, DEBUG_MODE);
+	//write_status(THINKING, philo, DEBUG_MODE);
 	eating_time = philo->data->time_to_eat;
 	sleeping_time = philo->data->time_to_sleep;
 	thinking_time = eating_time * 2 - sleeping_time;
@@ -145,6 +145,7 @@ static void	*dinner_simulation(void *philosopher)
 		eating(philo);
 		write_status(SLEEPING, philo, DEBUG_MODE);
 		precise_usleep(philo->data->time_to_sleep, philo->data);
+		write_status(THINKING, philo, DEBUG_MODE);
 		thinking(philo);
 	}
 	return (NULL);
