@@ -43,7 +43,7 @@ int	ft_printf(const char *format, ...)
 			else if (*format == 'd')
 				put_digit((long long int)va_arg(pointer, int), 10, &len);
 			else if (*format == 'x')
-				put_digit((long long int)va_arg(pointer, int), 16, &len);
+				put_digit((long long int)va_arg(pointer, unsigned int), 16, &len);
 		}
 		else
 			len += write(1, format, 1);                 
