@@ -41,7 +41,7 @@ int	ft_printf(const char *format, ...)
 			if (*format == 's')
 				put_string(va_arg(pointer, char *), &len);
 			else if (*format == 'd')
-				put_digit((long long int)va_arg(pointer, int), 10, &len);
+				put_digit(va_arg(pointer, int), 10, &len);
 			else if (*format == 'x')
 				put_digit((unsigned long long int)va_arg(pointer, unsigned int), 16, &len);
 		}
