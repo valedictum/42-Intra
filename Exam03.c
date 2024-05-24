@@ -18,7 +18,7 @@ void	put_digit(long long int num, int base, int *len)
 
 	if (num < 0)
 	{
-		num *= -1;
+		num = -num;
 		*len += write(1, '-', 1);
 	}
 	if (num >= base)
@@ -35,7 +35,7 @@ int	ft_printf(const char *format, ...)
 
 	while (*format)
 	{
-		if (*format == '%' && ((*(format + 1) == 's') || (*(format + 1) == 'd') || (*(format + 1) == 'x'))) 
+		if (*format == '%' && (*(format + 1) == 's' || *(format + 1) == 'd' || *(format + 1) == 'x')) 
 		{
 			format++;
 			if (*format) == 's')
