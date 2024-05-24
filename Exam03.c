@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdio.h>
 
 void	put_string(char	*str, int	*len)
 {
@@ -19,7 +20,7 @@ void	put_digit(long long int num, int base, int *len)
 	if (num < 0 && base == 10)
 	{
 		num = -num;
-		*len += write(1, '-', 1);
+		*len += write(1, "-", 1);
 	}
 	if (num >= base)
 		put_digit((num / base), base, len);
@@ -52,3 +53,21 @@ int	ft_printf(const char *format, ...)
 	va_end(pointer);
 	return (len);
 }
+
+/*
+int main (void)
+{
+	int len1 = 0;
+	int len2 = 0;
+
+	len1 = printf("%s\n", "Hello World!");
+	len2 = ft_printf("%s\n", "Hello World!");
+	len1 = printf("%d\n", -94376121);
+	len2 = ft_printf("%d\n", -94376121);
+	len1 = printf("%x\n", 255);
+	len2 = ft_printf("%x\n", 255);
+	len1 = printf("%s\n", NULL);
+	len2 = ft_printf("%s\n", NULL);
+	return (0);
+}
+*/
