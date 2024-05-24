@@ -16,7 +16,7 @@ void	put_digit(long long int num, int base, int *len)
 {
 	char *hexadecimal = "0123456789abcdef";
 
-	if (num < 0)
+	if (num < 0 && base == 10)
 	{
 		num = -num;
 		*len += write(1, '-', 1);
@@ -49,5 +49,6 @@ int	ft_printf(const char *format, ...)
 			len += write(1, format, 1);                 
 		format++;
 	}
-	return (va_end(pointer), len);
+	va_end(pointer);
+	return (len);
 }
