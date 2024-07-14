@@ -12,7 +12,7 @@
 
 #include "Contact.hpp"
 
-Contact::Contact(void)
+Contact::Contact(void) : first_name (""), last_name (""), nickname (""), phone_number(""), darkest_secret("") {}  
 {
 	//std::cout << "Contact constructor called" << std::endl;
 	return;
