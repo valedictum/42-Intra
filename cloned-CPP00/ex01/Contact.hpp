@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:08:46 by atang             #+#    #+#             */
-/*   Updated: 2024/07/08 23:49:07 by sentry           ###   ########.fr       */
+/*   Updated: 2024/07/14 17:39:04 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ class	Contact // Class keyword used to create a class called Contact
 		void	display_info();
 		void	display_summary(int index);
 		bool	is_empty() const;
+		//void 	wait_for_keypress(); const
 
 	//private://
 		std::string	first_name;

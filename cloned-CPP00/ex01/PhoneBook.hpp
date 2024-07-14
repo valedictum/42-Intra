@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:33:14 by atang             #+#    #+#             */
-/*   Updated: 2024/07/10 22:56:46 by sentry           ###   ########.fr       */
+/*   Updated: 2024/07/14 17:30:34 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #define	PHONEBOOK_HPP
 
 #include "Contact.hpp"
+#include <vector>
+#include <string>
+#include <iostream>
 
 # define RST    "\033[0m"      /* Reset to default color */
 # define RED    "\033[1;31m"   /* Bold Red */
@@ -27,15 +30,20 @@
 class	PhoneBook
 {
 	public:
-		PhoneBook();
+
+		std::vector<Contact> contacts;
+		int		oldest_index;
+		PhoneBook() : oldest_index (0)
+		{
+			contacts.resize(8);
+		}
 		void	add_contact();
 		void	search_contacts();
 		void	print_menu();
 		void	print_search_menu();
+		void	printContacts() const; 
 
 	//private:
-		Contact	contacts[8];
-		int		oldest_index;
 };
 
 #endif
