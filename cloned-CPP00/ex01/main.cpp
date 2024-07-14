@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:36:24 by atang             #+#    #+#             */
-/*   Updated: 2024/07/14 17:40:01 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/14 21:53:43 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ int main(int argc, char **argv)
 			exit(0);
 		}
 		else
+		{
 			std::cout << std::endl;
-			std::cout << RED "Invalid command entered!" << std::endl; 
-			std::cout << "Please choose from: ADD, SEARCH, or EXIT" RST <<std::endl;
+			std::cout << RED "Invalid command entered!" RST << std::endl; 
+			std::cout << "Please choose from: ADD, SEARCH, or EXIT" <<std::endl;
 			std::cout << std::endl;
+		}
 		//wait_for_keypress();
 	}
 	/*
