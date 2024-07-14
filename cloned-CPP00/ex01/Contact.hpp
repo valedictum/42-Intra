@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:08:46 by atang             #+#    #+#             */
-/*   Updated: 2024/07/07 15:47:41 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/08 23:49:07 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ class	Contact // Class keyword used to create a class called Contact
 	public: // Access specifier (members (attributes and methods) of the class are accessible from outside the class)
 		Contact();
 		//~Contact();
+		void	set_info();
+		void	display_info();
+		void	display_summary(int index);
+		bool	is_empty() const;
 
 	//private://
 		std::string	first_name;

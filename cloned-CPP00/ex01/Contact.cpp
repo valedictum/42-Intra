@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:31:17 by atang             #+#    #+#             */
-/*   Updated: 2024/07/07 15:47:43 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/10 22:22:16 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 Contact::Contact(void)
 {
-	std::cout << "Contact constructor called" << std::endl;
+	//std::cout << "Contact constructor called" << std::endl;
 	return;
 }
 

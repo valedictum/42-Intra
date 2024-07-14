@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
+#    By: sentry <sentry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/06 18:16:49 by atang             #+#    #+#              #
-#    Updated: 2024/07/07 15:47:42 by atang            ###   ########.fr        #
+#    Updated: 2024/07/13 19:10:01 by sentry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
 
-NAME		= PhoneBook
+NAME		= Phonebook
 CC			= c++
 RM			= rm -f
 CPPFLAGS	= -Wall -Wextra -Werror -std=c++98
