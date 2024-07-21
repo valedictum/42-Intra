@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:36:24 by atang             #+#    #+#             */
-/*   Updated: 2024/07/14 21:53:43 by sentry           ###   ########.fr       */
+/*   Updated: 2024/07/21 15:52:59 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int main(int argc, char **argv)
 		}
 		else if (command == "SEARCH")
 		{
-		//	phoneBook.search_contacts();
+			Contact::display_info_summary(contacts); 
+			phoneBook.search_contacts();
 		}
 		else if (command == "EXIT")
 		{

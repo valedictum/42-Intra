@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:32:56 by atang             #+#    #+#             */
-/*   Updated: 2024/07/14 16:56:51 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/21 15:32:10 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,43 +31,53 @@ void PhoneBook::print_menu()
 	std::cout << "**                                               **" << std::endl;
 	std::cout << "***************************************************" << std::endl;
 	std::cout << std::endl;
-	std::cout << B << "              Welcome to Phonebook!" RST << std::endl;
-	std::cout << "            What would you like to do:" << std::endl;
-	std::cout << G << "              ADD" << RST << ", " << Y << "SEARCH" << RST << ", or " << RED << "EXIT" << RST << std::endl;
+	std::cout << B << "               Welcome to Phonebook!" RST << std::endl;
+	std::cout << "             What would you like to do:" << std::endl;
+	std::cout << G << "               ADD" << RST << ", " << Y << "SEARCH" << RST << ", or " << RED << "EXIT" << RST << "?" << std::endl;
 	std::cout << std::endl;
 	std::cout << "> ";
 }
 
 void PhoneBook::add_contact()
 {
+	Contact	new_contact;
+
 	std::cout << "Enter first name: ";
-	std::getline(std::cin, contacts[oldest_index].first_name);
+	std::getline(std::cin, new_contact.first_name);
 	std::cout << "Enter last name: ";
-	std::getline(std::cin, contacts[oldest_index].last_name);
+	std::getline(std::cin, new_contact.last_name);
 	std::cout << "Enter nickname: ";
-	std::getline(std::cin, contacts[oldest_index].nickname);
+	std::getline(std::cin, new_contact.nickname);
 	std::cout << "Enter phone number: ";
-	std::getline(std::cin, contacts[oldest_index].phone_number);
+	std::getline(std::cin, new_contact.phone_number);
 	std::cout << "Enter darkest secret: ";
-	std::getline(std::cin, contacts[oldest_index].darkest_secret);
-	oldest_index = (oldest_index + 1) % contacts.size();
-	std::cout << "Contact added to PhoneBook\n";
+	std::getline(std::cin, new_contact.darkest_secret);
+
+	if (new_contact.is_empty())
+	{
+		std::cout << RED "\nContact NOT added - entry required for ALL fields\n" RST;
+	}
+	else
+	{
+		contacts[oldest_index] = new_contact;
+		oldest_index = (oldest_index + 1) % contacts.size();
+		std::cout << G "Contact successfully added to Phonebook!\n" RST;
+	}
 }
 
-/*
 void PhoneBook::search_contacts()
 {
-	std::cout << "Enter the index: ";
+	std::cout << "\nEnter the index: ";
 	int index;
 	std::cin >> index;
 	std::cin.ignore();
 	if (index >= 0 && index < 8)
 		contacts[index].display_info();
 	else
-		std::cout << "Invalid index" << std::endl;
+		std::cout << RED "\nInvalid index entered" RST << std::endl;
 }
-*/
 
+/*
 void PhoneBook::printContacts() const
 {
     for (size_t i = 0; i < contacts.size(); ++i)
@@ -80,3 +90,4 @@ void PhoneBook::printContacts() const
         std::cout << "Darkest Secret: " << contact.darkest_secret << "\n\n";
     }
 }
+*/

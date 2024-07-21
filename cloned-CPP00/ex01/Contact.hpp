@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:08:46 by atang             #+#    #+#             */
-/*   Updated: 2024/07/14 17:39:04 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/21 15:51:41 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 #define	CONTACT_HPP
 
 #include <iostream>
+#include <string>
+#include <vector>
+
+# define RST    "\033[0m"      /* Reset to default color */
+# define RED    "\033[1;31m"   /* Bold Red */
+# define G      "\033[1;32m"   /* Bold Green */
+# define Y      "\033[1;33m"   /* Bold Yellow */
+# define B      "\033[1;34m"   /* Bold Blue */
+# define M      "\033[1;35m"   /* Bold Magenta */
+# define C      "\033[1;36m"   /* Bold Cyan */
+# define W      "\033[1;37m"   /* Bold White */
 
 /*
 	- access specifiers: public (members are accessible from outside class),
@@ -36,10 +47,12 @@ class	Contact // Class keyword used to create a class called Contact
 	public: // Access specifier (members (attributes and methods) of the class are accessible from outside the class)
 		Contact();
 		//~Contact();
-		void	set_info();
-		void	display_info();
-		void	display_summary(int index);
-		bool	is_empty() const;
+		void		set_info();
+		void		display_info() const;
+		static void display_summary(const std::vector<Contact>& contacts);
+		void		display_contacts () const;
+		bool		is_empty() const;
+		void		display_info_summary() const; 
 		//void 	wait_for_keypress(); const
 
 	//private://
