@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:31:17 by atang             #+#    #+#             */
-/*   Updated: 2024/07/21 23:56:18 by sentry           ###   ########.fr       */
+/*   Updated: 2024/07/22 15:55:12 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,11 @@ bool	Contact::is_empty() const
 
 void	Contact::display_info() const
 {
-	std::cout << Y "\nFirst Name: " RST << first_name << "\n";
+	std::cout << Y "First Name: " RST << first_name << "\n";
     std::cout << Y << "Last Name: " RST << last_name << "\n";
     std::cout << Y "Nickname: " RST << nickname << "\n";
     std::cout << Y "Phone Number: " RST << phone_number << "\n";
     std::cout << Y "Darkest Secret: " RST << darkest_secret << "\n";
-}
-
-
-void Contact::display_info_summary() const 
-{
-    std::cout << "\nFirst Name: " << first_name << "\n";
-    std::cout << "Last Name: " << last_name << "\n";
-    std::cout << "Nickname: " << nickname << "\n";
 }
 
 void Contact::display_summary(const std::vector<Contact>& contacts)

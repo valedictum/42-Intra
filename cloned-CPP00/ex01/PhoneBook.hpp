@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:33:14 by atang             #+#    #+#             */
-/*   Updated: 2024/07/21 23:40:39 by sentry           ###   ########.fr       */
+/*   Updated: 2024/07/22 16:09:08 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ class	PhoneBook
 		void	print_search_menu();
 		void	printContacts() const; 
 
-	//private:
+	private:
+		std::string	truncate(const std::string& str, size_t	width) const;
+		bool 	is_numeric(const std::string& str) const;
+		void 	press_enter() const;
 };
 
 #endif

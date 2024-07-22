@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:32:56 by atang             #+#    #+#             */
-/*   Updated: 2024/07/22 00:36:21 by sentry           ###   ########.fr       */
+/*   Updated: 2024/07/22 16:31:31 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@ PhoneBook::PhoneBook(void)
 	return;
 }
 */
+
+void PhoneBook::press_enter() const
+{
+    std::cout << C "\nPress enter to return to the main menu..." RST << std::endl;
+    std::cin.get();
+}
+
+bool PhoneBook::is_numeric(const std::string& str) const
+{
+    return !str.empty() && std::all_of(str.begin(), str.end(), ::isdigit);
+}
 
 void PhoneBook::print_menu()
 {
@@ -42,7 +53,7 @@ void PhoneBook::add_contact()
 {
 	Contact	new_contact;
 
-	std::cout << "Enter first name: ";
+	std::cout << "\nEnter first name: ";
 	std::getline(std::cin, new_contact.first_name);
 	std::cout << "Enter last name: ";
 	std::getline(std::cin, new_contact.last_name);
@@ -61,11 +72,13 @@ void PhoneBook::add_contact()
 	{
 		contacts[oldest_index] = new_contact;
 		oldest_index = (oldest_index + 1) % contacts.size();
-		std::cout << G "Contact successfully added to Phonebook!\n" RST;
+		std::cout << G "\nContact successfully added to Phonebook!\n" RST;
 	}
+	press_enter();
 }
 
 void PhoneBook::search_contacts()
+/*
 {
 	std::cout << "\nEnter the index: ";
 	int index;
@@ -75,13 +88,48 @@ void PhoneBook::search_contacts()
 		contacts[index].display_info();
 	else
 		std::cout << RED "\nInvalid index entered" RST << std::endl;
+
+}
+*/
+{
+    std::cout << "\nEnter the index: ";
+    std::string input;
+    std::getline(std::cin, input);
+
+    if (is_numeric(input))
+    {
+        int index = std::stoi(input);
+        if (index >= 0 && index < 8 && !contacts[index].is_empty())
+        {
+			std::cout << B "\nContact Index: " RST<< index << std::endl;
+			std::cout << std::endl;
+            contacts[index].display_info();
+        }
+        else
+        {
+            std::cout << RED "\nInvalid index entered (empty or outside maximum number of contacts)" RST<< std::endl;
+        }
+    }
+    else
+    {
+        std::cout << RED "\nInvalid input entered" RST << std::endl;
+    }
+	press_enter();
+}
+
+std::string	PhoneBook::truncate(const	std::string& str, size_t width) const
+{
+	if (str.length() >width)
+		return str.substr(0, width - 1) + ".";
+	else
+		return str;
 }
 
 void PhoneBook::printContacts() const
 {
 	std::cout << std::endl;
 	std::cout << "    ----------|----------|----------|---------- \n";
-	std::cout << "         Index|First Name| Last Name|  Nickname \n";
+	std::cout << B "         Index" RST "|" B "First Name" RST "| " B "Last Name" RST "|" B "  Nickname\n" RST;
     std::cout << "    ----------|----------|----------|---------- \n";
 	for (size_t i = 0, filled_index = 0; i < contacts.size(); ++i)
 	{
@@ -89,9 +137,9 @@ void PhoneBook::printContacts() const
         if (!contact.is_empty())
 		{
 			std::cout 	<< "    " << std::setw(10) << filled_index++ << '|'
-						<< std::setw(10) << contact.first_name << '|' 
-						<< std::setw(10) << contact.last_name << '|'
-						<< std::setw(10) << contact.nickname << "\n";
+						<< std::setw(10) << truncate(contact.first_name, 10) << '|' 
+						<< std::setw(10) << truncate(contact.last_name, 10) << '|'
+						<< std::setw(10) << truncate(contact.nickname, 10) << "\n";
 		}
     }
 }
