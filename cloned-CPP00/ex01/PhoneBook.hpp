@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:33:14 by atang             #+#    #+#             */
-/*   Updated: 2024/07/14 17:30:34 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/21 23:40:39 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 # define RST    "\033[0m"      /* Reset to default color */
 # define RED    "\033[1;31m"   /* Bold Red */

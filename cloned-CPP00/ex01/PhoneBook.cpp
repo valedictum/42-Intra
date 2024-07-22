@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:32:56 by atang             #+#    #+#             */
-/*   Updated: 2024/07/21 15:32:10 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/22 00:36:21 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,27 @@ void PhoneBook::search_contacts()
 	int index;
 	std::cin >> index;
 	std::cin.ignore();
-	if (index >= 0 && index < 8)
+	if (index >= 0 && index < 8 && !contacts[index].is_empty())
 		contacts[index].display_info();
 	else
 		std::cout << RED "\nInvalid index entered" RST << std::endl;
 }
 
-/*
 void PhoneBook::printContacts() const
 {
-    for (size_t i = 0; i < contacts.size(); ++i)
+	std::cout << std::endl;
+	std::cout << "    ----------|----------|----------|---------- \n";
+	std::cout << "         Index|First Name| Last Name|  Nickname \n";
+    std::cout << "    ----------|----------|----------|---------- \n";
+	for (size_t i = 0, filled_index = 0; i < contacts.size(); ++i)
 	{
-		const Contact &contact = contacts[i];
-        std::cout << "First Name: " << contact.first_name << "\n";
-        std::cout << "Last Name: " << contact.last_name << "\n";
-        std::cout << "Nickname: " << contact.nickname << "\n";
-        std::cout << "Phone Number: " << contact.phone_number << "\n";
-        std::cout << "Darkest Secret: " << contact.darkest_secret << "\n\n";
+        const Contact& contact = contacts[i];
+        if (!contact.is_empty())
+		{
+			std::cout 	<< "    " << std::setw(10) << filled_index++ << '|'
+						<< std::setw(10) << contact.first_name << '|' 
+						<< std::setw(10) << contact.last_name << '|'
+						<< std::setw(10) << contact.nickname << "\n";
+		}
     }
 }
-*/

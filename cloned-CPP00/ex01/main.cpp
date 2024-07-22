@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:36:24 by atang             #+#    #+#             */
-/*   Updated: 2024/07/21 15:52:59 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/21 23:05:47 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int main(int argc, char **argv)
 		}
 		else if (command == "SEARCH")
 		{
-			Contact::display_info_summary(contacts); 
+			//Contact::display_info_summary(contacts);
+			phoneBook.printContacts();
 			phoneBook.search_contacts();
 		}
 		else if (command == "EXIT")
@@ -67,18 +68,6 @@ int main(int argc, char **argv)
 		}
 		//wait_for_keypress();
 	}
-	/*
-	// Access attributes and set values
-	contact1.first_name = "This";
-	contact1.last_name = "Person";
-	contact1.phone_number = "0123456789";
-	contact1.darkest_secret = "Likes Nickelback";
-	// Print attribute values
-	std::cout << "First name: " << contact1.first_name <<std::endl;
-	std::cout << "Last name: " << contact1.last_name <<std::endl;
-	std::cout << "Phone Number: " << contact1.phone_number <<std::endl;
-	std::cout << "Darkest Secret: " << contact1.darkest_secret <<std::endl;
-    */
 	return(0);
 }
 

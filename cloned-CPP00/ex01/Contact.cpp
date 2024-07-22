@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:31:17 by atang             #+#    #+#             */
-/*   Updated: 2024/07/21 15:49:43 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/21 23:56:18 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ void Contact::display_summary(const std::vector<Contact>& contacts)
     for (size_t i = 0; i < contacts.size(); ++i)
 	{
         const Contact& contact = contacts[i];
-        std::cout << i << "      | "
-                  << contact.first_name << "      | "
-                  << contact.last_name << "      | "
-                  << contact.nickname << "      \n";
+        if (!contact.is_empty())
+        {
+            std::cout << i << "      | "
+                    << contact.first_name << "      | "
+                    << contact.last_name << "      | "
+                    << contact.nickname << "      \n";
+        }
     }
 }
