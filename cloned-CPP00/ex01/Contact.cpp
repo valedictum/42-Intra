@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:31:17 by atang             #+#    #+#             */
-/*   Updated: 2024/07/28 15:59:04 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/29 00:16:54 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
-
 
 /*
 	Constructor for the Contact class which initialises all member variables to 
@@ -93,4 +92,45 @@ void Contact::display_summary(const std::vector<Contact>& contacts)
                     << contact.nickname << "      \n";
         }
     }
+}
+
+void Contact::set_info()
+{
+    std::cout << "\nEnter first name: ";
+    std::getline(std::cin, first_name);
+    std::cout << "Enter last name: ";
+    std::getline(std::cin, last_name);
+    std::cout << "Enter nickname: ";
+    std::getline(std::cin, nickname);
+    std::cout << "Enter phone number: ";
+    std::getline(std::cin, phone_number);
+    std::cout << "Enter darkest secret: ";
+    std::getline(std::cin, darkest_secret);
+
+    if (is_empty()) {
+        std::cout << "\nContact NOT added - entry required for ALL fields\n";
+    } else {
+        std::cout << "\nContact successfully added to Phonebook!\n";
+    }
+}
+
+void Contact::set_first_name(const std::string& name)
+{
+    first_name = name;
+}
+
+void Contact::set_last_name(const std::string& name) {
+    last_name = name;
+}
+
+void Contact::set_nickname(const std::string& nick) {
+    nickname = nick;
+}
+
+void Contact::set_phone_number(const std::string& number) {
+    phone_number = number;
+}
+
+void Contact::set_darkest_secret(const std::string& secret) {
+    darkest_secret = secret;
 }

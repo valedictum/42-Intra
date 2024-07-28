@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:32:56 by atang             #+#    #+#             */
-/*   Updated: 2024/07/28 16:01:41 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/29 00:12:25 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
+#include <string>
 
 /*
 	Constructor for the PhoneBook class which initialises the oldest_index to 0
@@ -35,12 +36,30 @@ void PhoneBook::press_enter() const
 
 /*
 	Bool that checks if a given string is numeric (true if numeric, false otherwise)
+	(for loop version)
 */
+
+bool PhoneBook::is_numeric(const std::string& str) const 
+{
+    if (str.empty()) 
+		return false;
+    for (std::size_t i = 0; i < str.size(); ++i)
+	{
+        if (!std::isdigit(str[i])) 
+			return false;
+    }
+    return true;
+}
+
+/*
+	all_of version of is_numeric which doens't work on Ubuntu
 
 bool PhoneBook::is_numeric(const std::string& str) const
 {
     return !str.empty() && std::all_of(str.begin(), str.end(), ::isdigit);
 }
+
+*/
 
 /*
 	Prints main menu of the Phonebook program displaying options to ADD a contact, 
@@ -78,6 +97,7 @@ void PhoneBook::print_menu()
 
 void PhoneBook::add_contact()
 {
+	/*
 	Contact	new_contact; // new Contact object created
 
 	std::cout << "\nEnter first name: ";
@@ -90,6 +110,29 @@ void PhoneBook::add_contact()
 	std::getline(std::cin, new_contact.phone_number);
 	std::cout << "Enter darkest secret: ";
 	std::getline(std::cin, new_contact.darkest_secret);
+	*/
+	Contact new_contact;
+    std::string input;
+
+    std::cout << "\nEnter first name: ";
+    std::getline(std::cin, input);
+    new_contact.set_first_name(input);
+
+    std::cout << "Enter last name: ";
+    std::getline(std::cin, input);
+    new_contact.set_last_name(input);
+
+    std::cout << "Enter nickname: ";
+    std::getline(std::cin, input);
+    new_contact.set_nickname(input);
+
+    std::cout << "Enter phone number: ";
+    std::getline(std::cin, input);
+    new_contact.set_phone_number(input);
+
+    std::cout << "Enter darkest secret: ";
+    std::getline(std::cin, input);
+    new_contact.set_darkest_secret(input);
 
 	if (new_contact.is_empty())
 	{
@@ -118,9 +161,13 @@ void PhoneBook::search_contacts()
 
     if (is_numeric(input)) // digit check
     {
-        int index = std::stoi(input); // conversion of input string to integer index
-        if (index >= 0 && index < 8 && !contacts[index].is_empty())
-        {
+        //int index = std::stoi(input); // conversion of input string to integer index
+		std::stringstream ss(input);
+		int index;
+		ss >> index; // conversion of input string to integer index
+        //if (index >= 0 && index < 8 && !contacts[index].is_empty())
+        if (!ss.fail() && ss.eof() && index >= 0 && index < 8 && !contacts[index].is_empty())
+		{
 			std::cout << B "\nContact Index: " RST<< index << std::endl;
 			std::cout << std::endl;
             contacts[index].display_info();
@@ -168,11 +215,19 @@ void PhoneBook::printContacts() const
 	{
         const Contact& contact = contacts[i];
         if (!contact.is_empty())
+		/*
 		{
 			std::cout 	<< "    " << std::setw(10) << filled_index++ << '|'
 						<< std::setw(10) << truncate(contact.first_name, 10) << '|' 
 						<< std::setw(10) << truncate(contact.last_name, 10) << '|'
 						<< std::setw(10) << truncate(contact.nickname, 10) << "\n";
 		}
+		*/
+	     {
+            std::cout << "    " << std::setw(10) << filled_index++ << '|'
+                      << std::setw(10) << truncate(contact.get_info("first_name"), 10) << '|' 
+                      << std::setw(10) << truncate(contact.get_info("last_name"), 10) << '|'
+                      << std::setw(10) << truncate(contact.get_info("nickname"), 10) << "\n";
+        }
     }
 }

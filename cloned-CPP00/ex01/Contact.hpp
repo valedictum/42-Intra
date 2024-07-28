@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:08:46 by atang             #+#    #+#             */
-/*   Updated: 2024/07/28 15:59:23 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/29 08:11:37 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,21 @@ class	Contact // Class keyword used to create a class called Contact
 	public: // Access specifier
 		Contact(); // Constructor for creating new Contact object
 		void		set_info();
-
+		void		add_contact();
 		void		display_info() const;
 		static void display_summary(const std::vector<Contact>& contacts);
 		void		display_contacts () const;
 		bool		is_empty() const;
 		void		display_info_summary() const; 
 		std::string get_info(const std::string& field) const;
+		void		printContacts() const;
+		std::string	truncate(const std::string& str, size_t	width);
+		void 		set_first_name(const std::string& name);
+		void 		set_last_name(const std::string& name);
+		void 		set_nickname(const std::string& nick);
+		void 		set_phone_number(const std::string& number);
+		void 		set_darkest_secret(const std::string& secret);
+
 	private:
 		std::string	first_name;
 		std::string	last_name;
