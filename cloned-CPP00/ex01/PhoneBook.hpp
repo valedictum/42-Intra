@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:33:14 by atang             #+#    #+#             */
-/*   Updated: 2024/07/22 16:09:08 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/28 15:52:37 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #define	PHONEBOOK_HPP
 
 #include "Contact.hpp"
-#include <vector>
-#include <string>
+#include <vector> // For std::vector container
+#include <string> // For std::string class
 #include <iostream>
-#include <iomanip>
+#include <iomanip> // For manipulation of output formatting
 
 # define RST    "\033[0m"      /* Reset to default color */
 # define RED    "\033[1;31m"   /* Bold Red */
@@ -32,22 +32,20 @@ class	PhoneBook
 {
 	public:
 
-		std::vector<Contact> contacts;
-		int		oldest_index;
-		PhoneBook() : oldest_index (0)
-		{
-			contacts.resize(8);
-		}
-		void	add_contact();
-		void	search_contacts();
-		void	print_menu();
-		void	print_search_menu();
-		void	printContacts() const; 
+		//std::vector<Contact> contacts;
+		int			oldest_index;
+		PhoneBook();
+		void		add_contact();
+		void		search_contacts();
+		void		print_menu();
+		void		print_search_menu();
+		void		printContacts() const;
+		std::string	truncate(const std::string& str, size_t	width) const;
+		bool 		is_numeric(const std::string& str) const;
+		void 		press_enter() const;
 
 	private:
-		std::string	truncate(const std::string& str, size_t	width) const;
-		bool 	is_numeric(const std::string& str) const;
-		void 	press_enter() const;
+		std::vector<Contact> contacts;
 };
 
 #endif

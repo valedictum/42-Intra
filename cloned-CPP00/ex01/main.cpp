@@ -6,16 +6,24 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:36:24 by atang             #+#    #+#             */
-/*   Updated: 2024/07/22 15:55:13 by atang            ###   ########.fr       */
+/*   Updated: 2024/07/28 12:38:25 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 #include <iostream>
-#include <cstdlib>
+#include <cstdlib> // C++ version of stdlib.h for exit()
 
-static void	makeUpper(std::string	&str)
+/*
+	&str (reference to string object) as changes made to str parameter inside 
+	fn will directly affect the original string passed to the fn (as opposed 
+	to *str where changes made to *str would require dereferencing the pointer 
+	to access and modify the original string object) i.e. operating on the 
+	ORIGINAL std::string object without needing to return a new string 
+*/
+
+static void	makeUpper(std::string	&str) 
 {
 	for (size_t i = 0; i < str.size(); ++i)
 	{
@@ -23,26 +31,18 @@ static void	makeUpper(std::string	&str)
 	}
 }
 
-/*
-void Contact::wait_for_keypress() const
-{
-    std::cout << "Press enter to return to menu..." << std::endl;
-    std::cin.get(); // Wait for the user to press enter key
-}
-*/
-
 int main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	//Contact		contact1; // Create an object of Contact
-	PhoneBook	phoneBook; // Create an object of PhoneBook
+
+	PhoneBook	phoneBook; // Create an instance of PhoneBook
 
 	while (true)
 	{
-		phoneBook.print_menu();
-		std::string command;
-		std::getline(std::cin, command);
+		phoneBook.print_menu(); // Display menu options
+		std::string command; // Declare string variable to store user command
+		std::getline(std::cin, command); // Get user input from console
 		makeUpper(command);
 		if (command == "ADD")
 		{
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 		}
 		else if (command == "SEARCH")
 		{
-			phoneBook.printContacts();
+			phoneBook.printContacts(); // Display all contacts
 			phoneBook.search_contacts();
 		}
 		else if (command == "EXIT")
@@ -64,8 +64,6 @@ int main(int argc, char **argv)
 			std::cout << "Please choose from: ADD, SEARCH, or EXIT" <<std::endl;
 			std::cout << std::endl;
 		}
-		//wait_for_keypress();
 	}
 	return(0);
 }
-
