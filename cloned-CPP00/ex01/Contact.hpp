@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Contact.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 19:08:46 by atang             #+#    #+#             */
-/*   Updated: 2024/07/29 22:30:20 by sentry           ###   ########.fr       */
+/*   Updated: 2024/08/02 15:09:18 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include <iostream>
 #include <string>
-//#include <vector> // for std::vector (dynamic array that can resize itself automatically)
 
 # define RST    "\033[0m"      /* Reset to default color */
 # define RED    "\033[1;31m"   /* Bold Red */
@@ -45,45 +44,13 @@
 	integrity and to prevent accidental modifications)
 */
 
-/*
--> OLD CLASS
-
-class	Contact // Class keyword used to create a class called Contact
-{
-	public: // Access specifier
-		Contact(); // Constructor for creating new Contact object
-		void		set_info();
-		void		add_contact();
-		void		display_info() const;
-		static void display_summary(const std::vector<Contact>& contacts);
-		void		display_contacts () const;
-		bool		is_empty() const;
-		void		display_info_summary() const; 
-		std::string get_info(const std::string& field) const;
-		void		printContacts() const;
-		std::string	truncate(const std::string& str, size_t	width);
-		void 		set_first_name(const std::string& name);
-		void 		set_last_name(const std::string& name);
-		void 		set_nickname(const std::string& nick);
-		void 		set_phone_number(const std::string& number);
-		void 		set_darkest_secret(const std::string& secret);
-
-	private:
-		std::string	first_name;
-		std::string	last_name;
-		std::string	nickname;
-		std::string	phone_number;
-		std::string	darkest_secret;
-};
-*/
-
 class Contact
 {
     public:
         Contact();
         void setInfo();
         void displayInfo() const;
-        bool is_empty() const;
+        bool isEmpty() const;
         std::string getInfo(const std::string& field) const;
 
     private:

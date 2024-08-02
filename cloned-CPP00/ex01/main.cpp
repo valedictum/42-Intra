@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:36:24 by atang             #+#    #+#             */
-/*   Updated: 2024/07/29 22:49:41 by sentry           ###   ########.fr       */
+/*   Updated: 2024/08/02 15:54:59 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,17 @@ int main(int argc, char **argv)
 
 	while (true)
 	{
-		phoneBook.print_menu(); // Display menu options
+		phoneBook.printMenu(); // Display menu options
 		std::string command; // Declare string variable to store user command
 		std::getline(std::cin, command); // Get user input from console
 		makeUpper(command);
 		if (command == "ADD")
 		{
-			phoneBook.add_contact();
+			phoneBook.addContact();
 		}
 		else if (command == "SEARCH")
 		{
-			phoneBook.printContacts(); // Display all contacts
-			phoneBook.search_contacts();
+			phoneBook.searchContacts();
 		}
 		else if (command == "EXIT")
 		{
@@ -61,7 +60,7 @@ int main(int argc, char **argv)
 		{
 			std::cout << std::endl;
 			std::cout << RED "Invalid command entered!" RST << std::endl; 
-			std::cout << "Please choose from: ADD, SEARCH, or EXIT" <<std::endl;
+			std::cout << "Please choose from: " G "ADD" RST "," Y " SEARCH" RST ", or " RED "EXIT" RST <<std::endl;
 			std::cout << std::endl;
 		}
 	}

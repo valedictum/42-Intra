@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:33:14 by atang             #+#    #+#             */
-/*   Updated: 2024/07/29 22:49:39 by sentry           ###   ########.fr       */
+/*   Updated: 2024/08/02 16:10:06 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 #define	PHONEBOOK_HPP
 
 #include "Contact.hpp"
-//#include <vector> // For std::vector container
 #include <string> // For std::string class
 #include <iostream>
 #include <iomanip> // For manipulation of output formatting
-//#include <sstream> // For std::stringstream
-//#include <cctype>  // For ::isdigit()
 #include <cstdlib> // For ::atoi()
 
 #define MAX_CONTACTS 8
@@ -33,46 +30,23 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-/*
-class	PhoneBook
-{
-	public:
-
-		//std::vector<Contact> contacts;
-		int			oldest_index;
-		PhoneBook();
-		void		add_contact();
-		void		search_contacts();
-		void		print_menu();
-		void		print_search_menu();
-		void		printContacts() const;
-		std::string	truncate(const std::string& str, size_t	width) const;
-		bool 		is_numeric(const std::string& str) const;
-		void 		press_enter() const;
-
-	private:
-		std::vector<Contact> contacts;
-};
-*/
-
 class PhoneBook
 {
     public:
         PhoneBook();
-        void add_contact();
-        void search_contacts() const;
-        void print_menu() const;
-        void printContacts() const;
+        void addContact();
+        void searchContacts() const;
+        void printMenu() const;
 		void displaySummary() const;
 
     private:
         Contact contacts[MAX_CONTACTS];
-        int contactCount;
-        int oldestIndex;
+        int contact_count;
+        int oldest_index;
 
         std::string truncate(const std::string& str, size_t width) const;
-        bool is_numeric(const std::string& str) const;
-        void press_enter() const;
+        bool isNumeric(const std::string& str) const;
+        void pressEnter() const;
 };
 
 #endif
