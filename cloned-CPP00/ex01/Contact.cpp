@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:31:17 by atang             #+#    #+#             */
-/*   Updated: 2024/07/29 00:16:54 by sentry           ###   ########.fr       */
+/*   Updated: 2024/08/02 12:24:18 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,50 +17,40 @@
 	empty strings
 */
 
-Contact::Contact(void) : first_name (""), last_name (""), nickname (""), phone_number(""), darkest_secret("") {}  
+Contact::Contact() : first_name(""), last_name(""), nickname(""), phone_number(""), darkest_secret("") {}
 
 /*
 	bool which returns true if any of the contact files are empty, otherwise false
 */
-
 
 bool	Contact::is_empty() const
 {
 	return first_name.empty() || last_name.empty() || nickname.empty() || phone_number.empty() || darkest_secret.empty();
 }
 
-std::string Contact::get_info(const std::string& field) const
+
+std::string Contact::getInfo(const std::string& field) const
 {
-        if (field == "first_name")
-		{
-            return first_name;
-        }
-		else if (field == "last_name")
-		{
-            return last_name;
-        }
-		else if (field == "nickname")
-		{
-            return nickname;
-        }
-		else if (field == "phone_number")
-		{
-            return phone_number;
-        }
-		else if (field == "darkest_secret")
-		{
-            return darkest_secret;
-        }
-		else
-		{
-            return "Invalid field";
-        }
-    }
+    if (field == "first_name")
+        return first_name;
+    else if (field == "last_name")
+        return last_name;
+    else if (field == "nickname")
+        return nickname;
+    else if (field == "phone_number")
+        return phone_number;
+    else if (field == "darkest_secret")
+        return darkest_secret;
+    else
+        return "Invalid field";
+}
 
 /*
 	Displays contact information
 */
 
+/*
+-> OLD DISPLAY_INFO
 void	Contact::display_info() const
 {
 	std::cout << Y "First Name: " RST << first_name << "\n";
@@ -69,6 +59,17 @@ void	Contact::display_info() const
     std::cout << Y "Phone Number: " RST << phone_number << "\n";
     std::cout << Y "Darkest Secret: " RST << darkest_secret << "\n";
 }
+*/
+
+// NEW DISPLAY_INFO
+void Contact::displayInfo() const
+{
+    std::cout << "First Name: " << first_name << "\n";
+    std::cout << "Last Name: " << last_name << "\n";
+    std::cout << "Nickname: " << nickname << "\n";
+    std::cout << "Phone Number: " << phone_number << "\n";
+    std::cout << "Darkest Secret: " << darkest_secret << "\n";
+}
 
 /*
 	Displays contact summary information (index, first name, last name, nickname), taking a constant reference 
@@ -76,6 +77,8 @@ void	Contact::display_info() const
 	- iterates over the contact vector and prints the above for each non-empty contact
 */
 
+/*
+-> OLD DISPLAY_SUMMARY
 void Contact::display_summary(const std::vector<Contact>& contacts)
 {
     std::cout << "Index  | First Name  | Last Name   | Nickname   \n";
@@ -93,6 +96,10 @@ void Contact::display_summary(const std::vector<Contact>& contacts)
         }
     }
 }
+*/
+
+/*
+-> OLD SET_INFO
 
 void Contact::set_info()
 {
@@ -113,7 +120,24 @@ void Contact::set_info()
         std::cout << "\nContact successfully added to Phonebook!\n";
     }
 }
+*/
 
+// NEW SET_INFO
+void Contact::setInfo()
+{
+    std::cout << "Enter first name: ";
+    std::getline(std::cin, first_name);
+    std::cout << "Enter last name: ";
+    std::getline(std::cin, last_name);
+    std::cout << "Enter nickname: ";
+    std::getline(std::cin, nickname);
+    std::cout << "Enter phone number: ";
+    std::getline(std::cin, phone_number);
+    std::cout << "Enter darkest secret: ";
+    std::getline(std::cin, darkest_secret);
+}
+
+/*
 void Contact::set_first_name(const std::string& name)
 {
     first_name = name;
@@ -134,3 +158,4 @@ void Contact::set_phone_number(const std::string& number) {
 void Contact::set_darkest_secret(const std::string& secret) {
     darkest_secret = secret;
 }
+*/

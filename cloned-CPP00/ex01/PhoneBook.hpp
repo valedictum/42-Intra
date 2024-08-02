@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:33:14 by atang             #+#    #+#             */
-/*   Updated: 2024/07/28 23:08:18 by sentry           ###   ########.fr       */
+/*   Updated: 2024/07/29 22:49:39 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 #define	PHONEBOOK_HPP
 
 #include "Contact.hpp"
-#include <vector> // For std::vector container
+//#include <vector> // For std::vector container
 #include <string> // For std::string class
 #include <iostream>
 #include <iomanip> // For manipulation of output formatting
-#include <sstream> // For std::stringstream
-#include <cctype>  // For ::isdigit()
+//#include <sstream> // For std::stringstream
+//#include <cctype>  // For ::isdigit()
+#include <cstdlib> // For ::atoi()
+
+#define MAX_CONTACTS 8
 
 # define RST    "\033[0m"      /* Reset to default color */
 # define RED    "\033[1;31m"   /* Bold Red */
@@ -30,6 +33,7 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
+/*
 class	PhoneBook
 {
 	public:
@@ -48,6 +52,27 @@ class	PhoneBook
 
 	private:
 		std::vector<Contact> contacts;
+};
+*/
+
+class PhoneBook
+{
+    public:
+        PhoneBook();
+        void add_contact();
+        void search_contacts() const;
+        void print_menu() const;
+        void printContacts() const;
+		void displaySummary() const;
+
+    private:
+        Contact contacts[MAX_CONTACTS];
+        int contactCount;
+        int oldestIndex;
+
+        std::string truncate(const std::string& str, size_t width) const;
+        bool is_numeric(const std::string& str) const;
+        void press_enter() const;
 };
 
 #endif

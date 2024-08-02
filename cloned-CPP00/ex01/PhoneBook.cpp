@@ -6,7 +6,7 @@
 /*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 18:32:56 by atang             #+#    #+#             */
-/*   Updated: 2024/07/29 00:12:25 by sentry           ###   ########.fr       */
+/*   Updated: 2024/07/29 22:51:02 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@
 	and resizes the contacts vector to 8 elements
 */
 
+/*
+-> OLD CONSTRUCTOR
 PhoneBook::PhoneBook() : oldest_index (0)
 {
 	contacts.resize(8);
 }
+*/
+
+PhoneBook::PhoneBook() : contactCount(0), oldestIndex(0) {}
 
 /*
 	Displays message prompting user to press enter to return to the main menu
@@ -66,7 +71,7 @@ bool PhoneBook::is_numeric(const std::string& str) const
 	SEARCH for a specific contact, or EXIT the program.
 */
 
-void PhoneBook::print_menu()
+void PhoneBook::print_menu() const
 {
 	std::cout << std::endl;
 	std::cout << "******************  "  B "Phonebook" RST"  ********************" << std::endl;
@@ -95,22 +100,24 @@ void PhoneBook::print_menu()
 	- prompt to press enter to return to the main menu
 */
 
+/*
+
+-> OLD ADD_CONTACT
 void PhoneBook::add_contact()
 {
-	/*
-	Contact	new_contact; // new Contact object created
+	//Contact	new_contact; // new Contact object created
 
-	std::cout << "\nEnter first name: ";
-	std::getline(std::cin, new_contact.first_name);
-	std::cout << "Enter last name: ";
-	std::getline(std::cin, new_contact.last_name);
-	std::cout << "Enter nickname: ";
-	std::getline(std::cin, new_contact.nickname);
-	std::cout << "Enter phone number: ";
-	std::getline(std::cin, new_contact.phone_number);
-	std::cout << "Enter darkest secret: ";
-	std::getline(std::cin, new_contact.darkest_secret);
-	*/
+	//std::cout << "\nEnter first name: ";
+	//std::getline(std::cin, new_contact.first_name);
+	//std::cout << "Enter last name: ";
+	//std::getline(std::cin, new_contact.last_name);
+	//std::cout << "Enter nickname: ";
+	//std::getline(std::cin, new_contact.nickname);
+	//std::cout << "Enter phone number: ";
+	//std::getline(std::cin, new_contact.phone_number);
+	//std::cout << "Enter darkest secret: ";
+	//std::getline(std::cin, new_contact.darkest_secret);
+	
 	Contact new_contact;
     std::string input;
 
@@ -146,6 +153,25 @@ void PhoneBook::add_contact()
 	}
 	press_enter();
 }
+*/
+
+void PhoneBook::add_contact()
+{
+    Contact newContact;
+    newContact.setInfo();
+
+    if (!newContact.is_empty())
+    {
+        contacts[oldestIndex] = newContact;
+        oldestIndex = (oldestIndex + 1) % MAX_CONTACTS;
+        if (contactCount < MAX_CONTACTS)
+            contactCount++;
+        std::cout << "\nContact successfully added to Phonebook!\n";
+    }
+    press_enter();
+}
+
+
 
 /*
 	Search for a contact in the phonebook based on provided index (with validated input)
@@ -153,6 +179,8 @@ void PhoneBook::add_contact()
 	- after the search, user is prompted to press enter to return to the main menu
 */
 
+/*
+-> OLD SEARCH_CONTACTS
 void PhoneBook::search_contacts()
 {
     std::cout << "\nEnter the index: ";
@@ -183,6 +211,42 @@ void PhoneBook::search_contacts()
     }
 	press_enter();
 }
+*/
+
+void PhoneBook::search_contacts() const
+{
+    if (contactCount == 0)
+    {
+        std::cout << "\nPhonebook is empty.\n";
+        press_enter();
+        return;
+    }
+
+    displaySummary();  // Display the summary before asking for an index
+
+    std::cout << "\nEnter the index of the contact you want to view: ";
+    std::string input;
+    std::getline(std::cin, input);
+
+    if (is_numeric(input))
+    {
+        int index = std::atoi(input.c_str());
+        if (index >= 0 && index < contactCount)
+        {
+            std::cout << "\nContact details:\n";
+            contacts[index].displayInfo();
+        }
+        else
+        {
+            std::cout << "\nInvalid index.\n";
+        }
+    }
+    else
+    {
+        std::cout << "\nInvalid input.\n";
+    }
+    press_enter();
+}
 
 /*
 	Truncates a given string to a specified width (returns substring starting from index 0 to (width -1)) and adds "."
@@ -205,6 +269,8 @@ std::string	PhoneBook::truncate(const	std::string &str, size_t width) const
 	with "." if > 10 characters)
 */
 
+/*
+-> OLD PRINT_CONTACTS
 void PhoneBook::printContacts() const
 {
 	std::cout << std::endl;
@@ -215,19 +281,47 @@ void PhoneBook::printContacts() const
 	{
         const Contact& contact = contacts[i];
         if (!contact.is_empty())
-		/*
-		{
-			std::cout 	<< "    " << std::setw(10) << filled_index++ << '|'
-						<< std::setw(10) << truncate(contact.first_name, 10) << '|' 
-						<< std::setw(10) << truncate(contact.last_name, 10) << '|'
-						<< std::setw(10) << truncate(contact.nickname, 10) << "\n";
-		}
-		*/
-	     {
+		
+		//{
+		//	std::cout 	<< "    " << std::setw(10) << filled_index++ << '|'
+		//				<< std::setw(10) << truncate(contact.first_name, 10) << '|' 
+		//				<< std::setw(10) << truncate(contact.last_name, 10) << '|'
+		//				<< std::setw(10) << truncate(contact.nickname, 10) << "\n";
+		//}
+	    {
             std::cout << "    " << std::setw(10) << filled_index++ << '|'
                       << std::setw(10) << truncate(contact.get_info("first_name"), 10) << '|' 
                       << std::setw(10) << truncate(contact.get_info("last_name"), 10) << '|'
                       << std::setw(10) << truncate(contact.get_info("nickname"), 10) << "\n";
         }
     }
+}
+*/
+
+void PhoneBook::displaySummary() const
+{
+    std::cout << "\n|     Index|First Name| Last Name|  Nickname|\n";
+    std::cout << "|----------|----------|----------|----------|\n";
+    for (int i = 0; i < contactCount; ++i)
+    {
+        std::cout << "|" << std::setw(10) << i << "|"
+                  << std::setw(10) << truncate(contacts[i].getInfo("first_name"), 10) << "|"
+                  << std::setw(10) << truncate(contacts[i].getInfo("last_name"), 10) << "|"
+                  << std::setw(10) << truncate(contacts[i].getInfo("nickname"), 10) << "|\n";
+    }
+    std::cout << "|----------|----------|----------|----------|\n";
+}
+
+void PhoneBook::printContacts() const
+{
+    std::cout << "\n|     Index|First Name| Last Name|  Nickname|\n";
+    std::cout << "|----------|----------|----------|----------|\n";
+    for (int i = 0; i < contactCount; ++i)
+    {
+        std::cout << "|" << std::setw(10) << i << "|"
+                  << std::setw(10) << truncate(contacts[i].getInfo("first_name"), 10) << "|"
+                  << std::setw(10) << truncate(contacts[i].getInfo("last_name"), 10) << "|"
+                  << std::setw(10) << truncate(contacts[i].getInfo("nickname"), 10) << "|\n";
+    }
+    std::cout << "|----------|----------|----------|----------|\n";
 }
