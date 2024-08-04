@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 13:29:18 by atang             #+#    #+#             */
-/*   Updated: 2024/08/03 15:19:19 by atang            ###   ########.fr       */
+/*   Updated: 2024/08/04 14:49:53 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	//mrt = NULL;
 	//data = NULL;
 	i = 0;
-	if (argc != 2 || file_name_error(argv[1]))
+	if (argc != 2 || filename_error(argv[1]))
 		printf(RED "Error!\n" RST G "Correct usage is: ./mini_rt <filename>.rt\n" RST);
 	else if (file_exists(argv[1]))
 	{
