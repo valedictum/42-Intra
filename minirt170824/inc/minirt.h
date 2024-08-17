@@ -6,20 +6,22 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:11:49 by atang             #+#    #+#             */
-/*   Updated: 2024/08/04 14:50:01 by atang            ###   ########.fr       */
+/*   Updated: 2024/08/17 17:11:19 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include <unistd.h> //read, close
-# include <stdio.h> //size_t, printf
+# include <unistd.h> // read, close
+# include <stdio.h> // size_t, printf
 # include <stdlib.h>
 # include <fcntl.h> // O_RDONLY macro
+# include <string.h>
 
 // DEFINITIONS //
 
+# define BUFFER_SIZE 1024 
 # define MAX_OBJECTS 100
 
 # define RST    "\033[0m"      /* Reset to default color */
@@ -122,13 +124,41 @@ typedef	struct
 // file_check.c //
 int		file_exists(char *filename);
 int		filename_error(char	*filename);
-int		file_empty(const char	*filename);
+int		file_empty(const char *filename);
 
-// utils //
+// utils.c //
 size_t	ft_strlen(const char *s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		err_ret(const char *error_message);
 
-// get_next_line //
-char 	*get_next_line(int fd);
+// get_next_line.c //
+char	*read_and_append_lines(int fd, char	*stash);
+char	*extract_line_from_stash(char	*stash);
+char	*remaining_stash_after_extraction(char *stash);
+char	*get_next_line(int fd, char **line);
+
+// get_next_line_utils.c //
+size_t	gnl_strlen(const char *str);
+char	*gnl_strchr(char *str, int target_char);
+char	*gnl_strjoin(char *first_str, char *second_str);
+char	*gnl_initialise_str(void);
+
+// parse_elements.c //
+int		parse_ambient_light(char *line, AmbientLight *ambient_light);
+int		parse_camera(char *line, Camera *camera);
+int		parse_light(char *line, Light *light);
+
+// parse_main.c //
+int		parse_rt_file(const char *filename, Scene *scene);
+int		parse_line(char	*line, Scene *scene);
+
+// parse_shapes.c //
+
+// parse_utils.c //
+float	parse_float(char **str);
+int		parse_int(char	**str);
+void	parse_vector3(char *str, Vector3 *vec);
+void	parse_colour(char *str, Colour *colour);
+int		get_next_token(char **token);
 
 #endif

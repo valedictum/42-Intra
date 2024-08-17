@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 13:26:47 by atang             #+#    #+#             */
-/*   Updated: 2024/08/04 14:50:53 by atang            ###   ########.fr       */
+/*   Updated: 2024/08/17 17:34:14 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	file_empty(const char	*filename)
 	int fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		perror ("Failed to open file");
+		perror ("\nFailed to open file\n");
 		return (-1); // error opening file
 	}
 
@@ -64,12 +64,12 @@ int	file_empty(const char	*filename)
 
 	if (bytesRead == -1)
 	{
-		perror("Failed to read file");
+		perror("\nFailed to read file\n");
 		return (-1); // error reading file
 	}
 	if (bytesRead == 0)
 	{
-		printf(RED "File is empty!\n" RST);
+		printf(RED "\nFile is empty!\n\n" RST);
 		return (1); // empty file
 	}
 	return (0);
