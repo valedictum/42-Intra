@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:11:49 by atang             #+#    #+#             */
-/*   Updated: 2024/08/11 18:03:10 by atang            ###   ########.fr       */
+/*   Updated: 2024/08/18 15:07:42 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 // DEFINITIONS //
 
+# define BUFFER_SIZE 1024 
 # define MAX_OBJECTS 100
 
 # define RST    "\033[0m"      /* Reset to default color */
@@ -72,14 +73,14 @@ typedef	struct
 {
 	Vector3	centre;
 	float	diameter;
-	Colour	color;
+	Colour	colour;
 }	Sphere;
 
 typedef	struct
 {
 	Vector3	point;
 	Vector3	normal;
-	Colour	color;
+	Colour	colour;
 }	Plane;
 
 typedef	struct
@@ -88,7 +89,7 @@ typedef	struct
 	Vector3	axis;
 	float	diameter;
 	float	height;
-	Colour	color;
+	Colour	colour;
 }	Cylinder;
 
 typedef enum
@@ -98,7 +99,7 @@ typedef enum
     CYLINDER
 }	ObjectType;
 
-typedef	struct 
+typedef	struct	Object 
 {
 	ObjectType	type;
 	union
@@ -107,6 +108,7 @@ typedef	struct
 		Plane		plane;
 		Cylinder	cylinder;
 	}	data;
+	struct Object	*next;
 }	Object;
 
 typedef	struct
@@ -114,7 +116,8 @@ typedef	struct
 	AmbientLight	ambient_light;
 	Camera			camera;
 	Light			light;
-	Object			objects[MAX_OBJECTS];
+	//Object		objects[MAX_OBJECTS]; // array before linked list of objects
+	Object 			*objects;
 	int				object_count;
 }	Scene;
 
@@ -123,11 +126,12 @@ typedef	struct
 // file_check.c //
 int		file_exists(char *filename);
 int		filename_error(char	*filename);
-int		file_empty(const char	*filename);
+int		file_empty(const char *filename);
 
 // utils.c //
 size_t	ft_strlen(const char *s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		err_ret(const char *error_message);
 
 // get_next_line.c //
 char	*read_and_append_lines(int fd, char	*stash);
@@ -142,20 +146,29 @@ char	*gnl_strjoin(char *first_str, char *second_str);
 char	*gnl_initialise_str(void);
 
 // parse_elements.c //
-->
+int		parse_ambient_light(char *line, AmbientLight *ambient_light);
+int		parse_camera(char *line, Camera *camera);
+int		parse_light(char *line, Light *light);
 
 // parse_main.c //
-int		parse_rt_file(const char	*filename, Scene	*scene);
-int		parse_line(char	*line, Scene	*scene);
+int		parse_rt_file(const char *filename, Scene *scene);
+int		parse_line(char	*line, Scene *scene);
 
 // parse_shapes.c //
-->
+int		add_object(Scene *scene, Object *new_object);
+void	free_objects(Scene *scene);
+int		parse_sphere(char *line, Object *new_object);
+int		parse_plane(char *line, Object *new_object);
+int		parse_cylinder(char *line, Object *new_object);
 
 // parse_utils.c //
-float	parse_float(char	**str);
+//float	parse_float(char **str);
+float	parse_float(const char *str, float *result);
 int		parse_int(char	**str);
-void	parse_vector3(char	*str, Vector3	*vec);
-void	parse_colour(char	*str, Colour	*colour);
-
+//void	parse_vector3(char *str, Vector3 *vec);
+// inc/minirt.h
+void	parse_vector3(const char *str, Vector3 *vec);
+void	parse_colour(char *str, Colour *colour);
+int		get_next_token(char **token);
 
 #endif

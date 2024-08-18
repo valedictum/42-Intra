@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 13:59:30 by atang             #+#    #+#             */
-/*   Updated: 2024/08/03 15:09:10 by atang            ###   ########.fr       */
+/*   Updated: 2024/08/18 14:52:20 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,11 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		s2++;
 		n--;
 	}
+	return (0);
+}
+
+int	err_ret(const char *error_message)
+{
+	printf("Error - %s\n", error_message);
 	return (0);
 }

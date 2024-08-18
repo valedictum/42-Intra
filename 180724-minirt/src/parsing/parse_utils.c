@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:24:03 by atang             #+#    #+#             */
-/*   Updated: 2024/08/11 17:56:07 by atang            ###   ########.fr       */
+/*   Updated: 2024/08/18 15:19:25 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 	part of the string after the converted number
 */
 
-float	parse_float(char	**str)
+/*
+float	parse_float(char	**str) // The OG one
 {
 	char	*end; // points to the first character AFTER the parsed number
 	float	result; // stores the converted floating-point number
@@ -31,6 +32,13 @@ float	parse_float(char	**str)
 	else
 		*str = end;
 	return (result);
+}
+*/
+float parse_float(const char *str, float *result)
+{
+    char *endptr;
+    *result = strtof(str, &endptr);
+    return (*endptr == '\0'); // Return 1 if parsing was successful
 }
 
 /*
@@ -61,12 +69,48 @@ int	parse_int(char	**str)
 	next part of the string
 */
 
+/*
 void	parse_vector3(char	*str, Vector3	*vec)
 {
 	vec->x = parse_float(&str);
 	vec->y = parse_float(&str);
 	vec->z = parse_float(&str);
 }
+*/
+
+void parse_vector3(char *str, Vector3 *vec)
+{
+    float temp;
+
+    // Parse x component
+    if (!parse_float(str, &temp)) {
+        // Handle error if needed
+        return;
+    }
+    vec->x = temp;
+
+    // Move to the next token
+    str = strtok(NULL, " \t");
+
+    // Parse y component
+    if (!parse_float(str, &temp)) {
+        // Handle error if needed
+        return;
+    }
+    vec->y = temp;
+
+    // Move to the next token
+    str = strtok(NULL, " \t");
+
+    // Parse z component
+    if (!parse_float(str, &temp)) {
+        // Handle error if needed
+        return;
+    }
+    vec->z = temp;
+}
+
+
 
 /*
 	parse_colour()
@@ -79,4 +123,12 @@ void	parse_colour(char	*str, Colour	*colour)
 	colour->r = parse_int(&str);
 	colour->g = parse_int(&str);
 	colour->b = parse_int(&str);
+}
+
+int	get_next_token(char **token)
+{
+	*token = strtok(NULL, " \t");
+	if (!*token)
+		return (0);
+	return (1);
 }
