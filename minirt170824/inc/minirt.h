@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:11:49 by atang             #+#    #+#             */
-/*   Updated: 2024/08/17 17:11:19 by atang            ###   ########.fr       */
+/*   Updated: 2024/09/01 17:31:15 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef	struct
 		Plane		plane;
 		Cylinder	cylinder;
 	}	data;
+	struct Object	*next; // added ths
 }	Object;
 
 typedef	struct
@@ -115,7 +116,8 @@ typedef	struct
 	AmbientLight	ambient_light;
 	Camera			camera;
 	Light			light;
-	Object			objects[MAX_OBJECTS];
+	//Object			objects[MAX_OBJECTS]; // Changed to pointer as below
+	Object			*objects;
 	int				object_count;
 }	Scene;
 
@@ -157,8 +159,9 @@ int		parse_line(char	*line, Scene *scene);
 // parse_utils.c //
 float	parse_float(char **str);
 int		parse_int(char	**str);
-void	parse_vector3(char *str, Vector3 *vec);
-void	parse_colour(char *str, Colour *colour);
+int		parse_vector3(char *str, Vector3 *vec);
+int		parse_colour(char *str, Colour *colour);
 int		get_next_token(char **token);
+int		free_and_return(Object *obj, int ret_val);
 
 #endif
