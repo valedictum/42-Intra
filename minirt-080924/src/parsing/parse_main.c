@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:44:24 by atang             #+#    #+#             */
-/*   Updated: 2024/09/08 16:17:52 by atang            ###   ########.fr       */
+/*   Updated: 2024/09/14 17:27:39 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void print_ambient_light(const AmbientLight *ambient)
 {
-    printf(B "Ambient Light:\n\n" RST);
+    printf(B "\nAmbient Light:\n\n" RST);
     printf("  Ratio: %f\n", ambient->ratio);
     printf("  Colour: %d, %d, %d\n\n", ambient->colour.r, ambient->colour.g, ambient->colour.b);
 }
@@ -94,6 +94,8 @@ static void print_cylinder(const Object *object)
 static void print_all_objects(const Scene *scene)
 {
     Object *current = scene->objects;
+
+    printf(G "\nEntering" RST " print_all_objects...\n");
     while (current)
     {
         switch (current->type)
@@ -112,6 +114,7 @@ static void print_all_objects(const Scene *scene)
         }
         current = current->next;
     }
+    printf(RED "Exiting" RST " print_all_objects...\n");
 }
 /*
 	parse_rt_file()
@@ -158,7 +161,7 @@ int parse_rt_file(const char *filename, Scene *scene)
     char    *line;
     int     result;
 
-	printf(G "\nStarting parse_rt()...\n\n" RST);
+	printf(B "\nStarting parse_rt()...\n" RST);
     fd = open(filename, O_RDONLY);
     if (fd == -1)
     {
@@ -215,6 +218,7 @@ int	parse_line(char	*line, Scene	*scene)
 	token = strtok(line, " \t\n"); // split the line into tokens based on " ", \t, and \n
 	if (!token) // i.e empty line
 		return (1); // line is valid but no content to parse
+    printf("\nParsing line with token: %s\n", token);
 	if (strcmp(token, "A") == 0)
 		return (parse_ambient_light(line, &scene->ambient_light));
 	else if (strcmp(token, "C") == 0)

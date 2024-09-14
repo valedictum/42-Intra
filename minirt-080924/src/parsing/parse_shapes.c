@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_shapes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:00:19 by atang             #+#    #+#             */
-/*   Updated: 2024/09/08 14:34:04 by atang            ###   ########.fr       */
+/*   Updated: 2024/09/14 17:19:13 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int add_object(Scene *scene, Object *new_object)
         current->next = new_object;
     }
     scene->object_count++;
+    printf("Object added. New count: %d\n", scene->object_count);
     return 1;
 }
 
@@ -57,6 +58,7 @@ Object *create_sphere(void)
 
 int parse_sphere(char *line, Scene *scene)
 {
+    printf(G "Entering" RST " parse_sphere...\n");
 	(void)line;
     Object *new_sphere = malloc(sizeof(Object));
     char *token;
@@ -78,12 +80,13 @@ int parse_sphere(char *line, Scene *scene)
     token = strtok(NULL, " \t\n"); // Get the colour
     if (!token || !parse_colour(token, &new_sphere->data.sphere.colour))
         return free_and_return(new_sphere, 0);
-
+    printf(RED "Exiting" RST " parse_sphere...\n");
     return add_object(scene, new_sphere);
 }
 
 int parse_plane(char *line, Scene *scene)
 {
+    printf(G "Entering" RST " parse_plane...\n");
 	(void)line;
     Object *new_plane = malloc(sizeof(Object));
     char *token;
@@ -105,12 +108,13 @@ int parse_plane(char *line, Scene *scene)
     token = strtok(NULL, " \t\n"); // Get the colour
     if (!token || !parse_colour(token, &new_plane->data.plane.colour))
         return free_and_return(new_plane, 0);
-
+    printf(RED "Exiting" RST " parse_plane...\n");
     return add_object(scene, new_plane);
 }
 
 int parse_cylinder(char *line, Scene *scene)
 {
+    printf(G "Entering" RST " parse_cylinder...\n");
 	(void)line;
     Object *new_cylinder = malloc(sizeof(Object));
     char *token;
@@ -140,7 +144,7 @@ int parse_cylinder(char *line, Scene *scene)
     token = strtok(NULL, " \t\n"); // Get the colour
     if (!token || !parse_colour(token, &new_cylinder->data.cylinder.colour))
         return free_and_return(new_cylinder, 0);
-
+    printf(RED "Exiting" RST " parse_cylinder...\n");
     return add_object(scene, new_cylinder);
 }
 

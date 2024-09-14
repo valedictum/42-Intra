@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 13:29:18 by atang             #+#    #+#             */
-/*   Updated: 2024/08/17 17:34:52 by atang            ###   ########.fr       */
+/*   Updated: 2024/09/14 17:27:58 by sentry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 		printf(RED "Error!\n" RST G "Correct usage is: ./mini_rt <filename>.rt\n" RST);
 	else if (file_exists(argv[1]))
 	{
-		printf(G "\nFile found...\n" RST);
+		printf(B "\nFile found...\n" RST);
 
 		int	empty_check = file_empty(argv[1]); 
 		if (empty_check == 1 || empty_check == -1)
