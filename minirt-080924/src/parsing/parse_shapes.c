@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_shapes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:00:19 by atang             #+#    #+#             */
-/*   Updated: 2024/09/14 17:19:13 by sentry           ###   ########.fr       */
+/*   Updated: 2024/09/15 17:20:28 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,10 @@ int parse_sphere(char *line, Scene *scene)
     token = strtok(NULL, " \t\n"); // Get the centre
     if (!token || !parse_vector3(token, &new_sphere->data.sphere.centre))
         return free_and_return(new_sphere, 0);
-
     token = strtok(NULL, " \t\n"); // Get the diameter
     if (!token || !(new_sphere->data.sphere.diameter = parse_float(&token)))
         return free_and_return(new_sphere, 0);
-
+	printf("   Parsed diameter: %f\n", new_sphere->data.sphere.diameter);
     token = strtok(NULL, " \t\n"); // Get the colour
     if (!token || !parse_colour(token, &new_sphere->data.sphere.colour))
         return free_and_return(new_sphere, 0);
@@ -136,11 +135,11 @@ int parse_cylinder(char *line, Scene *scene)
     token = strtok(NULL, " \t\n"); // Get the diameter
     if (!token || !(new_cylinder->data.cylinder.diameter = parse_float(&token)))
         return free_and_return(new_cylinder, 0);
-
+	printf("   Parsed diameter: %f\n", new_cylinder->data.cylinder.diameter);
     token = strtok(NULL, " \t\n"); // Get the height
     if (!token || !(new_cylinder->data.cylinder.height = parse_float(&token)))
         return free_and_return(new_cylinder, 0);
-
+	printf("   Parsed height: %f\n", new_cylinder->data.cylinder.height);
     token = strtok(NULL, " \t\n"); // Get the colour
     if (!token || !parse_colour(token, &new_cylinder->data.cylinder.colour))
         return free_and_return(new_cylinder, 0);

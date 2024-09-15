@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:24:03 by atang             #+#    #+#             */
-/*   Updated: 2024/09/08 16:19:06 by atang            ###   ########.fr       */
+/*   Updated: 2024/09/15 17:19:06 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,12 @@ int	parse_vector3(char	*str, Vector3	*vec)
 	vec->x = parse_float(&str);
 	vec->y = parse_float(&str);
 	vec->z = parse_float(&str);
-	return (0);
+	//return (0);
+	printf("   Parsed vector: x = %f, y = %f, z = %f\n", vec->x, vec->y, vec->z);
+	 // Check for any parsing errors
+    if (vec->x == 0.0f && vec->y == 0.0f && vec->z == 0.0f)
+        return 0;  // Return failure if no valid float was parsed
+    return 1;  // Return success
 }
 
 /*
@@ -80,6 +85,7 @@ int	parse_colour(char	*str, Colour	*colour)
 	colour->r = parse_int(&str);
 	colour->g = parse_int(&str);
 	colour->b = parse_int(&str);
+	printf("   Parsed colour: R = %d, G = %d, B = %d\n", colour->r, colour->g, colour->b);
 	return (0);
 }
 

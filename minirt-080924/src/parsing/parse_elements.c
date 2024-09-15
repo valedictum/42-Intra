@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:59:55 by atang             #+#    #+#             */
-/*   Updated: 2024/09/14 17:22:22 by sentry           ###   ########.fr       */
+/*   Updated: 2024/09/15 17:20:31 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	parse_ambient_light(char *line, AmbientLight *ambient_light)
 		return (0);
 	ambient_light->ratio = parse_float(&token);
 	if (ambient_light->ratio < 0.0f || ambient_light->ratio > 1.0f)
-		return (err_ret("Ambient light ratio out of range (0.0 to 1.0)"));
+		return (err_ret("   Ambient light ratio out of range (0.0 to 1.0)"));
+	printf("   Parsed ratio: %f\n", ambient_light->ratio);
 	parse_colour(token, &ambient_light->colour);
 	printf(RED "Exiting" RST " parse_ambient_light...\n");
 	return (1);
@@ -56,6 +57,36 @@ int	parse_camera(char *line, Camera *camera)
 
 int parse_camera(char *line, Camera *camera)
 {
+    printf(G "Entering" RST " parse_camera...\n");
+    char *token;
+    (void) line;
+    
+    if (!get_next_token(&token))
+        return (printf("   Failed to get position token for camera\n"));
+    if (!parse_vector3(token, &camera->position))
+        return (printf("   Failed to parse camera position\n"));
+    if (!get_next_token(&token))
+        return (printf("   Failed to get orientation token for camera\n"));
+    if (!parse_vector3(token, &camera->orientation))
+        return (printf("   Failed to parse camera orientation\n"));
+    if (camera->orientation.x < -1 || camera->orientation.x > 1 ||
+        camera->orientation.y < -1 || camera->orientation.y > 1 ||
+        camera->orientation.z < -1 || camera->orientation.z > 1)
+        return (printf("Camera orientation vector ratio out of range (-1 to 1)\n"));
+    if (!get_next_token(&token))
+        return (printf("Failed to get FOV token for camera\n"));
+    camera->fov = parse_float(&token);
+	printf("   Parsed FOV: %f\n", camera->fov);
+    if (camera->fov < 0 || camera->fov > 180)
+        return (printf("Camera FOV out of range (0 to 180)\n"));
+    printf(RED "Exiting" RST " parse_camera...\n");
+    return 1;
+}
+
+/*
+OLD
+int parse_camera(char *line, Camera *camera)
+{
 	printf(G "Entering" RST " parse_camera...\n");
     char *token;
 	(void) line;
@@ -77,6 +108,7 @@ int parse_camera(char *line, Camera *camera)
         return (err_ret("Camera FOV out of range (0 to 180)"));
     return 1;
 }
+*/
 
 int	parse_light(char *line, Light *light)
 {
