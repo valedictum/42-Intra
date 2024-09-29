@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:59:55 by atang             #+#    #+#             */
-/*   Updated: 2024/09/15 17:20:31 by atang            ###   ########.fr       */
+/*   Updated: 2024/09/29 18:37:11 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int	parse_camera(char *line, Camera *camera)
 }
 */
 
+/*
+
+THIS ONE--
 int parse_camera(char *line, Camera *camera)
 {
     printf(G "Entering" RST " parse_camera...\n");
@@ -79,6 +82,35 @@ int parse_camera(char *line, Camera *camera)
 	printf("   Parsed FOV: %f\n", camera->fov);
     if (camera->fov < 0 || camera->fov > 180)
         return (printf("Camera FOV out of range (0 to 180)\n"));
+    printf(RED "Exiting" RST " parse_camera...\n");
+    return 1;
+}
+*/
+
+int parse_camera(char *line, Camera *camera)
+{
+    printf(G "Entering" RST " parse_camera...\n");
+    char *token;
+    (void) line;
+    
+    if (!get_next_token(&token))
+        return (printf("   Failed to get position token for camera\n"));
+    if (!parse_vector3(token, &camera->position))
+        return (printf("   Failed to parse camera position\n"));
+    
+    if (!get_next_token(&token))
+        return (printf("   Failed to get orientation token for camera\n"));
+    if (!parse_vector3(token, &camera->orientation))
+        return (printf("   Failed to parse camera orientation\n"));
+    
+    if (!get_next_token(&token))
+        return (printf("   Failed to get FOV token for camera\n"));
+    camera->fov = parse_float(&token);
+    printf("   Parsed FOV: %f\n", camera->fov);
+    
+    if (camera->fov < 0 || camera->fov > 180)
+        return (printf("Camera FOV out of range (0 to 180)\n"));
+    
     printf(RED "Exiting" RST " parse_camera...\n");
     return 1;
 }
