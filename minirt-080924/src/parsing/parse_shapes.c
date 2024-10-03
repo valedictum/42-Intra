@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:00:19 by atang             #+#    #+#             */
-/*   Updated: 2024/09/15 17:20:28 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/03 17:40:16 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int add_object(Scene *scene, Object *new_object)
     if (!scene->objects)
     {
         scene->objects = new_object;
+        printf("First object added to the scene.\n");
     }
     else
     {
@@ -24,6 +25,7 @@ int add_object(Scene *scene, Object *new_object)
         while (current->next)
             current = current->next;
         current->next = new_object;
+        printf("Object added to the end of the scene's object list.\n");
     }
     scene->object_count++;
     printf("Object added. New count: %d\n", scene->object_count);
@@ -78,8 +80,11 @@ int parse_sphere(char *line, Scene *scene)
 	printf("   Parsed diameter: %f\n", new_sphere->data.sphere.diameter);
     token = strtok(NULL, " \t\n"); // Get the colour
     if (!token || !parse_colour(token, &new_sphere->data.sphere.colour))
-        return free_and_return(new_sphere, 0);
-    printf(RED "Exiting" RST " parse_sphere...\n");
+	{
+		printf(RED "Exiting" RST " parse_sphere...\n");
+		return free_and_return(new_sphere, 0);
+	}
+	printf(RED "Exiting" RST " parse_sphere...\n");
     return add_object(scene, new_sphere);
 }
 
@@ -106,7 +111,11 @@ int parse_plane(char *line, Scene *scene)
 
     token = strtok(NULL, " \t\n"); // Get the colour
     if (!token || !parse_colour(token, &new_plane->data.plane.colour))
+	{
+		add_object(scene, new_plane);
+		printf(RED "Exiting" RST " parse_plane...\n");
         return free_and_return(new_plane, 0);
+	}
     printf(RED "Exiting" RST " parse_plane...\n");
     return add_object(scene, new_plane);
 }
@@ -142,9 +151,13 @@ int parse_cylinder(char *line, Scene *scene)
 	printf("   Parsed height: %f\n", new_cylinder->data.cylinder.height);
     token = strtok(NULL, " \t\n"); // Get the colour
     if (!token || !parse_colour(token, &new_cylinder->data.cylinder.colour))
+	{
+		printf(RED "Exiting" RST " parse_cylinder...\n");
         return free_and_return(new_cylinder, 0);
+	}
     printf(RED "Exiting" RST " parse_cylinder...\n");
-    return add_object(scene, new_cylinder);
+    add_object(scene, new_cylinder);
+	return (0);
 }
 
 // Helper function to free object and return 0

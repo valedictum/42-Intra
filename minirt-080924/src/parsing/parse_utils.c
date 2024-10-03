@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:24:03 by atang             #+#    #+#             */
-/*   Updated: 2024/09/15 17:19:06 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/03 15:34:13 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 	part of the string after the converted number
 */
 
+/*
+--> PREVIOUS
 float	parse_float(char	**str)
 {
 	char	*end; // points to the first character AFTER the parsed number
@@ -32,6 +34,25 @@ float	parse_float(char	**str)
 		*str = end;
 	return (result);
 }
+*/
+
+float parse_float(char **str)
+{
+    char *end;
+    float result;
+
+    result = strtof(*str, &end);
+    if (end == *str) // No digits were found
+    {
+        printf("   Warning: No valid float found in '%s'\n", *str);
+        return 0.0f;
+    }
+    *str = end;
+    while (**str == ' ' || **str == '\t' || **str == ',')
+        (*str)++;
+    return result;
+}
+
 
 /*
 	parse_int()
@@ -61,6 +82,7 @@ int	parse_int(char	**str)
 	pointer to point at the next part of the string
 */
 
+/*
 int	parse_vector3(char	*str, Vector3	*vec)
 {
 	vec->x = parse_float(&str);
@@ -72,6 +94,29 @@ int	parse_vector3(char	*str, Vector3	*vec)
     if (vec->x == 0.0f && vec->y == 0.0f && vec->z == 0.0f)
         return 0;  // Return failure if no valid float was parsed
     return 1;  // Return success
+}
+*/
+
+/*
+int parse_vector3(char *str, Vector3 *vec)
+{
+    printf("   Parsing vector from: %s\n", str);
+    vec->x = parse_float(&str);
+    vec->y = parse_float(&str);
+    vec->z = parse_float(&str);
+    printf("   Parsed vector: x = %f, y = %f, z = %f\n", vec->x, vec->y, vec->z);
+    return 1;  // Always return success, (0,0,0) is a valid vector
+}
+*/
+
+int parse_vector3(char *str, Vector3 *vec)
+{
+    printf("   Parsing vector from: %s\n", str);
+    vec->x = parse_float(&str);
+    vec->y = parse_float(&str);
+    vec->z = parse_float(&str);
+    printf("   Parsed vector: x = %f, y = %f, z = %f\n", vec->x, vec->y, vec->z);
+    return 1;  // Always return success, (0,0,0) is a valid vector
 }
 
 /*

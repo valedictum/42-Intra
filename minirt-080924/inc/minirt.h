@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:11:49 by atang             #+#    #+#             */
-/*   Updated: 2024/09/08 16:22:22 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/03 20:28:05 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int		parse_line(char	*line, Scene *scene);
 int		parse_sphere(char *line, Scene *scene);
 int		parse_plane(char *line, Scene *scene);
 int		parse_cylinder(char *line, Scene *scene);
+void	print_sphere(const Object *object);
 
 // parse_utils.c //
 float	parse_float(char **str);

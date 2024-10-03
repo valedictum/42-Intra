@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:44:24 by atang             #+#    #+#             */
-/*   Updated: 2024/09/14 17:27:39 by sentry           ###   ########.fr       */
+/*   Updated: 2024/10/03 20:28:04 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void print_light(const Light *light)
 	printf("  Colour: %d, %d, %d\n\n", light->colour.r, light->colour.g, light->colour.b);
 }
 
-static void print_sphere(const Object *object)
+void print_sphere(const Object *object)
 {
     if (object->type != SPHERE) return;
 
@@ -98,19 +98,21 @@ static void print_all_objects(const Scene *scene)
     printf(G "\nEntering" RST " print_all_objects...\n");
     while (current)
     {
-        switch (current->type)
+        if (current->type == SPHERE)
         {
-            case SPHERE:
-                print_sphere(current);
-                break;
-            case PLANE:
-                print_plane(current);
-                break;
-            case CYLINDER:
-                print_cylinder(current);
-                break;
-            default:
-                printf("Unknown object type\n");
+            print_sphere(current);
+        }
+        else if (current->type == PLANE)
+        {
+            print_plane(current);
+        }
+        else if (current->type == CYLINDER)
+        {
+            print_cylinder(current);
+        }
+        else
+        {
+            printf("Unknown object type\n");
         }
         current = current->next;
     }
@@ -198,10 +200,10 @@ int parse_rt_file(const char *filename, Scene *scene)
             break;
     }
     close(fd);
-	print_all_objects(scene);
 	print_ambient_light(&scene->ambient_light);
     print_camera(&scene->camera);
     print_light(&scene->light);
+	print_all_objects(scene);
     return (result); // success == 1 , failure == 0
 }
 
