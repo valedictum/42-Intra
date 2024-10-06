@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:44:24 by atang             #+#    #+#             */
-/*   Updated: 2024/10/03 20:28:04 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/06 15:42:55 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,23 +91,36 @@ static void print_cylinder(const Object *object)
         object->data.cylinder.colour.b);
 }
 
+/*
+--> PREVIOUS VERSION
+
 static void print_all_objects(const Scene *scene)
 {
     Object *current = scene->objects;
 
     printf(G "\nEntering" RST " print_all_objects...\n");
+    printf("Number of objects in scene: %d\n", scene->object_count);
+    
+    if (!current) {
+        printf("No objects in the scene.\n");
+    }
+
     while (current)
     {
+        printf("Printing object of type: ");
         if (current->type == SPHERE)
         {
+            printf("SPHERE\n");
             print_sphere(current);
         }
         else if (current->type == PLANE)
         {
+            printf("PLANE\n");
             print_plane(current);
         }
         else if (current->type == CYLINDER)
         {
+            printf("CYLINDER\n");
             print_cylinder(current);
         }
         else
@@ -118,6 +131,52 @@ static void print_all_objects(const Scene *scene)
     }
     printf(RED "Exiting" RST " print_all_objects...\n");
 }
+*/
+
+static void print_all_objects(const Scene *scene)
+{
+    Object *current = scene->objects;
+
+    printf(G "\nEntering" RST " print_all_objects...\n\n");
+    printf("Number of objects in scene: %d\n\n", scene->object_count);
+    
+    if (!current) {
+        printf("No objects in the scene.\n\n");
+    }
+
+    int position = 1; // Initialize position counter
+    while (current)
+    {
+        printf("Object list position: %d\n", position); // Print position
+        printf("Printing object of type: ");
+        
+        if (current->type == SPHERE)
+        {
+            printf("SPHERE\n");
+            print_sphere(current);
+        }
+        else if (current->type == PLANE)
+        {
+            printf("PLANE\n");
+            print_plane(current);
+        }
+        else if (current->type == CYLINDER)
+        {
+            printf("CYLINDER\n");
+            print_cylinder(current);
+        }
+        else
+        {
+            printf("Unknown object type\n");
+        }
+        
+        current = current->next;
+        position++; // Increment position counter
+    }
+    
+    printf(RED "Exiting" RST " print_all_objects...\n");
+}
+
 /*
 	parse_rt_file()
 	Manages file operations and calls parse_line() for each line read from the 
@@ -163,6 +222,8 @@ int parse_rt_file(const char *filename, Scene *scene)
     char    *line;
     int     result;
 
+	scene->objects = NULL;
+    scene->object_count = 0;
 	printf(B "\nStarting parse_rt()...\n" RST);
     fd = open(filename, O_RDONLY);
     if (fd == -1)
@@ -181,15 +242,17 @@ int parse_rt_file(const char *filename, Scene *scene)
         // Call get_next_line and handle memory allocation
         if (get_next_line(fd, &line) == NULL)  // Check if line is NULL
         {
+			printf("get_next_line returned NULL.\n");
             result = 0;
             free(line);
             break ;
         }
-
+		printf("Read line: %s\n", line); 
         // Process the line
         if (!parse_line(line, scene)) // parse_line failure
         {
             result = 0;
+			printf("Error parsing line: %s\n", line);
         }
         
         // Free the allocated memory for line

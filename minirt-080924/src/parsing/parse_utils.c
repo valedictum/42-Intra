@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:24:03 by atang             #+#    #+#             */
-/*   Updated: 2024/10/03 15:34:13 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/06 15:20:18 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,23 @@ int parse_vector3(char *str, Vector3 *vec)
 	r, g, and b components
 */
 
-int	parse_colour(char	*str, Colour	*colour)
+int parse_colour(char *str, Colour *colour)
 {
-	colour->r = parse_int(&str);
-	colour->g = parse_int(&str);
-	colour->b = parse_int(&str);
-	printf("   Parsed colour: R = %d, G = %d, B = %d\n", colour->r, colour->g, colour->b);
-	return (0);
+    colour->r = parse_int(&str);
+    colour->g = parse_int(&str);
+    colour->b = parse_int(&str);
+
+    // Ensure the parsed color values are within the valid range (0-255)
+    if (colour->r < 0 || colour->r > 255 || 
+        colour->g < 0 || colour->g > 255 || 
+        colour->b < 0 || colour->b > 255) {
+        printf(RED "Error: Colour values out of bounds (0-255).\n" RST);
+        return 0;  // Return failure if any value is out of range
+    }
+
+    printf("   Parsed colour: R = %d, G = %d, B = %d\n", colour->r, colour->g, colour->b);
+    
+    return 1;  // Return success
 }
 
 int	get_next_token(char **token)
