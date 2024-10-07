@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:59:55 by atang             #+#    #+#             */
-/*   Updated: 2024/10/06 16:14:45 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/07 14:03:14 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,10 @@ int parse_ambient_light(char *line, AmbientLight *ambient_light)
     if (ambient_light->ratio < 0.0f || ambient_light->ratio > 1.0f)
         return (err_ret("   Ambient light ratio out of range (0.0 to 1.0)"));
     printf("   Parsed ratio: %f\n", ambient_light->ratio);
-    
     if (!get_next_token(&token))
         return (0);
     printf("   Color token: %s\n", token);
     parse_colour(token, &ambient_light->colour);
-    //printf("   Parsed colour: R = %d, G = %d, B = %d\n", ambient_light->colour.r, ambient_light->colour.g, ambient_light->colour.b);
-    
     printf(RED "Exiting" RST " parse_ambient_light...\n");
     return (1);
 }
