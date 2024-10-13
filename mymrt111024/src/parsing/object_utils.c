@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:44:56 by atang             #+#    #+#             */
-/*   Updated: 2024/10/11 16:49:19 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 15:07:43 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	print_objects_in_scene(struct Object *objects)
 	const char		*type_str;
 
 	temp = objects;
-	printf("Current objects in scene:\n");
+	printf("      Current objects in scene:\n");
 	while (temp)
 	{
 		type_str = get_object_type_str(temp->type);
-		printf("Object type: %s\n", type_str);
+		printf("      Object type: %s\n", type_str);
 		temp = temp->next;
 	}
 }
@@ -45,23 +45,23 @@ int	add_object(t_Scene *scene, struct Object *new_object)
 	struct Object	*current;
 	const char		*current_type_str;
 
-	printf("Entering add_object function. Adding new object of type: %d\n",
+	printf(G "   Entering" RST " add_object()\n      Adding new object of type: %d\n",
 		new_object->type);
 	if (!scene)
 	{
-		printf("Error: Scene is NULL.\n");
+		printf("      Error: Scene is NULL.\n");
 		return (0);
 	}
 	if (!new_object)
 	{
-		printf("Error: New object is NULL.\n");
+		printf("      Error: New object is NULL.\n");
 		return (0);
 	}
 	object_type_str = get_object_type_str(new_object->type);
 	if (!scene->objects)
 	{
 		scene->objects = new_object;
-		printf("First object of type %s added to the scene.\n",
+		printf("      First object of type %s added to the scene.\n",
 			object_type_str);
 	}
 	else
@@ -70,18 +70,19 @@ int	add_object(t_Scene *scene, struct Object *new_object)
 		while (current->next)
 		{
 			current_type_str = get_object_type_str(current->type);
-			printf("Traversing object list. Current object type: %s\n",
+			printf("      Traversing object list. Current object type: %s\n",
 				current_type_str);
 			current = current->next;
 		}
 		current->next = new_object;
-		printf
-		("Object of type %s added to the end of the scene's object list.\n",
-			object_type_str);
+		//printf
+		//(G "Object of type %s added to the end of the scene's object list.\n" RST,
+		//	object_type_str);
 	}
 	scene->object_count++;
-	printf("Object added. New count: %d\n", scene->object_count);
+	printf("      Object added. New count: %d\n", scene->object_count);
 	print_objects_in_scene(scene->objects);
+	printf(RED "   Exiting" RST " add_object()\n");
 	return (1);
 }
 

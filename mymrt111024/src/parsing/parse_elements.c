@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:59:55 by atang             #+#    #+#             */
-/*   Updated: 2024/10/11 16:19:08 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 15:06:43 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	parse_ambient_light(char *line, t_AmbientLight *ambient_light)
 	char	*token;
 
 	(void) line;
-	printf(G "Entering" RST " parse_ambient_light...\n");
+	printf(G "Entering" RST " parse_ambient_light()\n");
 	if (!get_next_token(&token))
 		return (0);
 	ambient_light->ratio = parse_float(&token);
@@ -26,9 +26,9 @@ int	parse_ambient_light(char *line, t_AmbientLight *ambient_light)
 	printf("   Parsed ratio: %f\n", ambient_light->ratio);
 	if (!get_next_token(&token))
 		return (0);
-	printf("   Color token: %s\n", token);
 	parse_colour(token, &ambient_light->colour);
-	printf(RED "Exiting" RST " parse_ambient_light...\n");
+	printf(G "   SUCCESS - Ambient Light parsed and added!\n");
+	printf(RED "Exiting" RST " parse_ambient_light()\n");
 	return (1);
 }
 
@@ -37,7 +37,7 @@ int	parse_camera(char *line, t_Camera *camera)
 	char	*token;
 
 	(void) line;
-	printf(G "Entering" RST " parse_camera...\n");
+	printf(G "Entering" RST " parse_camera()\n");
 	if (!get_next_token(&token))
 		return (printf("   Failed to get X position for camera\n"), 0);
 	camera->position.x = atof(token);
@@ -66,7 +66,8 @@ int	parse_camera(char *line, t_Camera *camera)
 	printf("   Parsed FOV: %f\n", camera->fov);
 	if (camera->fov < 0 || camera->fov > 180)
 		return (printf("   Camera FOV out of range (0 to 180)\n"), 0);
-	printf(RED "Exiting" RST " parse_camera...\n");
+	printf(G "   SUCCESS - Camera parsed and added!\n");
+	printf(RED "Exiting" RST " parse_camera()\n");
 	return (1);
 }
 
@@ -75,7 +76,7 @@ int	parse_light(char *line, t_Light *light)
 	char	*token;
 
 	(void) line;
-	printf(G "Entering" RST " parse_light...\n");
+	printf(G "Entering" RST " parse_light()\n");
 	if (!get_next_token(&token))
 		return (0);
 	parse_vector3(token, &light->position);
@@ -87,6 +88,7 @@ int	parse_light(char *line, t_Light *light)
 	if (!get_next_token(&token))
 		return (0);
 	parse_colour(token, &light->colour);
-	printf(RED "Exiting" RST " parse_light...\n");
+	printf(G "   SUCCESS - Light parsed and added!\n");
+	printf(RED "Exiting" RST " parse_light()\n");
 	return (1);
 }

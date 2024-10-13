@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 13:29:18 by atang             #+#    #+#             */
-/*   Updated: 2024/10/11 16:46:59 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 16:05:45 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 			"Correct usage is: ./mini_rt <filename>.rt\n" RST);
 	else if (file_exists(argv[1]))
 	{
-		printf(B "\nFile found...\n" RST);
+		printf(M "\n--> FILE FOUND <--\n" RST);
 		empty_check = file_empty(argv[1]);
 		if (empty_check == 1 || empty_check == -1)
 		{

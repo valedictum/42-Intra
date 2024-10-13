@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:11:49 by atang             #+#    #+#             */
-/*   Updated: 2024/10/11 16:54:03 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 16:00:52 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define M      "\033[1;35m"   /* Bold Magenta */
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
+# define U      "\033[4m"       /* Underlined */
 
 // STRUCTURES//
 

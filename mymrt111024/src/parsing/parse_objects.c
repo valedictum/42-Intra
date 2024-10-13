@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:00:19 by atang             #+#    #+#             */
-/*   Updated: 2024/10/11 19:01:22 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 15:10:05 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int	parse_sphere(char *line, t_Scene *scene)
 	char			*token;
 
 	(void)line;
-	printf(G "Entering" RST " parse_sphere...\n");
+	printf(G "Entering" RST " parse_sphere()\n");
 	new_sphere = malloc(sizeof(struct Object));
 	if (!new_sphere)
 		return (0);
@@ -190,12 +190,18 @@ int	parse_sphere(char *line, t_Scene *scene)
 	token = strtok(NULL, " \t\n");
 	if (!token || !parse_colour(token, &new_sphere->u_data.sphere.colour))
 	{
-		printf(RED "Exiting" RST " parse_sphere...\n");
+		printf(RED "Exiting" RST " parse_sphere()\n");
 		return (free_and_return(new_sphere, 0));
 	}
-	printf(Y "Sphere parsed and added successfully.\n" RST);
-	printf(RED "Exiting" RST " parse_sphere...\n");
-	return (add_object(scene, new_sphere));
+	if (!add_object(scene, new_sphere))
+	{
+		printf(RED "Error: Failed to add sphere to the scene.\n" RST);
+		return (free_and_return(new_sphere, 0));
+	}
+	printf(G "   SUCCESS - Sphere parsed and added!\n" RST);
+	printf(RED "Exiting" RST " parse_sphere()\n");
+	return (1);
+	//return (add_object(scene, new_sphere));
 }
 
 int	parse_plane(char *line, t_Scene *scene)
@@ -204,7 +210,7 @@ int	parse_plane(char *line, t_Scene *scene)
 	char			*token;
 
 	(void)line;
-	printf(G "Entering" RST " parse_plane...\n");
+	printf(G "Entering" RST " parse_plane()\n");
 	new_plane = malloc(sizeof(struct Object));
 	if (!new_plane)
 	{
@@ -236,8 +242,8 @@ int	parse_plane(char *line, t_Scene *scene)
 		printf(RED "Error: Failed to add plane to the scene.\n" RST);
 		return (free_and_return(new_plane, 0));
 	}
-	printf(Y "Plane parsed and added successfully.\n" RST);
-	printf(RED "Exiting" RST " parse_plane...\n");
+	printf(G "   SUCCESS - Plane parsed and added!\n" RST);
+	printf(RED "Exiting" RST " parse_plane()\n");
 	return (1);
 }
 
@@ -247,7 +253,7 @@ int	parse_cylinder(char *line, t_Scene *scene)
 	char			*token;
 
 	(void)line;
-	printf(G "Entering" RST " parse_cylinder...\n");
+	printf(G "Entering" RST " parse_cylinder()\n");
 	new_cylinder = malloc(sizeof(struct Object));
 	if (!new_cylinder)
 		return (0);
@@ -272,11 +278,16 @@ int	parse_cylinder(char *line, t_Scene *scene)
 	token = strtok(NULL, " \t\n");
 	if (!token || !parse_colour(token, &new_cylinder->u_data.cylinder.colour))
 	{
-		printf(RED "Exiting" RST " parse_cylinder...\n");
+		printf(RED "Exiting" RST " parse_cylinder()\n");
 		return (free_and_return(new_cylinder, 0));
 	}
-	printf(Y "Cylinder parsed and added successfully.\n" RST);
-	printf(RED "Exiting" RST " parse_cylinder...\n");
-	add_object(scene, new_cylinder);
+	if (!add_object(scene, new_cylinder))
+	{
+		printf(RED "Error: Failed to add cylinder to the scene.\n" RST);
+		return (free_and_return(new_cylinder, 0));
+	}
+	printf(G "   SUCCESS - Cylinder parsed and added!\n" RST);
+	printf(RED "Exiting" RST " parse_cylinder()\n");
+	//add_object(scene, new_cylinder);
 	return (1);
 }
