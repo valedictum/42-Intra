@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:11:49 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 16:00:52 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 19:08:28 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h> // O_RDONLY macro
 # include <string.h>
 # include <sys/types.h> // for ssize_t
+# include "../minilibx/mlx.h"
 
 // DEFINITIONS //
 
@@ -113,6 +114,25 @@ typedef struct Object
 	struct Object	*next;
 }	t_Object;
 
+typedef struct s_Mlx
+{
+	int				width;
+	int				height;
+	int				**z_matrix;
+	int				zoom;
+	int				colour;
+	int				amplify;
+	int				shift_x;
+	int				shift_y;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*img_ptr;
+	unsigned int	*img_data;
+	int				bpp;
+	int				size_line;
+	int				endian;
+}			t_Mlx;
+
 typedef struct s_Scene
 {
 	t_AmbientLight	ambient_light;
@@ -121,6 +141,7 @@ typedef struct s_Scene
 	//Object		objects[MAX_OBJECTS]; // Changed to pointer as below
 	struct Object	*objects;
 	int				object_count;
+	t_Mlx			mlx;
 }	t_Scene;
 
 // PROTOTYPES //
@@ -146,6 +167,12 @@ size_t		gnl_strlen(const char *str);
 char		*gnl_strchr(char *str, int target_char);
 char		*gnl_strjoin(char *first_str, char *second_str);
 char		*gnl_initialise_str(void);
+
+// mlx.c //
+void		initialise_data(t_Scene	*mlx);
+int			deal_key(int key, t_Scene *scene);
+int			close_button_hook(t_Scene *scene);
+void		handle_exit(t_Scene *scene);
 
 // object_utils.c //
 const char	*get_object_type_str(int type);

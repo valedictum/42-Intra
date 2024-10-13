@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:44:56 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 15:07:43 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 20:24:20 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	add_object(t_Scene *scene, struct Object *new_object)
 		while (current->next)
 		{
 			current_type_str = get_object_type_str(current->type);
-			printf("      Traversing object list. Current object type: %s\n",
+			printf("      Traversing object list - current object type: %s\n",
 				current_type_str);
 			current = current->next;
 		}
@@ -80,7 +80,7 @@ int	add_object(t_Scene *scene, struct Object *new_object)
 		//	object_type_str);
 	}
 	scene->object_count++;
-	printf("      Object added. New count: %d\n", scene->object_count);
+	printf(G "      Object added! New count: %d\n" RST, scene->object_count);
 	print_objects_in_scene(scene->objects);
 	printf(RED "   Exiting" RST " add_object()\n");
 	return (1);

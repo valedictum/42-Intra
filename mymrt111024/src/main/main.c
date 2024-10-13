@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 13:29:18 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 16:05:45 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 19:58:27 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ int	main(int argc, char **argv)
 			"Correct usage is: ./mini_rt <filename>.rt\n" RST);
 	else if (file_exists(argv[1]))
 	{
-		printf(M "\n--> FILE FOUND <--\n" RST);
+		printf(M "\n---> FILE FOUND <---\n" RST);
 		empty_check = file_empty(argv[1]);
 		if (empty_check == 1 || empty_check == -1)
 		{
 			return (1);
 		}
 		parse_rt_file(argv[1], &scene);
-		//data = (t_mrt *)malloc(sizeof(t_mrt));
-		//if (data == NULL)
-		//	return (1);
-		//init_mrt(mrt);
+		initialise_data(&scene);
+		printf(M "\n---> WINDOW OPENED <---\n\n" RST);
+		mlx_key_hook(scene.mlx.win_ptr, deal_key, &scene);
+		mlx_hook(scene.mlx.win_ptr, 17, 0, close_button_hook, &scene);
+		mlx_loop(scene.mlx.mlx_ptr);
 	}
 	else
 	{

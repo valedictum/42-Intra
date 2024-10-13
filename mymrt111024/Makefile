@@ -6,7 +6,7 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 19:36:12 by tday              #+#    #+#              #
-#    Updated: 2024/10/13 16:11:15 by atang            ###   ########.fr        #
+#    Updated: 2024/10/13 19:21:04 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,13 @@ OBJ_DIR			:=		obj
 INC_DIR 		:=		inc
 LIBFT_DIR		:=		libft
 LIBFT			:=		$(LIBFT_DIR)/libft.a
+MLX_DIR 		:= 		./minilibx_macos/
 CC				:=		gcc
 CFLAGS			:=		-Wall -Wextra -Werror -O3
 
 # Define source and object files
 SRCS			:=		src/main/main.c											\
+						src/mlx/mlx.c											\
 						src/parsing/file_check.c								\
 						src/parsing/get_next_line_utils.c						\
 						src/parsing/get_next_line.c								\
@@ -37,6 +39,8 @@ SRCS			:=		src/main/main.c											\
 
 OBJS			:=		$(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 RM				:=		rm -f
+
+.SILENT:
 
 # Create object directories
 $(OBJ_DIR)/%.o: src/%.c
@@ -61,14 +65,22 @@ BLUE			:=		\033[1;34m
 RED    			:=		\033[1;31m
 
 # Targets
-all: $(LIBFT) $(NAME)
+all: build_minilibx $(LIBFT) $(NAME)
 
 $(LIBFT):		
 	@$(MAKE) -s -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -L$(LIBFT_DIR) -lft -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 	@echo "$(CYAN)Everything compiled and linked into executable: $(BLUE)$(NAME)$(DEFAULT_COLOUR)"
+
+build_minilibx:
+	@echo "Building MiniLibX..."
+	@cd $(MLX_DIR) && $(MAKE)
+
+fclean_minilibx:
+	@echo "Fully cleaning MiniLibX..."
+	@$(MAKE) -C $(MLX_DIR) fclean
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
@@ -77,11 +89,11 @@ clean:
 	@$(RM) $(OBJ_DIR)/parsing/parse_shapes.o 
 	@echo "$(RED)Object files deleted.$(DEFAULT_COLOUR)"
 
-fclean: clean
+fclean: fclean_minilibx clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@$(RM) $(OBJS) $(NAME)
 	@echo "$(YELLOW)$(NAME) deleted.$(DEFAULT_COLOUR)"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re build_minilibx fclean_minilibx

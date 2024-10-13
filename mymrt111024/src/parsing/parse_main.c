@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:44:24 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 16:07:07 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 20:40:39 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	parse_rt_file(const char *filename, t_Scene *scene)
 
 	scene->objects = NULL;
 	scene->object_count = 0;
-	printf(M "\n--> PARSING <--" RST);
+	printf(M "\n---> PARSING <---\n" RST);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
@@ -40,7 +40,7 @@ int	parse_rt_file(const char *filename, t_Scene *scene)
 		line = NULL;
 		if (get_next_line(fd, &line) == NULL)
 		{
-			printf(Y "\nLine read: get_next_line returned NULL!\n\n" RST);
+			printf(Y "\nLine read: get_next_line returned NULL - EOF or error!\n\n" RST);
 			result = 0;
 			free(line);
 			break ;
@@ -56,12 +56,12 @@ int	parse_rt_file(const char *filename, t_Scene *scene)
 			break ;
 	}
 	close(fd);
-	printf(M "--> PRINTING PARSED AND ADDED VALUES <--\n" RST);
-	printf(G "Entering" RST " print_ambient_light(), print_camera(), and print_light()");
+	printf(M "---> PRINTING PARSED AND ADDED VALUES <---\n\n" RST);
+	printf(G "Entering" RST " print_ambient_light(), print_camera(), and print_light()\n");
 	print_ambient_light(&scene->ambient_light);
 	print_camera(&scene->camera);
 	print_light(&scene->light);
-	printf(RED "Exiting" RST " print_ambient_light(), print_camera(), and print_light()\n");
+	printf(RED "\nExiting" RST " print_ambient_light(), print_camera(), and print_light()\n");
 	print_all_objects(scene);
 	return (result);
 }

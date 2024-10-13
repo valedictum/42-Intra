@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 12:12:23 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 16:01:57 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/13 20:30:28 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ void	print_all_objects(const t_Scene *scene)
 	int				position;
 
 	current = scene->objects;
-	printf(G "\nEntering" RST " print_all_objects()\n");
-	printf("   " U "NUMBER OF OBJECTS IN SCENE: %d" RST, scene->object_count);
+	printf(G "\nEntering" RST " print_all_objects()\n\n");
+	printf("   NUMBER OF OBJECTS IN SCENE: %d\n", scene->object_count);
 	if (!current)
-		printf("   No objects in the scene.\n\n");
+		printf("\n   No objects in the scene!");
 	position = 1;
 	while (current)
 	{
-		printf("\n   -> OBJECT LIST POSITION: %d\n", position);
+		printf("\n-> " U "OBJECT LIST POSITION: %d\n" RST, position);
 		printf("   Printing object of type: ");
 		if (current->type == SPHERE)
 		{
@@ -103,5 +103,5 @@ void	print_all_objects(const t_Scene *scene)
 		current = current->next;
 		position++;
 	}
-	printf(RED "\nExiting" RST " print_all_objects()\n");
+	printf(RED "\n\nExiting" RST " print_all_objects()\n");
 }
