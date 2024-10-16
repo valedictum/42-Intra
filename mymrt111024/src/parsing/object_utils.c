@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:44:56 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 20:24:20 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/16 12:50:00 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	add_object(t_Scene *scene, struct Object *new_object)
 	struct Object	*current;
 	const char		*current_type_str;
 
-	printf(G "   Entering" RST " add_object()\n      Adding new object of type: %d\n",
-		new_object->type);
+	printf(G "   Entering" RST " add_object()\n");
 	if (!scene)
 	{
 		printf("      Error: Scene is NULL.\n");
@@ -61,8 +60,7 @@ int	add_object(t_Scene *scene, struct Object *new_object)
 	if (!scene->objects)
 	{
 		scene->objects = new_object;
-		printf("      First object of type %s added to the scene.\n",
-			object_type_str);
+		printf("      First object added to the scene!\n");
 	}
 	else
 	{
@@ -70,8 +68,6 @@ int	add_object(t_Scene *scene, struct Object *new_object)
 		while (current->next)
 		{
 			current_type_str = get_object_type_str(current->type);
-			printf("      Traversing object list - current object type: %s\n",
-				current_type_str);
 			current = current->next;
 		}
 		current->next = new_object;

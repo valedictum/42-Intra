@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 13:29:18 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 19:58:27 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/16 12:32:36 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@ int	main(int argc, char **argv)
 {
 	t_Scene	scene;
 	int		empty_check;
-	//t_mrt	*mrt;
-	//t_data	*data;
-	//int		parse_result;
-	//mrt = NULL;
-	//data = NULL;
+
 	if (argc != 2 || filename_error(argv[1]))
+	{
 		printf(RED "Error!\n" RST G
 			"Correct usage is: ./mini_rt <filename>.rt\n" RST);
+	}
 	else if (file_exists(argv[1]))
 	{
 		printf(M "\n---> FILE FOUND <---\n" RST);

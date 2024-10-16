@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 12:12:23 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 20:30:28 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/16 12:46:50 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ void	print_sphere(const struct Object *object)
 {
 	if (object->type != SPHERE)
 		return ;
-	//printf(C "   Sphere:\n" RST);
-	printf("   Center: %f, %f, %f\n",
+	printf("      Center: %f, %f, %f\n",
 		object->u_data.sphere.centre.x,
 		object->u_data.sphere.centre.y,
 		object->u_data.sphere.centre.z);
-	printf("   Diameter: %f\n", object->u_data.sphere.diameter);
-	printf("   Colour: %d, %d, %d",
+	printf("      Diameter: %f\n", object->u_data.sphere.diameter);
+	printf("      Colour: %d, %d, %d",
 		object->u_data.sphere.colour.r,
 		object->u_data.sphere.colour.g,
 		object->u_data.sphere.colour.b);
@@ -32,16 +31,15 @@ void	print_plane(const struct Object *object)
 {
 	if (object->type != PLANE)
 		return ;
-	//printf(G "   Plane:\n" RST);
-	printf("   Point: %f, %f, %f\n",
+	printf("      Point: %f, %f, %f\n",
 		object->u_data.plane.point.x,
 		object->u_data.plane.point.y,
 		object->u_data.plane.point.z);
-	printf("   Normal: %f, %f, %f\n",
+	printf("      Normal: %f, %f, %f\n",
 		object->u_data.plane.normal.x,
 		object->u_data.plane.normal.y,
 		object->u_data.plane.normal.z);
-	printf("   Colour: %d, %d, %d",
+	printf("      Colour: %d, %d, %d",
 		object->u_data.plane.colour.r,
 		object->u_data.plane.colour.g,
 		object->u_data.plane.colour.b);
@@ -51,18 +49,17 @@ void	print_cylinder(const struct Object *object)
 {
 	if (object->type != CYLINDER)
 		return ;
-	//printf(Y "   Cylinder:\n" RST);
-	printf("   Center: %f, %f, %f\n",
+	printf("      Center: %f, %f, %f\n",
 		object->u_data.cylinder.centre.x,
 		object->u_data.cylinder.centre.y,
 		object->u_data.cylinder.centre.z);
-	printf("   Axis: %f, %f, %f\n",
+	printf("      Axis: %f, %f, %f\n",
 		object->u_data.cylinder.axis.x,
 		object->u_data.cylinder.axis.y,
 		object->u_data.cylinder.axis.z);
-	printf("   Diameter: %f\n", object->u_data.cylinder.diameter);
-	printf("   Height: %f\n", object->u_data.cylinder.height);
-	printf("   Colour: %d, %d, %d",
+	printf("      Diameter: %f\n", object->u_data.cylinder.diameter);
+	printf("      Height: %f\n", object->u_data.cylinder.height);
+	printf("      Colour: %d, %d, %d",
 		object->u_data.cylinder.colour.r,
 		object->u_data.cylinder.colour.g,
 		object->u_data.cylinder.colour.b);
@@ -82,7 +79,7 @@ void	print_all_objects(const t_Scene *scene)
 	while (current)
 	{
 		printf("\n-> " U "OBJECT LIST POSITION: %d\n" RST, position);
-		printf("   Printing object of type: ");
+		printf("      Printing object of type: ");
 		if (current->type == SPHERE)
 		{
 			printf(Y "SPHERE\n" RST);

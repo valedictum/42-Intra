@@ -6,7 +6,7 @@
 #    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 19:36:12 by tday              #+#    #+#              #
-#    Updated: 2024/10/13 19:21:04 by atang            ###   ########.fr        #
+#    Updated: 2024/10/16 13:08:13 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ $(OBJ_DIR)/%.o: src/%.c
 # Function definition
 define check_dir_change
 $(eval CUR_DIR := $(patsubst src/%/,%, $(dir $(1))))
-$(if $(filter-out $(LAST_DIR),$(CUR_DIR)), @echo "$(GREEN)$(CUR_DIR) functions compiled successfully!$(DEFAULT_COLOUR)")
+$(if $(filter-out $(LAST_DIR),$(CUR_DIR)), @echo "$(YELLOW)$(CUR_DIR) functions compiled successfully!$(DEFAULT_COLOUR)")
 $(eval LAST_DIR := $(CUR_DIR))
 endef
 
@@ -72,14 +72,15 @@ $(LIBFT):
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
-	@echo "$(CYAN)Everything compiled and linked into executable: $(BLUE)$(NAME)$(DEFAULT_COLOUR)"
-
+	@echo "$(GREEN)--> SUCCESS! Everything compiled and linked into executable: $(BLUE)$(NAME)$(DEFAULT_COLOUR)"
+	@echo "\n"
 build_minilibx:
 	@echo "Building MiniLibX..."
 	@cd $(MLX_DIR) && $(MAKE)
 
 fclean_minilibx:
-	@echo "Fully cleaning MiniLibX..."
+	@echo "\n"
+	@echo "$(RED)Fully cleaning MiniLibX...$(DEFAULT COLOUR)"
 	@$(MAKE) -C $(MLX_DIR) fclean
 
 clean:
@@ -87,12 +88,13 @@ clean:
 	@$(RM) $(OBJS)
 	@$(RM) src/main/main.o
 	@$(RM) $(OBJ_DIR)/parsing/parse_shapes.o 
-	@echo "$(RED)Object files deleted.$(DEFAULT_COLOUR)"
+	@echo "$(RED)--> SUCCESS! Object files deleted$(DEFAULT_COLOUR)"
 
 fclean: fclean_minilibx clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@$(RM) $(OBJS) $(NAME)
-	@echo "$(YELLOW)$(NAME) deleted.$(DEFAULT_COLOUR)"
+	@echo "$(RED)--> SUCCESS! $(RST)$(BLUE)$(NAME)$(RED) deleted$(DEFAULT_COLOUR)"
+	@echo "\n"
 
 re: fclean all
 

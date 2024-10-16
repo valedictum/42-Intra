@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 17:59:55 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 19:47:53 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/16 18:12:04 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	parse_ambient_light(char *line, t_AmbientLight *ambient_light)
 		return (0);
 	ambient_light->ratio = parse_float(&token);
 	if (ambient_light->ratio < 0.0f || ambient_light->ratio > 1.0f)
-		return (err_ret("   Ambient light ratio out of range (0.0 to 1.0)"));
+	{
+		printf(RED"Error! Ambient light ratio out of range (0.0 to 1.0)" RST);
+		exit(1);
+	}
 	printf("   Parsed ratio: %f\n", ambient_light->ratio);
 	if (!get_next_token(&token))
 		return (0);
@@ -65,7 +68,7 @@ int	parse_camera(char *line, t_Camera *camera)
 	camera->fov = atof(token);
 	printf("   Parsed FOV: %f\n", camera->fov);
 	if (camera->fov < 0 || camera->fov > 180)
-		return (printf("   Camera FOV out of range (0 to 180)\n"), 0);
+		err_exit("Camera FOV out of range (0 to 180)");
 	printf(G "   SUCCESS - Camera parsed and added!\n\n");
 	printf(RED "Exiting" RST " parse_camera()\n");
 	return (1);
@@ -84,7 +87,7 @@ int	parse_light(char *line, t_Light *light)
 		return (0);
 	light->brightness = parse_float(&token);
 	if (light->brightness < 0.0f || light->brightness > 1.0f)
-		return (err_ret("Light brightness ratio out of range (0.0 to 1.0)"));
+		err_exit("Light brightness ratio out of range (0.0 to 1.0)");
 	if (!get_next_token(&token))
 		return (0);
 	parse_colour(token, &light->colour);

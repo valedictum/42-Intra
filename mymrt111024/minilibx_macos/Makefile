@@ -7,6 +7,8 @@ OBJ1=$(SRC:.c=.o)
 OBJ=$(OBJ1:.m=.o)
 CFLAGS+=-O2
 
+.SILENT:
+
 all: $(NOM)
 
 $(NOM):	$(OBJ)

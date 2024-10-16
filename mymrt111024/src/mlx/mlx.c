@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 17:58:17 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 19:57:00 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/16 12:32:45 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	initialise_data(t_Scene	*scene)
 {
 	scene->mlx.amplify = 1;
 	scene->mlx.mlx_ptr = mlx_init();
-	scene->mlx.win_ptr = mlx_new_window(scene->mlx.mlx_ptr, 1024, 768, "miniRT");
+	scene->mlx.win_ptr = mlx_new_window(scene->mlx.mlx_ptr, 1024, 768,
+			"miniRT");
 	scene->mlx.img_ptr = mlx_new_image(scene->mlx.mlx_ptr, 1024, 768);
 	//data->img_data = (unsigned int *)mlx_get_data_addr(data->img_ptr,
 	//		&data->bpp, &data->size_line, &data->endian);

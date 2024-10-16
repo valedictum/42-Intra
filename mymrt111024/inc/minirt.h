@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:11:49 by atang             #+#    #+#             */
-/*   Updated: 2024/10/13 19:08:28 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/16 18:12:04 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,9 @@ int			file_empty(const char *filename);
 size_t		ft_strlen(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			err_ret(const char *error_message);
-
+int			err_free_exit(struct Object *current, t_Scene *scene);
+void		err_exit(const char *message);
+//int			free_and_return(t_Scene *scene);
 // get_next_line.c //
 char		*read_and_append_lines(int fd, char	*stash);
 char		*extract_line_from_stash(char	*stash);
@@ -188,7 +190,7 @@ int			parse_light(char *line, t_Light *light);
 // parse_main.c //
 int			parse_rt_file(const char *filename, t_Scene *scene);
 int			parse_line(char	*line, t_Scene *scene);
-int			free_and_return(struct Object *obj, int ret_val);
+//int			free_and_return(struct Object *obj, int ret_val);
 
 // parse_objects.c //
 int			parse_sphere(char *line, t_Scene *scene);

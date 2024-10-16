@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tday <tday@student.42.fr>                  +#+  +:+       +#+         #
+#    By: atang <atang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/26 11:33:08 by tday              #+#    #+#              #
-#    Updated: 2024/03/10 14:27:39 by tday             ###   ########.fr        #
+#    Updated: 2024/10/16 13:07:49 by atang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ RM				:=		rm -f
 define check_dir_change
 $(eval CUR_DIR := $(patsubst src/%/,%, $(dir $(1))))
 $(if $(filter-out $(LAST_DIR),$(CUR_DIR)), @echo 								\
-"$(GREEN)$(CUR_DIR) functions compiled successfully!$(DEFAULT_COLOUR)")
+"$(YELLOW)$(CUR_DIR) functions compiled successfully!$(DEFAULT_COLOUR)")
 $(eval LAST_DIR := $(CUR_DIR))
 endef
 
@@ -97,7 +97,7 @@ all:			$(NAME)
 
 $(NAME):		$(OBJS)
 				@$(AR) $(NAME) $(OBJS)
-				@echo "$(CYAN)$(NAME) compiled successfully!$(DEFAULT_COLOUR)"
+				@echo "$(GREEN)--> SUCCESS! $(NAME) compiled$(DEFAULT_COLOUR)"
 				@echo "\n"
 
 $(OBJS):		%.o: %.c
@@ -113,7 +113,7 @@ clean:
 
 aclean: 		
 				@$(RM) $(NAME)
-				@echo "$(YELLOW)$(NAME) deleted.$(DEFAULT_COLOUR)"
+				@echo "$(RED)--> SUCCESS! $(NAME) deleted$(DEFAULT_COLOUR)"
 				@echo "\n"
 
 fclean: 		clean aclean

@@ -6,7 +6,7 @@
 /*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 13:59:30 by atang             #+#    #+#             */
-/*   Updated: 2024/10/11 16:51:52 by atang            ###   ########.fr       */
+/*   Updated: 2024/10/16 18:16:03 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,45 @@ int	err_ret(const char *error_message)
 	return (0);
 }
 
+/*
 int	free_and_return(struct Object *obj, int ret_val)
 {
 	free(obj);
 	return (ret_val);
+}
+*/
+
+int	err_free_exit(struct Object *current, t_Scene *scene)
+{
+	struct Object	*next;
+	struct Object	*object;
+
+	if (scene && scene->mlx.mlx_ptr && scene->mlx.win_ptr)
+	{
+		mlx_destroy_window(scene->mlx.mlx_ptr, scene->mlx.win_ptr);
+	}
+	if (current)
+	{
+		free(current);
+		current = NULL;
+	}
+	if (scene && scene->objects)
+	{
+		object = scene->objects;
+		while (object)
+		{
+			next = object->next;
+			free(object);
+			object = next;
+		}
+		scene->objects = NULL;
+	}
+	free(scene);
+	exit(1);
+}
+
+void	err_exit(const char *message)
+{
+	printf(RED "\nError! %s\nExiting...\n\n" RST, message);
+	exit (1);
 }
