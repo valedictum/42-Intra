@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:11:49 by atang             #+#    #+#             */
-/*   Updated: 2024/10/19 12:08:37 by sentry           ###   ########.fr       */
+/*   Updated: 2024/10/19 14:33:19 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,11 @@ typedef struct s_Scene
 
 // PROTOTYPES //
 
+// error.c //
+int			err_free_exit(struct Object *current, t_Scene *scene);
+int			err_return(const char *message);
+int			err_exit(t_Error error);
+
 // file_check.c //
 int			file_exists(char *filename);
 int			filename_error(char	*filename);
@@ -168,11 +173,6 @@ int			file_status(const char *filename);
 // utils.c //
 size_t		ft_strlen(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-int			err_return(const char *message);
-int			err_free_exit(struct Object *current, t_Scene *scene);
-int			err_exit(t_Error error);
-//void		err_exit(const char *message);
-//int			free_and_return(t_Scene *scene);
 
 // get_next_line.c //
 char		*read_and_append_lines(int fd, char	*stash);

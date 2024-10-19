@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sentry <sentry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atang <atang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:44:24 by atang             #+#    #+#             */
-/*   Updated: 2024/10/19 11:09:57 by sentry           ###   ########.fr       */
+/*   Updated: 2024/10/19 14:33:21 by atang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	parse_rt_file(const char *filename, t_Scene *scene)
 	print_ambient_light(&scene->ambient_light);
 	print_camera(&scene->camera);
 	print_light(&scene->light);
-	printf(RED "\nExiting" RST " print_ambient_light(), print_camera(), and print_light()\n");
+	printf(RED "\nExiting" RST " print_ambient_light(), print_camera(), and print_light()\n\n");
 	printf("---------------------------------------------------------------\n");
 	print_all_objects(scene);
 	return (result);

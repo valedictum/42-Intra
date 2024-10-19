@@ -1,14 +1,16 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile-macos                                     :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: sentry <sentry@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/19 19:36:12 by tday              #+#    #+#              #
-#    Updated: 2024/10/16 22:41:17 by sentry           ###   ########.fr        #
+#    Updated: 2024/10/16 23:45:30 by sentry           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# Variables
 
 # Variables
 
@@ -18,7 +20,7 @@ OBJ_DIR			:=		obj
 INC_DIR 		:=		inc
 LIBFT_DIR		:=		libft
 LIBFT			:=		$(LIBFT_DIR)/libft.a
-MLX_DIR 		:= 		./minilibx_macos/
+MLX_DIR 		:= 		./minilibx-linux/
 CC				:=		gcc
 CFLAGS			:=		-Wall -Wextra -Werror -O3
 
@@ -71,17 +73,19 @@ $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -I$(MLX_DIR) -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -o $(NAME)
 	@echo "$(GREEN)--> SUCCESS! Everything compiled and linked into executable: $(BLUE)$(NAME)$(DEFAULT_COLOUR)"
 	@echo "\n"
+
 build_minilibx:
 	@echo "Building MiniLibX..."
-	@cd $(MLX_DIR) && $(MAKE)
+	@cd $(MLX_DIR) && ./configure && $(MAKE)
 
 fclean_minilibx:
 	@echo "\n"
 	@echo "$(RED)Fully cleaning MiniLibX...$(DEFAULT COLOUR)"
-	@$(MAKE) -C $(MLX_DIR) fclean
+	@cd $(MLX_DIR) && make clean
+	@cd $(MLX_DIR) && rm -f *.o libmlx.a libmlx_Linux.a
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
